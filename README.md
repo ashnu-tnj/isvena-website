@@ -1,7 +1,7 @@
 # Isvena
 
 A luxury D2C website for Isvena, a hand-braided leather goods house carrying
-forward the workshop of P.M. Rahamathulla & Co (est. 2016, Ambur, Tamil Nadu).
+forward the workshop of P.M. Rahamathulla & Co (est. 2016, Chennai, Tamil Nadu).
 
 Built with Next.js (App Router), TypeScript, and Tailwind CSS.
 
@@ -18,7 +18,10 @@ Open [http://localhost:3000](http://localhost:3000).
 
 - `src/app` — routes: home, `/shop`, `/shop/[category]`, `/product/[slug]`,
   `/heritage`, `/contact`
-- `src/data` — product and category content (`products.ts`, `categories.ts`)
+- `src/data` — product and category content (`products.ts`, `categories.ts`),
+  seeded from P.M. Rahamathulla & Co's public TradeIndia/IndiaMART range;
+  prices are proposed D2C retail and dimensions default to made-to-order
+  sizing — confirm both against the workshop's spec sheets before launch
 - `src/components` — header, footer, product card, cart drawer, and the
   `PlaceholderArt` component used for stand-in product photography
 - `src/lib/cart-context.tsx` — client-side shopping bag (persisted to

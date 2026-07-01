@@ -4,7 +4,7 @@ export interface Product {
   slug: string;
   name: string;
   category: string; // category slug
-  price: number;
+  price: number; // proposed D2C retail price in USD — adjust before launch
   currency: "USD";
   materials: string;
   dimensions: string;
@@ -13,220 +13,273 @@ export interface Product {
   description: string;
   colors: string[];
   tone: Tone;
+  /** Short word rendered on the placeholder art panel */
+  label: string;
   featured?: boolean;
 }
 
+/**
+ * Catalog seeded from P.M. Rahamathulla & Co's public TradeIndia /
+ * IndiaMART range (est. 2016, Periyamet, Chennai). Wholesale listings
+ * don't publish full retail specs, so dimensions default to
+ * made-to-order sizing and prices are proposed D2C retail — both
+ * should be confirmed against the workshop's spec sheets.
+ */
 export const products: Product[] = [
-  // Hand-Braided Totes
+  // Leather Totes
   {
-    slug: "amara-hand-braided-tote",
-    name: "Amara Hand-Braided Tote",
-    category: "hand-braided-totes",
-    price: 380,
+    slug: "woven-braided-laptop-tote",
+    label: "Braided",
+    name: "Woven Braided Laptop Tote",
+    category: "tote-bags",
+    price: 345,
     currency: "USD",
-    materials: "Full-grain vegetable-tanned leather, brass hardware",
-    dimensions: "40 x 30 x 14 cm",
-    weight: "0.9 kg",
+    materials: "Hand-braided full-grain leather, reinforced base",
+    dimensions: "Fits up to a 15″ laptop · standard & custom sizes",
     craftsmanship:
-      "Over 900 individual leather strips are cut, conditioned, and interlaced by hand across roughly 14 hours of weaving per bag.",
+      "Our signature export piece: fine leather strips are interlaced entirely by hand into a weave strong enough to carry a working day, with a padded sleeve stitched in for the laptop.",
     description:
-      "Our signature tote, woven from a single hide in an open basket pattern that softens and relaxes beautifully with wear.",
-    colors: ["Cognac", "Umber", "Black"],
+      "The bag our buyers abroad kept reordering — a hand-braided leather tote sized for a laptop, papers, and everything between.",
+    colors: ["Tan", "Brown", "Black"],
     tone: "cognac",
     featured: true,
   },
   {
-    slug: "kavya-market-tote",
-    name: "Kavya Market Tote",
-    category: "hand-braided-totes",
-    price: 340,
+    slug: "leather-u-shape-tote",
+    label: "U-Shape",
+    name: "Leather U-Shape Tote",
+    category: "tote-bags",
+    price: 320,
     currency: "USD",
-    materials: "Full-grain leather, cotton-canvas lining",
-    dimensions: "38 x 28 x 12 cm",
-    weight: "0.8 kg",
+    materials: "Full-grain leather, tonal stitching",
+    dimensions: "Standard & custom sizes available",
     craftsmanship:
-      "A tighter, closed weave for structure, hand-stitched at every seam and finished with a rolled top edge.",
+      "Cut on a rounded U-line pattern that lets the leather relax into a soft, open silhouette, with handles rolled and stitched by hand.",
     description:
-      "An everyday companion built on the same braiding technique as our Amara tote, sized for the daily commute.",
-    colors: ["Sand", "Cognac"],
-    tone: "sand",
-  },
-  {
-    slug: "meera-oversized-tote",
-    name: "Meera Oversized Tote",
-    category: "hand-braided-totes",
-    price: 420,
-    currency: "USD",
-    materials: "Full-grain leather, reinforced braided handles",
-    dimensions: "45 x 34 x 16 cm",
-    weight: "1.1 kg",
-    craftsmanship:
-      "Handles are braided from six cords rather than two for extra strength, a detail unique to our larger totes.",
-    description:
-      "Room for a laptop, a change of shoes, and everything in between — without losing the hand of the leather.",
-    colors: ["Umber", "Black"],
-    tone: "umber",
-  },
-
-  // Leather Wallets
-  {
-    slug: "rahim-bifold-wallet",
-    name: "Rahim Bifold Wallet",
-    category: "leather-wallets",
-    price: 85,
-    currency: "USD",
-    materials: "Vegetable-tanned leather, hand-burnished edges",
-    dimensions: "11 x 9 cm",
-    craftsmanship:
-      "Edges are sanded, dyed, and burnished by hand in four passes for a rounded, glass-smooth finish.",
-    description:
-      "A slim six-card bifold cut from a single piece of hide, named for the founder of our workshop.",
-    colors: ["Black", "Umber", "Cognac"],
+      "A generous, curved everyday tote — the softer of our two signature tote lines, offered in a range of colours.",
+    colors: ["Tan", "Brown", "Black", "Custom colours on request"],
     tone: "umber",
     featured: true,
   },
   {
-    slug: "arjun-cardholder",
-    name: "Arjun Cardholder",
-    category: "leather-wallets",
-    price: 55,
+    slug: "leather-v-shape-tote",
+    label: "V-Shape",
+    name: "Leather V-Shape Tote",
+    category: "tote-bags",
+    price: 320,
     currency: "USD",
-    materials: "Full-grain leather",
-    dimensions: "10 x 7 cm",
+    materials: "Full-grain leather, tonal stitching",
+    dimensions: "Standard & custom sizes available",
     craftsmanship:
-      "A single fold, four pockets, and one continuous line of saddle stitching for a minimal everyday carry.",
+      "The V-line pattern tapers toward the base for a sharper, more architectural profile that holds its shape empty or full.",
     description:
-      "For those who carry less. Fits flush in a front pocket and ages into a personal patina within weeks.",
-    colors: ["Cognac", "Black", "Sand"],
-    tone: "sand",
-  },
-  {
-    slug: "zainab-braided-trifold",
-    name: "Zainab Braided Trifold",
-    category: "leather-wallets",
-    price: 95,
-    currency: "USD",
-    materials: "Vegetable-tanned leather, braided trim",
-    dimensions: "12 x 9.5 cm",
-    craftsmanship:
-      "A narrow hand-braided panel runs along the spine, a nod to our totes in a smaller, everyday form.",
-    description:
-      "Three-panel construction with a coin pocket, finished with the same braid used across our bag collection.",
-    colors: ["Umber", "Cognac"],
+      "The structured counterpart to our U-shape tote — a tapered silhouette for those who like a cleaner line.",
+    colors: ["Tan", "Brown", "Black", "Custom colours on request"],
     tone: "cognac",
   },
 
-  // Clutches
+  // Basket & Woven Bags
   {
-    slug: "nadia-evening-clutch",
-    name: "Nadia Evening Clutch",
-    category: "clutches",
-    price: 210,
+    slug: "leather-basket-bag",
+    label: "Basket",
+    name: "Leather Basket Bag",
+    category: "woven-basket-bags",
+    price: 290,
     currency: "USD",
-    materials: "Full-grain leather, brass frame clasp",
-    dimensions: "26 x 16 x 4 cm",
+    materials: "Full-grain leather, open basket weave",
+    dimensions: "Standard & custom sizes available",
     craftsmanship:
-      "A solid brass frame is hand-set into the leather shell, then lined in raw silk sourced from a family-run weaver.",
+      "Traditional basketry technique worked in leather strips rather than cane — each basket is woven over a form, then edged and handled by hand.",
     description:
-      "Structured enough to hold its shape, soft enough to fold flat — designed for evenings that run long.",
-    colors: ["Black", "Umber"],
-    tone: "ink",
+      "Our take on the market basket: the warmth of woven cane, rendered in leather that ages where straw would fray.",
+    colors: ["Tan", "Natural", "Brown"],
+    tone: "sand",
     featured: true,
   },
   {
-    slug: "leela-braided-clutch",
-    name: "Leela Braided Clutch",
-    category: "clutches",
-    price: 195,
+    slug: "water-reed-bag",
+    label: "Reed",
+    name: "Water Reed Bag",
+    category: "woven-basket-bags",
+    price: 180,
     currency: "USD",
-    materials: "Full-grain leather, hand-braided front panel",
-    dimensions: "28 x 15 x 3 cm",
+    materials: "Natural water reed, leather trim & handles",
+    dimensions: "Standard & custom sizes available",
     craftsmanship:
-      "The front panel alone takes close to three hours to weave before it's mounted onto the clutch body.",
+      "Water reed is soaked, woven, and sun-dried the way basket-makers here have always worked it, then finished with leather handles from our own bench.",
     description:
-      "Our tote's signature weave, scaled down into a flat evening silhouette with a discreet magnetic close.",
-    colors: ["Cognac", "Sand"],
-    tone: "cognac",
-  },
-
-  // Bags
-  {
-    slug: "safiya-crossbody",
-    name: "Safiya Crossbody",
-    category: "bags",
-    price: 260,
-    currency: "USD",
-    materials: "Full-grain leather, adjustable braided strap",
-    dimensions: "24 x 18 x 8 cm",
-    craftsmanship:
-      "A single hide is used per bag to keep grain and color consistent across the body and strap.",
-    description:
-      "A compact city bag with a fully adjustable, hand-braided strap and a structured base that keeps its shape.",
-    colors: ["Olive", "Umber", "Black"],
+      "A natural-fibre carry-all that pairs hand-woven reed with the workshop's leather trim — light, breathable, and summer-ready.",
+    colors: ["Natural", "Natural / Tan trim"],
     tone: "olive",
     featured: true,
   },
   {
-    slug: "ishaan-waist-bag",
-    name: "Ishaan Waist Bag",
-    category: "bags",
-    price: 150,
+    slug: "straw-market-bag",
+    label: "Straw",
+    name: "Straw Market Bag",
+    category: "woven-basket-bags",
+    price: 140,
     currency: "USD",
-    materials: "Full-grain leather, solid brass buckle",
-    dimensions: "20 x 14 x 6 cm",
+    materials: "Woven straw, leather handles",
+    dimensions: "Standard & custom sizes available",
     craftsmanship:
-      "Built on the same pattern as our export waist bags, refined with a hand-finished edge and interior zip.",
+      "Woven from straw in an open checker pattern and bound at the rim by hand, with stitched leather handles set to sit flat on the shoulder.",
     description:
-      "A hands-free companion for travel days, sized for a phone, cards, and a passport.",
-    colors: ["Cognac", "Black"],
+      "An easy, open market bag in woven straw — the most relaxed piece in the range.",
+    colors: ["Natural"],
+    tone: "cream",
+  },
+  {
+    slug: "leather-bottle-bag",
+    label: "Bottle",
+    name: "Leather Bottle Bag",
+    category: "woven-basket-bags",
+    price: 120,
+    currency: "USD",
+    materials: "Full-grain leather, adjustable strap",
+    dimensions: "Fits standard wine & water bottles",
+    craftsmanship:
+      "A single hide sleeve, wet-moulded to the bottle's curve and hand-stitched up one seam — no lining, no filler.",
+    description:
+      "A slim leather carrier for a bottle of wine or water — a small piece that shows the workshop's moulding and stitching at close range.",
+    colors: ["Tan", "Brown"],
     tone: "umber",
   },
+
+  // Clutches
   {
-    slug: "priya-woven-basket-bag",
-    name: "Priya Woven Basket Bag",
-    category: "bags",
-    price: 300,
+    slug: "ladies-leather-clutch-purse",
+    label: "Clutch",
+    name: "Ladies' Leather Clutch Purse",
+    category: "clutches",
+    price: 165,
     currency: "USD",
-    materials: "Full-grain leather, structured base",
-    dimensions: "30 x 22 x 16 cm",
+    materials: "Full-grain leather, secure closure",
+    dimensions: "Standard & custom sizes available",
     craftsmanship:
-      "A rounded, basket-inspired silhouette built over a reinforced base for shape that holds without stiffening the leather.",
+      "Built as a structured purse-clutch with interior card slots and a hand-set closure, edges burnished in multiple passes.",
     description:
-      "Rooted in traditional basket weaving, reinterpreted in leather for a softer, everyday shoulder bag.",
-    colors: ["Sand", "Cognac"],
-    tone: "sand",
+      "The more finished of our two clutch lines — structured enough for evening, organised enough for every day.",
+    colors: ["Black", "Brown", "Tan"],
+    tone: "ink",
+    featured: true,
+  },
+  {
+    slug: "leather-clutch-bag",
+    label: "Clutch",
+    name: "Leather Clutch Bag",
+    category: "clutches",
+    price: 130,
+    currency: "USD",
+    materials: "Full-grain leather",
+    dimensions: "Standard & custom sizes available",
+    craftsmanship:
+      "A flat-pattern clutch cut from quality hide and finished by hand — the piece our workshop has produced at export scale for years.",
+    description:
+      "A clean, fold-flat clutch in quality leather — simple on purpose, made to disappear under an arm.",
+    colors: ["Tan", "Brown", "Black", "Custom colours on request"],
+    tone: "cognac",
   },
 
-  // Belts
+  // Leather Wallets
   {
-    slug: "vikram-braided-belt",
-    name: "Vikram Braided Belt",
-    category: "belts",
+    slug: "chrome-free-mens-wallet",
+    label: "Bifold",
+    name: "Chrome-Free Men's Wallet",
+    category: "leather-wallets",
+    price: 85,
+    currency: "USD",
+    materials: "Chrome-free tanned leather",
+    dimensions: "Standard bifold sizing",
+    craftsmanship:
+      "Tanned without chromium salts — gentler on skin and on the tanneries' effluent — then cut, folded, and edge-finished by hand into a classic bifold.",
+    description:
+      "Our men's bifold in chrome-free leather: the same wallet we manufacture for export, with a cleaner tannage story.",
+    colors: ["Brown", "Black", "Tan"],
+    tone: "umber",
+    featured: true,
+  },
+  {
+    slug: "ladies-leather-wallet",
+    label: "Wallet",
+    name: "Ladies' Leather Wallet",
+    category: "leather-wallets",
+    price: 90,
+    currency: "USD",
+    materials: "Full-grain leather",
+    dimensions: "Standard & custom sizes available",
+    craftsmanship:
+      "A longer-format wallet with card rows and a zip coin section, saddle-stitched where machine seams would eventually give.",
+    description:
+      "The companion piece to our men's bifold — a full-size ladies' wallet from the same Chennai bench.",
+    colors: ["Tan", "Brown", "Black"],
+    tone: "cognac",
+  },
+
+  // Belts & Waist Bags
+  {
+    slug: "braided-leather-belt",
+    label: "Braided",
+    name: "Braided Leather Belt",
+    category: "belts-waist-bags",
     price: 75,
     currency: "USD",
-    materials: "Leather cord, solid brass buckle",
-    dimensions: "Made to size, 3 cm width",
+    materials: "Braided leather cord, metal buckle",
+    dimensions: "Made to size",
     craftsmanship:
-      "Eight leather cords are braided under tension around a stitched core for a belt that won't stretch out of shape.",
+      "Leather cords braided under tension around a stitched core — the technique the rest of our woven range grew out of.",
     description:
-      "The piece our workshop was founded on. Every belt is braided to order and cut to your exact size.",
-    colors: ["Black", "Umber", "Cognac"],
+      "The piece where our braid began. Every belt is braided to order and cut to your exact size.",
+    colors: ["Tan", "Brown", "Black"],
     tone: "sand",
     featured: true,
   },
   {
-    slug: "farah-reversible-belt",
-    name: "Farah Reversible Belt",
-    category: "belts",
-    price: 90,
+    slug: "mens-leather-belt",
+    label: "Classic",
+    name: "Men's Leather Belt",
+    category: "belts-waist-bags",
+    price: 70,
     currency: "USD",
-    materials: "Full-grain leather, rotating brass buckle",
-    dimensions: "Made to size, 3.5 cm width",
+    materials: "Full-grain leather, metal buckle",
+    dimensions: "Made to size",
     craftsmanship:
-      "Two hides are laminated back-to-back by hand and pressed under weight for 48 hours before cutting.",
+      "A single thickness of full-grain hide — no bonded layers — with edges dyed and burnished by hand.",
     description:
-      "Black on one side, cognac on the other — one belt, finished to switch with a simple twist of the buckle.",
-    colors: ["Black / Cognac"],
+      "A plain, honest belt in full-grain leather, built to outlast the wardrobe around it.",
+    colors: ["Brown", "Black", "Tan"],
+    tone: "ink",
+  },
+  {
+    slug: "ladies-belt",
+    label: "Slim",
+    name: "Ladies' Belt",
+    category: "belts-waist-bags",
+    price: 65,
+    currency: "USD",
+    materials: "Full-grain leather, metal buckle",
+    dimensions: "Made to size",
+    craftsmanship:
+      "Cut narrower and finished with a lighter buckle, in the same single-hide construction as our men's line.",
+    description:
+      "A slim leather belt made to size, in the workshop's core colours or a custom shade on request.",
+    colors: ["Tan", "Brown", "Black", "Custom colours on request"],
+    tone: "cognac",
+  },
+  {
+    slug: "leather-waist-bag",
+    label: "Waist",
+    name: "Leather Waist Bag",
+    category: "belts-waist-bags",
+    price: 150,
+    currency: "USD",
+    materials: "Full-grain leather, metal buckle",
+    dimensions: "Standard & custom sizes available",
+    craftsmanship:
+      "Built on our long-running export waist-bag pattern, refined with a hand-finished edge and interior zip pocket.",
+    description:
+      "A hands-free companion for travel days — sized for a phone, cards, and a passport.",
+    colors: ["Tan", "Brown", "Black"],
     tone: "umber",
   },
 ];

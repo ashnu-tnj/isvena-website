@@ -59,7 +59,7 @@ export default async function ProductPage({
           <div className="relative col-span-2 aspect-[4/5]">
             <PlaceholderArt
               tone={product.tone}
-              label={product.name.split(" ")[0]}
+              label={product.label}
               className="h-full w-full"
             />
           </div>

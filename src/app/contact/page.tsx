@@ -27,7 +27,7 @@ export default function ContactPage() {
             <p className="mt-2 text-ink-soft">
               Isvena Leather Studio
               <br />
-              Ambur, Vellore District
+              Periyamet, Chennai 600 003
               <br />
               Tamil Nadu, India
             </p>

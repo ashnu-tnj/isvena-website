@@ -4,14 +4,14 @@ import PlaceholderArt from "@/components/placeholder-art";
 export const metadata: Metadata = {
   title: "Our Heritage",
   description:
-    "Isvena traces its roots to P.M. Rahamathulla & Co, a leather workshop in Ambur, Tamil Nadu, manufacturing and exporting hand-braided leather goods since 2016.",
+    "Isvena traces its roots to P.M. Rahamathulla & Co, a leather workshop in Chennai, Tamil Nadu, manufacturing and exporting hand-braided leather goods since 2016.",
 };
 
 const steps = [
   {
     n: "01",
     title: "Sourcing",
-    body: "We work with a small number of tanneries that vegetable-tan and full-grain finish hides to our specification, selecting only leather with enough temper to hold a tight braid.",
+    body: "We work with a small number of tanneries that finish full-grain and chrome-free hides to our specification, selecting only leather with enough temper to hold a tight braid.",
   },
   {
     n: "02",
@@ -26,7 +26,7 @@ const steps = [
   {
     n: "04",
     title: "Finishing",
-    body: "Edges are burnished, hardware is set in solid brass, and every piece is inspected by hand before it leaves Ambur.",
+    body: "Edges are burnished, hardware is set in solid brass, and every piece is inspected by hand before it leaves the Chennai workshop.",
   },
 ];
 
@@ -39,7 +39,7 @@ export default function HeritagePage() {
         <div className="relative flex h-full flex-col items-center justify-center px-6 text-center text-cream">
           <p className="eyebrow text-cream/80">Our Heritage</p>
           <h1 className="mt-5 max-w-xl font-display text-4xl italic leading-tight sm:text-5xl">
-            A workshop in Ambur, since 2016.
+            A workshop in Chennai, since 2016.
           </h1>
         </div>
       </section>
@@ -54,10 +54,11 @@ export default function HeritagePage() {
         <div className="space-y-5 text-sm leading-relaxed text-ink-soft">
           <p>
             Isvena began life as P.M. Rahamathulla &amp; Co, a family-run manufacturer and
-            exporter of leather goods founded in 2016 in Ambur, Tamil Nadu — a region with a
+            exporter of leather goods founded in 2016 in Chennai, Tamil Nadu — a region with a
             leatherworking tradition that stretches back generations. For years, our workshop
-            produced hand-braided bags, wallets, belts and clutches for buyers around the
-            world, refining a weaving technique few workshops still practice at this scale.
+            produced hand-braided totes, basket and water-reed weaves, wallets, belts and
+            clutches for buyers around the world, refining a weaving technique few workshops
+            still practice at this scale.
           </p>
           <p>
             Isvena is the next chapter of that same workshop: the same artisans, the same
