@@ -15,7 +15,7 @@ export default function ShopPage() {
         <p className="eyebrow text-umber">The Collection</p>
         <h1 className="mt-4 font-display text-4xl italic sm:text-5xl">Shop Isvena</h1>
         <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-ink-soft">
-          Every category traces back to the same workshop bench in Ambur, Tamil Nadu.
+          Every category traces back to the same workshop bench in Chennai, Tamil Nadu.
         </p>
       </section>
 

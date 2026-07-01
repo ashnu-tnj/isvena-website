@@ -5,9 +5,9 @@ import { categories } from "@/data/categories";
 import { getFeaturedProducts } from "@/data/products";
 
 const usps = [
-  { title: "Full-Grain Leather", detail: "Sourced from responsibly run tanneries" },
+  { title: "Full-Grain Leather", detail: "Chrome-free tannages, responsibly sourced" },
   { title: "Hand-Braided", detail: "Woven by artisans, strip by strip" },
-  { title: "Made in Ambur", detail: "One workshop, since 2016" },
+  { title: "Made in Chennai", detail: "One workshop, since 2016" },
   { title: "Shipped Worldwide", detail: "From Tamil Nadu to your door" },
 ];
 
@@ -22,7 +22,7 @@ export default function Home() {
         <PlaceholderArt tone="umber" pattern="weave" className="absolute inset-0 h-full w-full" />
         <div className="absolute inset-0 bg-ink/25" />
         <div className="relative flex h-full flex-col items-center justify-end px-6 pb-20 text-center text-cream">
-          <p className="eyebrow text-cream/80">Since 2016 &middot; Ambur, Tamil Nadu</p>
+          <p className="eyebrow text-cream/80">Since 2016 &middot; Chennai, Tamil Nadu</p>
           <h1 className="mt-5 max-w-2xl font-display text-4xl italic leading-tight sm:text-6xl">
             Leather, woven by hand to outlast the trend.
           </h1>
@@ -102,7 +102,7 @@ export default function Home() {
             <div className="relative aspect-[4/5] lg:aspect-auto lg:h-[640px]">
               <PlaceholderArt
                 tone={signature.tone}
-                label={signature.name.split(" ")[0]}
+                label={signature.label}
                 caption="Signature Piece"
                 className="h-full w-full"
               />
@@ -132,7 +132,7 @@ export default function Home() {
       {/* Heritage teaser */}
       <section className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-24 lg:grid-cols-2 lg:px-10">
         <div>
-          <p className="eyebrow text-umber">Est. 2016 &middot; Ambur, Tamil Nadu</p>
+          <p className="eyebrow text-umber">Est. 2016 &middot; Chennai, Tamil Nadu</p>
           <h2 className="mt-4 font-display text-3xl italic sm:text-4xl">
             A workshop, before it was a brand.
           </h2>

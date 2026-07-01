@@ -61,7 +61,7 @@ export default function SiteFooter() {
 
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-cream/15 pt-6 text-xs text-cream/50 sm:flex-row">
           <p>© {new Date().getFullYear()} Isvena. A legacy of P.M. Rahamathulla &amp; Co., est. 2016.</p>
-          <p>Ambur, Tamil Nadu, India — Shipping Worldwide</p>
+          <p>Chennai, Tamil Nadu, India — Shipping Worldwide</p>
         </div>
       </div>
     </footer>

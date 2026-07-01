@@ -8,7 +8,7 @@ export default function ProductCard({ product }: { product: Product }) {
       <div className="relative aspect-[4/5] overflow-hidden bg-sand">
         <PlaceholderArt
           tone={product.tone}
-          label={product.name.split(" ")[0]}
+          label={product.label}
           className="h-full w-full transition duration-700 group-hover:scale-105"
         />
       </div>

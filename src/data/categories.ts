@@ -11,22 +11,22 @@ export interface Category {
 
 export const categories: Category[] = [
   {
-    slug: "hand-braided-totes",
-    name: "Hand-Braided Totes",
+    slug: "tote-bags",
+    name: "Leather Totes",
     shortName: "Totes",
-    tagline: "Woven by hand, strip by strip",
+    tagline: "Woven and stitched, shaped by hand",
     description:
-      "Our signature silhouette. Full-grain leather is cut into fine strips and interlaced entirely by hand, a technique passed down through generations of Tamil Nadu artisans, giving every tote a structure and texture no machine can replicate.",
+      "Our tote silhouettes — the U-shape, the V-shape, and the hand-braided laptop tote — have anchored our export range for years. Full-grain leather, structured to carry a working day and soften into your own.",
     tone: "cognac",
   },
   {
-    slug: "leather-wallets",
-    name: "Leather Wallets",
-    shortName: "Wallets",
-    tagline: "Everyday carry, precisely built",
+    slug: "woven-basket-bags",
+    name: "Basket & Woven Bags",
+    shortName: "Baskets",
+    tagline: "Basketry, reimagined in leather and reed",
     description:
-      "Slim bifolds and cardholders cut from vegetable-tanned hide, edge-painted and hand-burnished to a soft sheen that only deepens with use.",
-    tone: "umber",
+      "A tribute to traditional Indian basketry: leather basket bags, water reed and straw weaves, and our bottle bag — natural materials interlaced by hand in the Chennai workshop.",
+    tone: "olive",
   },
   {
     slug: "clutches",
@@ -34,25 +34,25 @@ export const categories: Category[] = [
     shortName: "Clutches",
     tagline: "Evening structure, quiet detail",
     description:
-      "Compact, considered pieces for evenings out — braided panels and clean edges finished entirely by hand in our Ambur atelier.",
+      "Compact, considered pieces finished entirely by hand — from the everyday leather clutch to our structured ladies' clutch purse.",
     tone: "ink",
   },
   {
-    slug: "bags",
-    name: "Crossbody & Shoulder Bags",
-    shortName: "Bags",
-    tagline: "Built for the everyday commute",
+    slug: "leather-wallets",
+    name: "Leather Wallets",
+    shortName: "Wallets",
+    tagline: "Chrome-free leather, precisely built",
     description:
-      "From market baskets to structured shoulder bags, each piece balances the durability our workshop is known for with a lighter, city-ready silhouette.",
-    tone: "olive",
+      "Wallets cut from chrome-free, naturally tanned hide — kinder to skin and to the tanneries' water — edge-finished by hand to a soft sheen that deepens with use.",
+    tone: "umber",
   },
   {
-    slug: "belts",
-    name: "Braided Belts",
+    slug: "belts-waist-bags",
+    name: "Belts & Waist Bags",
     shortName: "Belts",
     tagline: "The original hand-braid",
     description:
-      "Where our workshop began. Narrow leather cords, braided tight and finished with solid brass hardware, built to outlast the wardrobe around them.",
+      "Where our workshop's braid began: men's and ladies' belts — plain and hand-braided — alongside the leather waist bag built on our export pattern.",
     tone: "sand",
   },
 ];

@@ -61,7 +61,7 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
         </button>
       </div>
       <p className="mt-3 text-xs text-ink-soft">
-        Made to order · Ships in 2–3 weeks from our Ambur workshop.
+        Made to order · Ships in 2–3 weeks from our Chennai workshop.
       </p>
     </div>
   );
