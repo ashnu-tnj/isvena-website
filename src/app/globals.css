@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+:root {
+  --ivory: #f7f3ec;
+  --cream: #fbf9f5;
+  --ink: #201b16;
+  --ink-soft: #3a332b;
+  --cognac: #a25a34;
+  --cognac-dark: #7c4527;
+  --umber: #4a3222;
+  --sand: #d9c9ae;
+  --sand-line: #e4d8c2;
+  --olive: #6f6a4e;
+}
+
+@theme inline {
+  --color-ivory: var(--ivory);
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-cognac: var(--cognac);
+  --color-cognac-dark: var(--cognac-dark);
+  --color-umber: var(--umber);
+  --color-sand: var(--sand);
+  --color-sand-line: var(--sand-line);
+  --color-olive: var(--olive);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
+body {
+  background: var(--ivory);
+  color: var(--ink);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-display {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+}
+
+.tracking-widest-plus {
+  letter-spacing: 0.22em;
+}
+
+.eyebrow {
+  font-family: var(--font-body), ui-sans-serif, sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.hairline {
+  border-color: var(--sand-line);
+}
+
+::selection {
+  background: var(--cognac);
+  color: var(--cream);
+}
