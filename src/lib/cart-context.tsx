@@ -26,6 +26,9 @@ interface CartContextValue {
   addItem: (product: Product, color: string, qty?: number) => void;
   removeItem: (slug: string, color: string) => void;
   updateQty: (slug: string, color: string, qty: number) => void;
+  clearCart: () => void;
+  /** True once the cart has been restored from localStorage. */
+  hydrated: boolean;
   subtotal: number;
   count: number;
 }
@@ -87,6 +90,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     );
   }, []);
 
+  const clearCart = useCallback(() => setLines([]), []);
+
   const subtotal = useMemo(
     () => lines.reduce((sum, l) => sum + l.price * l.qty, 0),
     [lines]
@@ -101,6 +106,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     addItem,
     removeItem,
     updateQty,
+    clearCart,
+    hydrated,
     subtotal,
     count,
   };

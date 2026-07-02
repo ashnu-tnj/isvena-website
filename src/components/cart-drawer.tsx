@@ -1,10 +1,39 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { useCart } from "@/lib/cart-context";
 
 export default function CartDrawer() {
   const { lines, isOpen, closeCart, removeItem, updateQty, subtotal } = useCart();
+  const [checkingOut, setCheckingOut] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+
+  async function startCheckout() {
+    setCheckingOut(true);
+    setCheckoutError(null);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          lines: lines.map((l) => ({ slug: l.slug, color: l.color, qty: l.qty })),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.url) {
+        setCheckoutError(
+          data.error ?? "Could not start checkout. Please try again."
+        );
+        return;
+      }
+      window.location.href = data.url;
+    } catch {
+      setCheckoutError("Could not start checkout. Please try again.");
+    } finally {
+      setCheckingOut(false);
+    }
+  }
 
   return (
     <>
@@ -99,17 +128,30 @@ export default function CartDrawer() {
               <span className="font-display text-lg">${subtotal.toLocaleString()}</span>
             </div>
             <p className="mb-4 text-xs leading-relaxed text-ink-soft">
-              Each piece is woven or stitched to order. Our concierge team will confirm
-              availability, made-to-order timing, and secure payment by email before your
-              order is finalized.
+              Each piece is woven or stitched to order and ships in 2–3 weeks.
+              Secure payment by card via Stripe; shipping and taxes are
+              calculated at checkout.
             </p>
-            <Link
-              href="/contact"
-              onClick={closeCart}
-              className="block w-full bg-ink py-3 text-center text-sm uppercase tracking-widest-plus text-cream transition hover:bg-cognac-dark"
+            {checkoutError && (
+              <p className="mb-3 text-xs leading-relaxed text-cognac-dark">
+                {checkoutError}{" "}
+                <Link
+                  href="/contact"
+                  onClick={closeCart}
+                  className="underline underline-offset-4"
+                >
+                  Order via our concierge instead
+                </Link>
+                .
+              </p>
+            )}
+            <button
+              onClick={startCheckout}
+              disabled={checkingOut}
+              className="block w-full bg-ink py-3 text-center text-sm uppercase tracking-widest-plus text-cream transition hover:bg-cognac-dark disabled:opacity-60"
             >
-              Request Checkout
-            </Link>
+              {checkingOut ? "Preparing Checkout…" : "Checkout"}
+            </button>
           </div>
         )}
       </aside>
