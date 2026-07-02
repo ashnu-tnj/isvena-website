@@ -64,7 +64,7 @@ export default function Home() {
         <div className="mb-12 flex flex-col items-center text-center">
           <p className="eyebrow text-umber">Curated Collections</p>
           <h2 className="mt-3 font-display text-3xl italic sm:text-4xl">
-            Five categories, one workshop
+            Six categories, one workshop
           </h2>
         </div>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">

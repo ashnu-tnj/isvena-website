@@ -34,6 +34,11 @@ const milestones = [
     body: "India bans the export of vegetable-tanned leather, closing the chapter on the veg-tan trade that had defined the house for a generation.",
   },
   {
+    year: "2000",
+    title: "Back to the Trade",
+    body: "The family returns to the leather trade in Chennai as a wholesale trader, exporter and importer — waist bags, baskets, braided belts and straw bags moving through the city's Periyamet leather quarter.",
+  },
+  {
     year: "2016",
     title: "A New Workshop",
     body: "The family name returns to leather: P.M. Rahamathulla & Co is founded in Periyamet, Chennai — this time as a manufacturer and exporter of finished goods, from hand-braided totes to chrome-free wallets.",
