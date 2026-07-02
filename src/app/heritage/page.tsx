@@ -4,8 +4,46 @@ import PlaceholderArt from "@/components/placeholder-art";
 export const metadata: Metadata = {
   title: "Our Heritage",
   description:
-    "Isvena traces its roots to P.M. Rahamathulla & Co, a leather workshop in Chennai, Tamil Nadu, manufacturing and exporting hand-braided leather goods since 2016.",
+    "Isvena's story begins in 1936 with founder P.M. Rahmathulla, apprentice leather trader in British Colombo — through PMR & Co's vegetable-tanned exports to the UK and Italy, to today's Chennai workshop.",
 };
+
+const milestones = [
+  {
+    year: "1936",
+    title: "The Apprentice",
+    body: "Founder P.M. Rahmathulla begins his career as a leather trader, apprenticing under his father P. Mohamed Ismail — a renowned supplier of leather to book binders in British Colombo.",
+  },
+  {
+    year: "1944",
+    title: "The Tannery",
+    body: "After eight years in the trade, Rahmathulla commences his own tanning operation, working the hides himself.",
+  },
+  {
+    year: "1950",
+    title: "PMR & Co",
+    body: "PMR & Co is established. The tannery works mainly in cow hides, producing farm-related goods sold to local farmers.",
+  },
+  {
+    year: "1966",
+    title: "The Export Era",
+    body: "The family registers its trademark brand to export vegetable-tanned cow hides. Rahmathulla pioneers a unique process for cow calf skins — an instant success in the United Kingdom and Italy.",
+  },
+  {
+    year: "1990",
+    title: "End of an Era",
+    body: "India bans the export of vegetable-tanned leather, closing the chapter on the veg-tan trade that had defined the house for a generation.",
+  },
+  {
+    year: "2016",
+    title: "A New Workshop",
+    body: "The family name returns to leather: P.M. Rahamathulla & Co is founded in Periyamet, Chennai — this time as a manufacturer and exporter of finished goods, from hand-braided totes to chrome-free wallets.",
+  },
+  {
+    year: "Today",
+    title: "Isvena",
+    body: "Nearly ninety years after that first apprenticeship, Isvena carries the family's craft directly to a global wardrobe.",
+  },
+];
 
 const steps = [
   {
@@ -39,26 +77,52 @@ export default function HeritagePage() {
         <div className="relative flex h-full flex-col items-center justify-center px-6 text-center text-cream">
           <p className="eyebrow text-cream/80">Our Heritage</p>
           <h1 className="mt-5 max-w-xl font-display text-4xl italic leading-tight sm:text-5xl">
-            A workshop in Chennai, since 2016.
+            In leather since 1936.
           </h1>
+          <p className="mt-5 max-w-md text-sm leading-relaxed text-cream/85">
+            From an apprenticeship in British Colombo to a Chennai workshop shipping
+            worldwide — one family, four generations, one material.
+          </p>
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-6xl gap-12 px-6 py-24 lg:grid-cols-2 lg:px-10">
+      {/* Timeline */}
+      <section className="mx-auto max-w-4xl px-6 py-24 lg:px-10">
+        <div className="mb-16 text-center">
+          <p className="eyebrow text-umber">The Legacy</p>
+          <h2 className="mt-3 font-display text-3xl italic sm:text-4xl">
+            Ninety years, one material
+          </h2>
+        </div>
+        <ol className="relative space-y-14 border-l hairline pl-8 sm:pl-12">
+          {milestones.map((m) => (
+            <li key={m.year} className="relative">
+              <span
+                className="absolute -left-[2.05rem] top-2 h-2 w-2 rounded-full bg-cognac sm:-left-[3.05rem]"
+                aria-hidden="true"
+              />
+              <p className="font-display text-2xl italic text-cognac">{m.year}</p>
+              <h3 className="mt-1 font-display text-lg">{m.title}</h3>
+              <p className="mt-2 max-w-xl text-sm leading-relaxed text-ink-soft">{m.body}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="mx-auto grid max-w-6xl gap-12 border-t hairline px-6 py-24 lg:grid-cols-2 lg:px-10">
         <div>
-          <p className="eyebrow text-umber">The Beginning</p>
+          <p className="eyebrow text-umber">The Modern Chapter</p>
           <h2 className="mt-4 font-display text-3xl italic sm:text-4xl">
             From export orders to a name of our own
           </h2>
         </div>
         <div className="space-y-5 text-sm leading-relaxed text-ink-soft">
           <p>
-            Isvena began life as P.M. Rahamathulla &amp; Co, a family-run manufacturer and
-            exporter of leather goods founded in 2016 in Chennai, Tamil Nadu — a region with a
-            leatherworking tradition that stretches back generations. For years, our workshop
-            produced hand-braided totes, basket and water-reed weaves, wallets, belts and
-            clutches for buyers around the world, refining a weaving technique few workshops
-            still practice at this scale.
+            The current workshop, P.M. Rahamathulla &amp; Co, was founded in 2016 in Chennai,
+            Tamil Nadu — returning the family to the material it has worked since 1936. For
+            years, it has produced hand-braided totes, basket and water-reed weaves, wallets,
+            belts and clutches for buyers around the world, refining a weaving technique few
+            workshops still practice at this scale.
           </p>
           <p>
             Isvena is the next chapter of that same workshop: the same artisans, the same
@@ -110,7 +174,7 @@ export default function HeritagePage() {
           &ldquo;A machine can stitch a bag. It cannot braid one. That difference is the
           entire business.&rdquo;
         </p>
-        <p className="mt-6 eyebrow text-umber">P.M. Rahamathulla &amp; Co. — Founded 2016</p>
+        <p className="mt-6 eyebrow text-umber">P.M. Rahamathulla &amp; Co. — In leather since 1936</p>
       </section>
     </div>
   );

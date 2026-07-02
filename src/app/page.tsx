@@ -132,14 +132,15 @@ export default function Home() {
       {/* Heritage teaser */}
       <section className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-24 lg:grid-cols-2 lg:px-10">
         <div>
-          <p className="eyebrow text-umber">Est. 2016 &middot; Chennai, Tamil Nadu</p>
+          <p className="eyebrow text-umber">A Family in Leather Since 1936</p>
           <h2 className="mt-4 font-display text-3xl italic sm:text-4xl">
             A workshop, before it was a brand.
           </h2>
           <p className="mt-6 max-w-md text-sm leading-relaxed text-ink-soft">
-            Isvena carries forward the workshop of P.M. Rahamathulla &amp; Co, manufacturing
-            and exporting hand-braided leather goods since 2016. Isvena is the same hands,
-            the same hides, and the same braid — presented for a global home.
+            Our founder began as an apprentice leather trader in British Colombo in 1936.
+            Four generations later, the same family runs the Chennai workshop of P.M.
+            Rahamathulla &amp; Co — and Isvena is its next chapter: the same hands, the same
+            hides, and the same braid, presented for a global home.
           </p>
           <Link
             href="/heritage"

@@ -12,7 +12,7 @@ export default function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 bg-ivory/95 backdrop-blur">
       <div className="border-b hairline bg-ink py-2 text-center text-[0.65rem] uppercase tracking-widest-plus text-cream">
-        Handcrafted in Tamil Nadu, India — Since 2016 · Worldwide Shipping
+        Handcrafted in Tamil Nadu · A Family in Leather Since 1936 · Worldwide Shipping
       </div>
 
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
