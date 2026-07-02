@@ -25,11 +25,16 @@ export default function ContactPage() {
           <div>
             <p className="eyebrow text-umber">Studio</p>
             <p className="mt-2 text-ink-soft">
-              Isvena Leather Studio
+              Isvena — P.M. Rahamathulla &amp; Co
+              <br />
+              No: 16/14, M.V. Badran Street
               <br />
               Periyamet, Chennai 600 003
               <br />
               Tamil Nadu, India
+            </p>
+            <p className="mt-2 text-xs text-ink-soft">
+              GST: 33ATYPS6349H1ZV · Open Monday–Sunday
             </p>
           </div>
           <div>
