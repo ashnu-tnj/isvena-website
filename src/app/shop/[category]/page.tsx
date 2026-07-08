@@ -4,8 +4,11 @@ import Link from "next/link";
 import PlaceholderArt from "@/components/placeholder-art";
 import ProductCard from "@/components/product-card";
 import Reveal from "@/components/reveal";
+import JsonLd from "@/components/json-ld";
 import { categories, getCategory } from "@/data/categories";
 import { getProductsByCategory } from "@/data/products";
+import { collectionSchema, breadcrumbSchema } from "@/lib/structured-data";
+import { ogImage } from "@/lib/site";
 
 export function generateStaticParams() {
   return categories.map((c) => ({ category: c.slug }));
@@ -19,7 +22,19 @@ export async function generateMetadata({
   const { category } = await params;
   const cat = getCategory(category);
   if (!cat) return {};
-  return { title: cat.name, description: cat.description };
+  const canonical = `/shop/${cat.slug}`;
+  return {
+    title: cat.name,
+    description: cat.description,
+    alternates: { canonical },
+    openGraph: {
+      type: "website",
+      title: `${cat.name} — Isvena`,
+      description: cat.description,
+      url: canonical,
+      images: [ogImage],
+    },
+  };
 }
 
 export default async function CategoryPage({
@@ -32,8 +47,15 @@ export default async function CategoryPage({
   if (!cat) notFound();
   const items = getProductsByCategory(cat.slug);
 
+  const breadcrumbs = breadcrumbSchema([
+    { name: "Shop", path: "/shop" },
+    { name: cat.name, path: `/shop/${cat.slug}` },
+  ]);
+
   return (
     <div>
+      <JsonLd data={collectionSchema(cat, items)} />
+      <JsonLd data={breadcrumbs} />
       <section className="relative h-[52vh] min-h-[360px] w-full overflow-hidden">
         <PlaceholderArt
           tone={cat.tone}

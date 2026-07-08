@@ -1,10 +1,20 @@
 import type { Metadata } from "next";
 import PlaceholderArt from "@/components/placeholder-art";
+import { ogImage } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Our Heritage",
+  title: "Our Heritage — A Family in Leather Since 1936",
   description:
     "Isvena's story begins in 1936 with founder P.M. Rahmathulla, apprentice leather trader in British Colombo — through PMR & Co's vegetable-tanned exports to the UK and Italy, to today's Chennai workshop.",
+  alternates: { canonical: "/heritage" },
+  openGraph: {
+    type: "article",
+    title: "Our Heritage — A Family in Leather Since 1936",
+    description:
+      "From an apprenticeship in British Colombo in 1936 to a Chennai workshop shipping worldwide — one family, four generations, one material.",
+    url: "/heritage",
+    images: [ogImage],
+  },
 };
 
 const milestones = [

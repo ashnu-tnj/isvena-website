@@ -15,6 +15,12 @@ interface PlaceholderArtProps {
   caption?: string;
   pattern?: "weave" | "grain" | "plain";
   className?: string;
+  /**
+   * Accessible description. When provided the panel is exposed to assistive
+   * tech (and read as meaningful imagery); when omitted it is treated as
+   * decorative and hidden from screen readers.
+   */
+  alt?: string;
 }
 
 /**
@@ -28,6 +34,7 @@ export default function PlaceholderArt({
   caption,
   pattern = "weave",
   className = "",
+  alt,
 }: PlaceholderArtProps) {
   const { base, weave, text } = TONES[tone];
   const id = `${tone}-${pattern}-${label ?? "art"}`.replace(/\s+/g, "-");
@@ -36,6 +43,9 @@ export default function PlaceholderArt({
     <div
       className={`overflow-hidden ${className}`}
       style={{ backgroundColor: base }}
+      role={alt ? "img" : undefined}
+      aria-label={alt || undefined}
+      aria-hidden={alt ? undefined : true}
     >
       {pattern !== "plain" && (
         <svg className="absolute inset-0 h-full w-full opacity-90" preserveAspectRatio="none">

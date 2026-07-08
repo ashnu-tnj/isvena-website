@@ -3,10 +3,21 @@ import Link from "next/link";
 import PlaceholderArt from "@/components/placeholder-art";
 import Reveal from "@/components/reveal";
 import { categories } from "@/data/categories";
+import { ogImage } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Shop All",
-  description: "Browse the full Isvena collection of hand-braided leather goods.",
+  title: "Shop All Leather Goods",
+  description:
+    "Browse the full Isvena collection of hand-braided, vegetable-tanned leather goods — totes, slings, wallets, clutches, belts and baskets, made to order in Chennai and shipped worldwide.",
+  alternates: { canonical: "/shop" },
+  openGraph: {
+    type: "website",
+    title: "Shop All Leather Goods — Isvena",
+    description:
+      "The full Isvena collection of hand-braided, vegetable-tanned leather goods, made to order in Chennai.",
+    url: "/shop",
+    images: [ogImage],
+  },
 };
 
 export default function ShopPage() {
