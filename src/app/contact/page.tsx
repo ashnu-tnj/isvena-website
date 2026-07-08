@@ -1,14 +1,28 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/contact-form";
+import JsonLd from "@/components/json-ld";
+import { localBusinessSchema } from "@/lib/structured-data";
+import { ogImage } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description: "Reach the Isvena studio for orders, trade enquiries, and press.",
+  title: "Contact & Trade Enquiries",
+  description:
+    "Reach the Isvena studio in Periyamet, Chennai for orders, made-to-order timelines, trade and wholesale enquiries, and press.",
+  alternates: { canonical: "/contact" },
+  openGraph: {
+    type: "website",
+    title: "Contact & Trade Enquiries — Isvena",
+    description:
+      "Reach the Isvena studio in Periyamet, Chennai for orders, trade and wholesale enquiries, and press.",
+    url: "/contact",
+    images: [ogImage],
+  },
 };
 
 export default function ContactPage() {
   return (
     <div className="mx-auto max-w-5xl px-6 py-20 lg:px-10">
+      <JsonLd data={localBusinessSchema()} />
       <div className="text-center">
         <p className="reveal eyebrow text-gold">Get in Touch</p>
         <h1 className="reveal type-display mt-5 font-display italic" style={{ animationDelay: "0.1s" }}>

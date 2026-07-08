@@ -44,6 +44,11 @@ export default function SiteFooter() {
                 </Link>
               </li>
               <li>
+                <Link href="/faq" className="link-line">
+                  FAQ
+                </Link>
+              </li>
+              <li>
                 <Link href="/contact" className="link-line">
                   Contact &amp; Trade Enquiries
                 </Link>

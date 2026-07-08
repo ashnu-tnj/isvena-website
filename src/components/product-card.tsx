@@ -9,6 +9,7 @@ export default function ProductCard({ product }: { product: Product }) {
         <PlaceholderArt
           tone={product.tone}
           label={product.label}
+          alt={`${product.name} — ${product.materials}`}
           className="h-full w-full transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
         />
 

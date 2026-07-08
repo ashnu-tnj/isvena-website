@@ -4,8 +4,11 @@ import Link from "next/link";
 import PlaceholderArt from "@/components/placeholder-art";
 import ProductCard from "@/components/product-card";
 import ProductPurchasePanel from "@/components/product-purchase-panel";
+import JsonLd from "@/components/json-ld";
 import { getCategory } from "@/data/categories";
 import { getProduct, getProductsByCategory, products } from "@/data/products";
+import { productSchema, breadcrumbSchema } from "@/lib/structured-data";
+import { ogImage } from "@/lib/site";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -19,7 +22,27 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = getProduct(slug);
   if (!product) return {};
-  return { title: product.name, description: product.description };
+  const canonical = `/product/${product.slug}`;
+  const title = `${product.name} — $${product.price}`;
+  return {
+    title: product.name,
+    description: product.description,
+    keywords: [product.name, ...product.colors, product.materials],
+    alternates: { canonical },
+    openGraph: {
+      type: "website",
+      title,
+      description: product.description,
+      url: canonical,
+      images: [ogImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: product.description,
+      images: [ogImage.url],
+    },
+  };
 }
 
 export default async function ProductPage({
@@ -36,8 +59,18 @@ export default async function ProductPage({
     (p) => p.slug !== product.slug
   );
 
+  const breadcrumbs = breadcrumbSchema([
+    { name: "Shop", path: "/shop" },
+    ...(category
+      ? [{ name: category.name, path: `/shop/${category.slug}` }]
+      : []),
+    { name: product.name, path: `/product/${product.slug}` },
+  ]);
+
   return (
     <div>
+      <JsonLd data={productSchema(product, category)} />
+      <JsonLd data={breadcrumbs} />
       <nav className="mx-auto max-w-7xl px-6 pt-8 text-[0.68rem] uppercase tracking-widest-plus text-ink-soft lg:px-10">
         <Link href="/shop" className="link-line transition-colors hover:text-ink">
           Shop
@@ -63,6 +96,7 @@ export default async function ProductPage({
             <PlaceholderArt
               tone={product.tone}
               label={product.label}
+              alt={`${product.name} in ${product.materials}`}
               className="h-full w-full"
             />
           </div>
