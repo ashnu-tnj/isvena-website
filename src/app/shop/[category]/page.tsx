@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import PlaceholderArt from "@/components/placeholder-art";
 import ProductCard from "@/components/product-card";
+import Reveal from "@/components/reveal";
 import { categories, getCategory } from "@/data/categories";
 import { getProductsByCategory } from "@/data/products";
 
@@ -33,26 +34,37 @@ export default async function CategoryPage({
 
   return (
     <div>
-      <section className="relative h-[46vh] min-h-[320px] w-full overflow-hidden">
-        <PlaceholderArt tone={cat.tone} pattern="weave" className="absolute inset-0 h-full w-full" />
-        <div className="absolute inset-0 bg-ink/35" />
+      <section className="relative h-[52vh] min-h-[360px] w-full overflow-hidden">
+        <PlaceholderArt
+          tone={cat.tone}
+          pattern="weave"
+          className="ken-burns absolute inset-0 h-full w-full"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/25 to-ink/50" />
         <div className="relative flex h-full flex-col items-center justify-center px-6 text-center text-cream">
-          <p className="eyebrow text-cream/80">{cat.tagline}</p>
-          <h1 className="mt-4 font-display text-4xl italic sm:text-5xl">{cat.name}</h1>
+          <p className="reveal eyebrow text-cream/80" style={{ animationDelay: "0.1s" }}>
+            {cat.tagline}
+          </p>
+          <h1
+            className="reveal type-display mt-5 font-display italic"
+            style={{ animationDelay: "0.25s" }}
+          >
+            {cat.name}
+          </h1>
         </div>
       </section>
 
-      <section className="mx-auto max-w-4xl px-6 pt-12 text-center lg:px-10">
+      <section className="mx-auto max-w-4xl px-6 pt-14 text-center lg:px-10">
         <p className="text-sm leading-relaxed text-ink-soft">{cat.description}</p>
       </section>
 
-      <nav className="mx-auto mt-8 flex max-w-7xl flex-wrap justify-center gap-4 px-6 lg:px-10">
+      <nav className="mx-auto mt-10 flex max-w-7xl flex-wrap justify-center gap-x-6 gap-y-3 px-6 lg:px-10">
         {categories.map((c) => (
           <Link
             key={c.slug}
             href={`/shop/${c.slug}`}
-            className={`text-xs uppercase tracking-widest-plus ${
-              c.slug === cat.slug ? "text-cognac" : "text-ink-soft hover:text-cognac"
+            className={`link-line text-xs uppercase tracking-widest-plus transition-colors ${
+              c.slug === cat.slug ? "text-cognac" : "text-ink-soft hover:text-ink"
             }`}
           >
             {c.shortName}
@@ -63,8 +75,10 @@ export default async function CategoryPage({
       <section className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
         {items.length > 0 ? (
           <div className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-            {items.map((p) => (
-              <ProductCard key={p.slug} product={p} />
+            {items.map((p, i) => (
+              <Reveal key={p.slug} delay={(i % 3) * 80}>
+                <ProductCard product={p} />
+              </Reveal>
             ))}
           </div>
         ) : (

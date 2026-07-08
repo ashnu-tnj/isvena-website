@@ -76,15 +76,27 @@ const steps = [
 export default function HeritagePage() {
   return (
     <div>
-      <section className="relative h-[60vh] min-h-[420px] w-full overflow-hidden">
-        <PlaceholderArt tone="ink" pattern="weave" className="absolute inset-0 h-full w-full" />
-        <div className="absolute inset-0 bg-ink/30" />
+      <section className="relative h-[68vh] min-h-[460px] w-full overflow-hidden">
+        <PlaceholderArt
+          tone="ink"
+          pattern="weave"
+          className="ken-burns absolute inset-0 h-full w-full"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/45 via-ink/25 to-ink/55" />
         <div className="relative flex h-full flex-col items-center justify-center px-6 text-center text-cream">
-          <p className="eyebrow text-cream/80">Our Heritage</p>
-          <h1 className="mt-5 max-w-xl font-display text-4xl italic leading-tight sm:text-5xl">
+          <p className="reveal eyebrow text-cream/80" style={{ animationDelay: "0.1s" }}>
+            Our Heritage
+          </p>
+          <h1
+            className="reveal type-hero mt-6 max-w-2xl font-display italic"
+            style={{ animationDelay: "0.25s" }}
+          >
             In leather since 1936.
           </h1>
-          <p className="mt-5 max-w-md text-sm leading-relaxed text-cream/85">
+          <p
+            className="reveal mt-6 max-w-md text-sm leading-relaxed text-cream/85"
+            style={{ animationDelay: "0.4s" }}
+          >
             From an apprenticeship in British Colombo to a Chennai workshop shipping
             worldwide — one family, four generations, one material.
           </p>
@@ -94,8 +106,8 @@ export default function HeritagePage() {
       {/* Timeline */}
       <section className="mx-auto max-w-4xl px-6 py-24 lg:px-10">
         <div className="mb-16 text-center">
-          <p className="eyebrow text-umber">The Legacy</p>
-          <h2 className="mt-3 font-display text-3xl italic sm:text-4xl">
+          <p className="eyebrow text-gold">The Legacy</p>
+          <h2 className="mt-3 type-display font-display italic">
             Ninety years, one material
           </h2>
         </div>
@@ -116,8 +128,8 @@ export default function HeritagePage() {
 
       <section className="mx-auto grid max-w-6xl gap-12 border-t hairline px-6 py-24 lg:grid-cols-2 lg:px-10">
         <div>
-          <p className="eyebrow text-umber">The Modern Chapter</p>
-          <h2 className="mt-4 font-display text-3xl italic sm:text-4xl">
+          <p className="eyebrow text-gold">The Modern Chapter</p>
+          <h2 className="mt-4 type-display font-display italic">
             From export orders to a name of our own
           </h2>
         </div>
@@ -145,8 +157,8 @@ export default function HeritagePage() {
       <section className="bg-cream py-24">
         <div className="mx-auto max-w-6xl px-6 lg:px-10">
           <div className="mb-14 text-center">
-            <p className="eyebrow text-umber">How a Piece is Made</p>
-            <h2 className="mt-3 font-display text-3xl italic sm:text-4xl">
+            <p className="eyebrow text-gold">How a Piece is Made</p>
+            <h2 className="mt-3 type-display font-display italic">
               From hide to hand-braid
             </h2>
           </div>
@@ -165,8 +177,8 @@ export default function HeritagePage() {
       <section className="border-t hairline bg-sand-50 px-6 py-24 lg:px-10">
         <div className="mx-auto max-w-4xl">
           <div className="mb-14 text-center">
-            <p className="eyebrow text-umber">Why Vegetable-Tanned Leather</p>
-            <h2 className="mt-3 font-display text-3xl italic sm:text-4xl">
+            <p className="eyebrow text-gold">Why Vegetable-Tanned Leather</p>
+            <h2 className="mt-3 type-display font-display italic">
               Chrome-free, safe, and built to last centuries
             </h2>
           </div>
@@ -216,7 +228,7 @@ export default function HeritagePage() {
           &ldquo;A machine can stitch a bag. It cannot braid one. That difference is the
           entire business.&rdquo;
         </p>
-        <p className="mt-6 eyebrow text-umber">P.M. Rahamathulla &amp; Co. — In leather since 1936</p>
+        <p className="mt-6 eyebrow text-gold">P.M. Rahamathulla &amp; Co. — In leather since 1936</p>
       </section>
     </div>
   );

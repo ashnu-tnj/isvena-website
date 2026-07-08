@@ -10,9 +10,14 @@ export default function ContactPage() {
   return (
     <div className="mx-auto max-w-5xl px-6 py-20 lg:px-10">
       <div className="text-center">
-        <p className="eyebrow text-umber">Get in Touch</p>
-        <h1 className="mt-4 font-display text-4xl italic sm:text-5xl">Contact Isvena</h1>
-        <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-ink-soft">
+        <p className="reveal eyebrow text-gold">Get in Touch</p>
+        <h1 className="reveal type-display mt-5 font-display italic" style={{ animationDelay: "0.1s" }}>
+          Contact Isvena
+        </h1>
+        <p
+          className="reveal mx-auto mt-5 max-w-md text-sm leading-relaxed text-ink-soft"
+          style={{ animationDelay: "0.2s" }}
+        >
           For orders, made-to-order timelines, trade and wholesale enquiries, reach our
           studio directly. We typically respond within two business days.
         </p>
@@ -23,7 +28,7 @@ export default function ContactPage() {
 
         <div className="space-y-10 border-t hairline pt-10 text-sm lg:border-l lg:border-t-0 lg:pt-0 lg:pl-12">
           <div>
-            <p className="eyebrow text-umber">Studio</p>
+            <p className="eyebrow text-gold">Studio</p>
             <p className="mt-2 text-ink-soft">
               Isvena — P.M. Rahamathulla &amp; Co
               <br />
@@ -38,11 +43,11 @@ export default function ContactPage() {
             </p>
           </div>
           <div>
-            <p className="eyebrow text-umber">Email</p>
+            <p className="eyebrow text-gold">Email</p>
             <p className="mt-2 text-ink-soft">hello@isvena.com</p>
           </div>
           <div>
-            <p className="eyebrow text-umber">Trade &amp; Wholesale</p>
+            <p className="eyebrow text-gold">Trade &amp; Wholesale</p>
             <p className="mt-2 text-ink-soft">
               Isvena continues the export relationships built by P.M. Rahamathulla &amp; Co
               since 2016. For bulk or private-label enquiries, please select &ldquo;Trade /

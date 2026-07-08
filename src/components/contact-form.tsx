@@ -5,7 +5,7 @@ export default function ContactForm() {
     <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
-          <label className="eyebrow text-umber" htmlFor="name">
+          <label className="eyebrow text-gold" htmlFor="name">
             Name
           </label>
           <input
@@ -13,11 +13,11 @@ export default function ContactForm() {
             name="name"
             type="text"
             required
-            className="mt-2 w-full border-b hairline bg-transparent py-2 text-sm focus:border-cognac focus:outline-none"
+            className="mt-2 w-full border-b hairline bg-transparent py-2.5 text-sm transition-colors focus:border-cognac focus:outline-none"
           />
         </div>
         <div>
-          <label className="eyebrow text-umber" htmlFor="email">
+          <label className="eyebrow text-gold" htmlFor="email">
             Email
           </label>
           <input
@@ -25,12 +25,12 @@ export default function ContactForm() {
             name="email"
             type="email"
             required
-            className="mt-2 w-full border-b hairline bg-transparent py-2 text-sm focus:border-cognac focus:outline-none"
+            className="mt-2 w-full border-b hairline bg-transparent py-2.5 text-sm transition-colors focus:border-cognac focus:outline-none"
           />
         </div>
       </div>
       <div>
-        <label className="eyebrow text-umber" htmlFor="reason">
+        <label className="eyebrow text-gold" htmlFor="reason">
           Enquiry Type
         </label>
         <select
@@ -46,7 +46,7 @@ export default function ContactForm() {
         </select>
       </div>
       <div>
-        <label className="eyebrow text-umber" htmlFor="message">
+        <label className="eyebrow text-gold" htmlFor="message">
           Message
         </label>
         <textarea
@@ -57,10 +57,7 @@ export default function ContactForm() {
           className="mt-2 w-full border-b hairline bg-transparent py-2 text-sm focus:border-cognac focus:outline-none"
         />
       </div>
-      <button
-        type="submit"
-        className="bg-ink px-8 py-3 text-xs uppercase tracking-widest-plus text-cream transition hover:bg-cognac-dark"
-      >
+      <button type="submit" className="btn btn-solid">
         Send Message
       </button>
     </form>

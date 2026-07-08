@@ -11,6 +11,8 @@
   --sand: #d9c9ae;
   --sand-line: #e4d8c2;
   --olive: #6f6a4e;
+  --gold: #9a7431;
+  --gold-soft: #b8935a;
 }
 
 @theme inline {
@@ -24,6 +26,8 @@
   --color-sand: var(--sand);
   --color-sand-line: var(--sand-line);
   --color-olive: var(--olive);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
 
   --font-display: var(--font-display);
   --font-body: var(--font-body);
@@ -33,6 +37,8 @@ body {
   background: var(--ivory);
   color: var(--ink);
   font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 h1,
@@ -47,6 +53,20 @@ h4,
   letter-spacing: 0.22em;
 }
 
+/* ─── Fluid editorial type scale ──────────────────────────────── */
+.type-hero {
+  font-size: clamp(2.75rem, 8vw, 7rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+}
+
+.type-display {
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+
+/* ─── Eyebrow label ───────────────────────────────────────────── */
 .eyebrow {
   font-family: var(--font-body), ui-sans-serif, sans-serif;
   font-size: 0.7rem;
@@ -61,4 +81,145 @@ h4,
 ::selection {
   background: var(--cognac);
   color: var(--cream);
+}
+
+/* ─── Animated link underline ─────────────────────────────────── */
+.link-line {
+  position: relative;
+}
+.link-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.2em;
+  height: 1px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: right;
+  background: currentColor;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.link-line:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ─── Buttons ─────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.95rem 2.25rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.35s ease, color 0.35s ease,
+    border-color 0.35s ease, transform 0.35s ease;
+}
+.btn-solid {
+  background: var(--ink);
+  color: var(--cream);
+}
+.btn-solid:hover {
+  background: var(--cognac);
+}
+.btn-light {
+  background: var(--cream);
+  color: var(--ink);
+}
+.btn-light:hover {
+  background: var(--cognac);
+  color: var(--cream);
+}
+.btn-ghost {
+  border: 1px solid color-mix(in srgb, var(--cream) 55%, transparent);
+  color: var(--cream);
+}
+.btn-ghost:hover {
+  border-color: var(--cream);
+  background: color-mix(in srgb, var(--cream) 8%, transparent);
+}
+
+/* ─── Editorial reveal-on-scroll ──────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  animation: reveal-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes reveal-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scroll-driven reveal (progressive enhancement, no JS) */
+.reveal-view {
+  /* Default: fully visible. Only supporting engines opt into the effect. */
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal-view {
+      opacity: 0;
+      animation: reveal-up linear forwards;
+      animation-timeline: view();
+      animation-range: entry 4% entry 36%;
+    }
+  }
+}
+
+/* Slow ambient zoom for hero imagery */
+.ken-burns {
+  animation: ken-burns 18s ease-out forwards;
+}
+
+@keyframes ken-burns {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Marquee for the announcement bar */
+.marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee 34s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Subtle grain overlay */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .ken-burns,
+  .marquee-track {
+    animation: none !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
 }

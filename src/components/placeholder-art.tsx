@@ -65,8 +65,14 @@ export default function PlaceholderArt({
               <stop offset="0%" stopColor="#000000" stopOpacity="0" />
               <stop offset="100%" stopColor="#000000" stopOpacity="0.28" />
             </linearGradient>
+            <radialGradient id={`${id}-glow`} cx="50%" cy="38%" r="75%">
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.14" />
+              <stop offset="55%" stopColor="#ffffff" stopOpacity="0" />
+              <stop offset="100%" stopColor="#000000" stopOpacity="0.22" />
+            </radialGradient>
           </defs>
           <rect width="100%" height="100%" fill={`url(#${id})`} />
+          <rect width="100%" height="100%" fill={`url(#${id}-glow)`} />
           <rect width="100%" height="100%" fill={`url(#${id}-fade)`} />
         </svg>
       )}

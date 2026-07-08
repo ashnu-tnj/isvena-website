@@ -38,19 +38,22 @@ export default async function ProductPage({
 
   return (
     <div>
-      <nav className="mx-auto max-w-7xl px-6 pt-8 text-xs uppercase tracking-widest-plus text-ink-soft lg:px-10">
-        <Link href="/shop" className="hover:text-cognac">
+      <nav className="mx-auto max-w-7xl px-6 pt-8 text-[0.68rem] uppercase tracking-widest-plus text-ink-soft lg:px-10">
+        <Link href="/shop" className="link-line transition-colors hover:text-ink">
           Shop
         </Link>
         {category && (
           <>
-            {" / "}
-            <Link href={`/shop/${category.slug}`} className="hover:text-cognac">
+            <span className="mx-2 text-gold-soft">/</span>
+            <Link
+              href={`/shop/${category.slug}`}
+              className="link-line transition-colors hover:text-ink"
+            >
               {category.name}
             </Link>
           </>
         )}
-        {" / "}
+        <span className="mx-2 text-gold-soft">/</span>
         <span className="text-ink">{product.name}</span>
       </nav>
 
@@ -71,10 +74,12 @@ export default async function ProductPage({
           </div>
         </div>
 
-        <div className="lg:sticky lg:top-28 lg:self-start">
-          {category && <p className="eyebrow text-umber">{category.name}</p>}
-          <h1 className="mt-3 font-display text-3xl italic sm:text-4xl">{product.name}</h1>
-          <p className="mt-3 text-lg">${product.price.toLocaleString()}</p>
+        <div className="lg:sticky lg:top-32 lg:self-start">
+          {category && <p className="eyebrow text-gold">{category.name}</p>}
+          <h1 className="mt-4 font-display text-3xl italic sm:text-[2.75rem] sm:leading-[1.05]">
+            {product.name}
+          </h1>
+          <p className="mt-4 font-display text-2xl">${product.price.toLocaleString()}</p>
           <p className="mt-6 max-w-md text-sm leading-relaxed text-ink-soft">
             {product.description}
           </p>
@@ -85,19 +90,19 @@ export default async function ProductPage({
 
           <dl className="mt-10 space-y-5 border-t hairline pt-8 text-sm">
             <div>
-              <dt className="eyebrow text-umber">Materials</dt>
-              <dd className="mt-1 text-ink-soft">{product.materials}</dd>
+              <dt className="eyebrow text-gold">Materials</dt>
+              <dd className="mt-1.5 text-ink-soft">{product.materials}</dd>
             </div>
             <div>
-              <dt className="eyebrow text-umber">Dimensions</dt>
-              <dd className="mt-1 text-ink-soft">
+              <dt className="eyebrow text-gold">Dimensions</dt>
+              <dd className="mt-1.5 text-ink-soft">
                 {product.dimensions}
                 {product.weight ? ` · ${product.weight}` : ""}
               </dd>
             </div>
             <div>
-              <dt className="eyebrow text-umber">Craftsmanship</dt>
-              <dd className="mt-1 text-ink-soft">{product.craftsmanship}</dd>
+              <dt className="eyebrow text-gold">Craftsmanship</dt>
+              <dd className="mt-1.5 text-ink-soft">{product.craftsmanship}</dd>
             </div>
           </dl>
         </div>
@@ -106,8 +111,8 @@ export default async function ProductPage({
       {related.length > 0 && (
         <section className="border-t hairline bg-cream">
           <div className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
-            <p className="eyebrow text-umber text-center">You May Also Like</p>
-            <h2 className="mt-3 text-center font-display text-3xl italic sm:text-4xl">
+            <p className="eyebrow text-gold text-center">You May Also Like</p>
+            <h2 className="type-display mt-4 text-center font-display italic">
               More from {category?.name}
             </h2>
             <div className="mt-12 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">

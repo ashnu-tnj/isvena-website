@@ -51,7 +51,7 @@ export default function CartDrawer() {
         aria-label="Shopping bag"
       >
         <div className="flex items-center justify-between border-b hairline px-6 py-5">
-          <h2 className="eyebrow text-umber">Your Bag ({lines.reduce((s, l) => s + l.qty, 0)})</h2>
+          <h2 className="eyebrow text-gold">Your Bag ({lines.reduce((s, l) => s + l.qty, 0)})</h2>
           <button
             onClick={closeCart}
             className="text-sm tracking-wide text-ink-soft hover:text-cognac"
@@ -124,7 +124,7 @@ export default function CartDrawer() {
         {lines.length > 0 && (
           <div className="border-t hairline px-6 py-6">
             <div className="mb-4 flex items-center justify-between text-sm">
-              <span className="eyebrow text-umber">Subtotal</span>
+              <span className="eyebrow text-gold">Subtotal</span>
               <span className="font-display text-lg">${subtotal.toLocaleString()}</span>
             </div>
             <p className="mb-4 text-xs leading-relaxed text-ink-soft">
@@ -148,7 +148,7 @@ export default function CartDrawer() {
             <button
               onClick={startCheckout}
               disabled={checkingOut}
-              className="block w-full bg-ink py-3 text-center text-sm uppercase tracking-widest-plus text-cream transition hover:bg-cognac-dark disabled:opacity-60"
+              className="btn btn-solid w-full disabled:opacity-60"
             >
               {checkingOut ? "Preparing Checkout…" : "Checkout"}
             </button>
