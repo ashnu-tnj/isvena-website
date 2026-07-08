@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <div>
       {/* ─── Hero ─────────────────────────────────────────────── */}
-      <section className="relative h-[92vh] min-h-[600px] w-full overflow-hidden">
+      <section className="relative flex min-h-[92vh] w-full items-center justify-center overflow-hidden py-32 sm:py-28">
         <PlaceholderArt
           tone="umber"
           pattern="weave"
@@ -27,7 +27,7 @@ export default function Home() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-ink/45 via-ink/25 to-ink/55" />
 
-        <div className="relative flex h-full flex-col items-center justify-center px-6 text-center text-cream">
+        <div className="relative z-10 flex flex-col items-center px-6 text-center text-cream">
           <p
             className="reveal eyebrow text-cream/80"
             style={{ animationDelay: "0.1s" }}
@@ -69,9 +69,10 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Scroll cue */}
-        <div className="absolute inset-x-0 bottom-8 flex justify-center">
-          <span className="eyebrow flex flex-col items-center gap-2 text-cream/60">
+        {/* Scroll cue — decorative; hidden where vertical space is tight
+            so it never overlaps the headline, copy, or buttons. */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-6 hidden justify-center lg:flex">
+          <span className="eyebrow flex flex-col items-center gap-2 text-cream/50">
             Scroll
             <span className="h-8 w-px animate-pulse bg-cream/40" />
           </span>
