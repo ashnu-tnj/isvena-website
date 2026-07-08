@@ -13,13 +13,13 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
   return (
     <div>
       <div>
-        <p className="eyebrow text-umber">{color}</p>
+        <p className="eyebrow text-gold">Colour — {color}</p>
         <div className="mt-3 flex flex-wrap gap-2">
           {product.colors.map((c) => (
             <button
               key={c}
               onClick={() => setColor(c)}
-              className={`border px-4 py-2 text-xs uppercase tracking-wide transition ${
+              className={`border px-4 py-2 text-[0.7rem] uppercase tracking-wide transition-colors duration-300 ${
                 c === color
                   ? "border-ink bg-ink text-cream"
                   : "border-sand-line text-ink-soft hover:border-ink"
@@ -34,15 +34,15 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
       <div className="mt-6 flex items-center gap-4">
         <div className="flex items-center border hairline">
           <button
-            className="px-3 py-2 text-sm"
+            className="px-3.5 py-3 text-sm transition-colors hover:text-cognac"
             onClick={() => setQty((q) => Math.max(1, q - 1))}
             aria-label="Decrease quantity"
           >
             −
           </button>
-          <span className="px-3 text-sm">{qty}</span>
+          <span className="min-w-8 px-2 text-center text-sm">{qty}</span>
           <button
-            className="px-3 py-2 text-sm"
+            className="px-3.5 py-3 text-sm transition-colors hover:text-cognac"
             onClick={() => setQty((q) => q + 1)}
             aria-label="Increase quantity"
           >
@@ -55,9 +55,9 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
             setJustAdded(true);
             setTimeout(() => setJustAdded(false), 2000);
           }}
-          className="flex-1 bg-ink py-3 text-xs uppercase tracking-widest-plus text-cream transition hover:bg-cognac-dark"
+          className={`btn flex-1 ${justAdded ? "bg-cognac text-cream" : "btn-solid"}`}
         >
-          {justAdded ? "Added to Bag" : "Add to Bag"}
+          {justAdded ? "Added to Bag ✓" : "Add to Bag"}
         </button>
       </div>
       <p className="mt-3 text-xs text-ink-soft">
