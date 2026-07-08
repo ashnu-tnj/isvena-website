@@ -54,7 +54,7 @@ const steps = [
   {
     n: "01",
     title: "Sourcing",
-    body: "We work with a small number of tanneries that finish full-grain and chrome-free hides to our specification, selecting only leather with enough temper to hold a tight braid.",
+    body: "We work with tanneries that specialize in vegetable-tanned, chrome-free hides — the same method that made our family's name 90 years ago. This leather is safer for skin, fully biodegradable, and develops a rich patina with age.",
   },
   {
     n: "02",
@@ -158,6 +158,43 @@ export default function HeritagePage() {
                 <p className="mt-2 text-sm leading-relaxed text-ink-soft">{s.body}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t hairline bg-sand-50 px-6 py-24 lg:px-10">
+        <div className="mx-auto max-w-4xl">
+          <div className="mb-14 text-center">
+            <p className="eyebrow text-umber">Why Vegetable-Tanned Leather</p>
+            <h2 className="mt-3 font-display text-3xl italic sm:text-4xl">
+              Chrome-free, safe, and built to last centuries
+            </h2>
+          </div>
+          <div className="grid gap-12 sm:grid-cols-2">
+            <div>
+              <h3 className="font-display text-lg">Safe for Your Skin</h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink-soft">
+                Vegetable-tanned leather is chrome-free and non-toxic. Unlike chrome-tanned leather, which uses heavy metals and can cause allergic reactions, our leather is safe to wear directly against your skin every day, without concerns.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-display text-lg">Fully Biodegradable</h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink-soft">
+                Our leather breaks down naturally at the end of its life, returning to the earth. Chrome-tanned leather can take decades to decompose. Vegetable-tanning uses plant extracts — a process as old as leather itself.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-display text-lg">Develops Character</h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink-soft">
+                Vegetable-tanned leather ages beautifully, developing a rich patina and deepening in color with time and use. Your Isvena piece becomes uniquely yours, improving with every year you carry it.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-display text-lg">Built to Last Centuries</h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink-soft">
+                Vegetable-tanned leather from well-maintained pieces can last 100 years or more. This is the leather that bound medieval manuscripts and still survives in museums today.
+              </p>
+            </div>
           </div>
         </div>
       </section>

@@ -5,7 +5,7 @@ import { categories } from "@/data/categories";
 import { getFeaturedProducts } from "@/data/products";
 
 const usps = [
-  { title: "Full-Grain Leather", detail: "Chrome-free tannages, responsibly sourced" },
+  { title: "Vegetable-Tanned Leather", detail: "Chrome-free, safe for skin, fully biodegradable" },
   { title: "Hand-Braided", detail: "Woven by artisans, strip by strip" },
   { title: "Made in Chennai", detail: "One workshop, since 2016" },
   { title: "Shipped Worldwide", detail: "From Tamil Nadu to your door" },
