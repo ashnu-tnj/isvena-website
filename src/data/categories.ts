@@ -14,18 +14,18 @@ export const categories: Category[] = [
     slug: "tote-bags",
     name: "Hand-Braided Totes",
     shortName: "Totes",
-    tagline: "Chrome-free leather, woven strip by strip",
+    tagline: "Vegetable-tanned, chrome-free, woven strip by strip",
     description:
-      "Our signature line and the heart of the workshop: totes braided by hand from chrome-free, full-grain leather strips — from the classic open carryall to laptop-ready silhouettes — in red, tan, rose, brown, black and green.",
+      "Our signature line and the heart of the workshop: totes braided by hand from vegetable-tanned, chrome-free, full-grain leather strips — safe for your skin, fully biodegradable, and woven to outlast a lifetime. From the classic open carryall to laptop-ready silhouettes in red, tan, rose, brown, black and green.",
     tone: "cognac",
   },
   {
     slug: "sling-crossbody",
     name: "Sling & Crossbody",
     shortName: "Slings",
-    tagline: "Hands-free, braided light",
+    tagline: "Vegetable-tanned, hands-free, braided light",
     description:
-      "Braided chrome-free leather slings and crossbody bags — compact companions that carry the essentials and leave your hands free.",
+      "Braided vegetable-tanned, chrome-free leather slings and crossbody bags — compact companions that carry the essentials, leave your hands free, and are safe for daily wear against your skin.",
     tone: "umber",
   },
   {
@@ -50,9 +50,9 @@ export const categories: Category[] = [
     slug: "leather-wallets",
     name: "Leather Wallets",
     shortName: "Wallets",
-    tagline: "Chrome-free leather, precisely built",
+    tagline: "Vegetable-tanned, chrome-free, precisely built",
     description:
-      "Men's wallets cut from chrome-free hide — the woven-top six-slot, the braided bifold in sea blue and tan, and the classic four-slot — each edge-finished by hand.",
+      "Men's wallets cut from vegetable-tanned, chrome-free hide — safe to carry next to your skin, fully biodegradable, and built to last a lifetime. The woven-top six-slot, the braided bifold in sea blue and tan, and the classic four-slot — each edge-finished by hand.",
     tone: "sand",
   },
   {
