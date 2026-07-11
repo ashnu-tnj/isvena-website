@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { categories } from "@/data/categories";
 import { useCart } from "@/lib/cart-context";
@@ -84,9 +85,19 @@ export default function SiteHeader() {
 
           <Link
             href="/"
-            className="font-display text-2xl italic tracking-wide transition-colors hover:text-cognac sm:text-[1.7rem]"
+            className="transition-opacity hover:opacity-70"
+            aria-label="Isvena — home"
           >
-            Isvena
+            <Image
+              src="/brand/isvena-wordmark-ink.png"
+              alt="Isvena"
+              width={599}
+              height={106}
+              priority
+              className={`w-auto transition-all duration-500 ${
+                scrolled ? "h-5 sm:h-6" : "h-6 sm:h-7"
+              }`}
+            />
           </Link>
 
           <div className="flex items-center gap-7">
