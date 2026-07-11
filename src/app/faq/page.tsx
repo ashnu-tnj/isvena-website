@@ -32,7 +32,7 @@ export default function FaqPage() {
       <header className="text-center">
         <p className="reveal eyebrow text-gold">Answers</p>
         <h1
-          className="reveal type-display mt-5 font-display"
+          className="reveal type-display mt-5 font-display italic"
           style={{ animationDelay: "0.1s" }}
         >
           Frequently Asked Questions
@@ -53,7 +53,7 @@ export default function FaqPage() {
       <dl className="mt-16 divide-y divide-sand-line border-t hairline">
         {faqs.map((f) => (
           <Reveal key={f.q} as="div" className="py-8">
-            <dt className="font-display text-lg sm:text-xl">{f.q}</dt>
+            <dt className="font-display text-lg italic sm:text-xl">{f.q}</dt>
             <dd className="mt-3 text-sm leading-relaxed text-ink-soft">
               {f.a}
             </dd>

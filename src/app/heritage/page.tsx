@@ -98,7 +98,7 @@ export default function HeritagePage() {
             Our Heritage
           </p>
           <h1
-            className="reveal type-hero mt-6 max-w-2xl font-display"
+            className="reveal type-hero mt-6 max-w-2xl font-display italic"
             style={{ animationDelay: "0.25s" }}
           >
             In leather since 1936.
@@ -117,7 +117,7 @@ export default function HeritagePage() {
       <section className="mx-auto max-w-4xl px-6 py-24 lg:px-10">
         <div className="mb-16 text-center">
           <p className="eyebrow text-gold">The Legacy</p>
-          <h2 className="mt-3 type-display font-display">
+          <h2 className="mt-3 type-display font-display italic">
             Ninety years, one material
           </h2>
         </div>
@@ -128,7 +128,7 @@ export default function HeritagePage() {
                 className="absolute -left-[2.05rem] top-2 h-2 w-2 rounded-full bg-cognac sm:-left-[3.05rem]"
                 aria-hidden="true"
               />
-              <p className="font-display text-2xl text-cognac">{m.year}</p>
+              <p className="font-display text-2xl italic text-cognac">{m.year}</p>
               <h3 className="mt-1 font-display text-lg">{m.title}</h3>
               <p className="mt-2 max-w-xl text-sm leading-relaxed text-ink-soft">{m.body}</p>
             </li>
@@ -139,7 +139,7 @@ export default function HeritagePage() {
       <section className="mx-auto grid max-w-6xl gap-12 border-t hairline px-6 py-24 lg:grid-cols-2 lg:px-10">
         <div>
           <p className="eyebrow text-gold">The Modern Chapter</p>
-          <h2 className="mt-4 type-display font-display">
+          <h2 className="mt-4 type-display font-display italic">
             From export orders to a name of our own
           </h2>
         </div>
@@ -168,14 +168,14 @@ export default function HeritagePage() {
         <div className="mx-auto max-w-6xl px-6 lg:px-10">
           <div className="mb-14 text-center">
             <p className="eyebrow text-gold">How a Piece is Made</p>
-            <h2 className="mt-3 type-display font-display">
+            <h2 className="mt-3 type-display font-display italic">
               From hide to hand-braid
             </h2>
           </div>
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {steps.map((s) => (
               <div key={s.n} className="border-t hairline pt-5">
-                <span className="font-display text-sm text-cognac">{s.n}</span>
+                <span className="font-display text-sm italic text-cognac">{s.n}</span>
                 <h3 className="mt-2 font-display text-lg">{s.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-ink-soft">{s.body}</p>
               </div>
@@ -188,7 +188,7 @@ export default function HeritagePage() {
         <div className="mx-auto max-w-4xl">
           <div className="mb-14 text-center">
             <p className="eyebrow text-gold">Why Vegetable-Tanned Leather</p>
-            <h2 className="mt-3 type-display font-display">
+            <h2 className="mt-3 type-display font-display italic">
               Chrome-free, safe, and built to last centuries
             </h2>
           </div>
@@ -234,7 +234,7 @@ export default function HeritagePage() {
       </section>
 
       <section className="mx-auto max-w-3xl px-6 py-24 text-center lg:px-10">
-        <p className="font-display text-2xl leading-relaxed sm:text-3xl">
+        <p className="font-display text-2xl italic leading-relaxed sm:text-3xl">
           &ldquo;A machine can stitch a bag. It cannot braid one. That difference is the
           entire business.&rdquo;
         </p>

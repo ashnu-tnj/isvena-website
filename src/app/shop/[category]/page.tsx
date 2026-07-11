@@ -68,7 +68,7 @@ export default async function CategoryPage({
             {cat.tagline}
           </p>
           <h1
-            className="reveal type-display mt-5 font-display"
+            className="reveal type-display mt-5 font-display italic"
             style={{ animationDelay: "0.25s" }}
           >
             {cat.name}

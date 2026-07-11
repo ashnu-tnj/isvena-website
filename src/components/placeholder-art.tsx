@@ -91,7 +91,7 @@ export default function PlaceholderArt({
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-6 text-center">
           {label && (
             <span
-              className="font-display text-xl tracking-wide sm:text-2xl"
+              className="font-display text-xl italic tracking-wide sm:text-2xl"
               style={{ color: text }}
             >
               {label}
