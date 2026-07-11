@@ -25,7 +25,7 @@ export default function ContactPage() {
       <JsonLd data={localBusinessSchema()} />
       <div className="text-center">
         <p className="reveal eyebrow text-gold">Get in Touch</p>
-        <h1 className="reveal type-display mt-5 font-display italic" style={{ animationDelay: "0.1s" }}>
+        <h1 className="reveal type-display mt-5 font-display" style={{ animationDelay: "0.1s" }}>
           Contact Isvena
         </h1>
         <p

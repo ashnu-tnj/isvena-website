@@ -36,13 +36,13 @@ export default function Home() {
           </p>
           <h1 className="mt-6 max-w-4xl">
             <span
-              className="reveal type-hero block font-display italic"
+              className="reveal type-hero block font-display"
               style={{ animationDelay: "0.25s" }}
             >
               Leather, woven by hand
             </span>
             <span
-              className="reveal type-hero block font-display italic text-cream/85"
+              className="reveal type-hero block font-display text-cream/85"
               style={{ animationDelay: "0.4s" }}
             >
               to outlast the trend.
@@ -88,7 +88,7 @@ export default function Home() {
               delay={i * 90}
               className="px-6 py-10 text-center"
             >
-              <p className="font-display text-sm italic text-gold">{u.n}</p>
+              <p className="font-display text-sm text-gold">{u.n}</p>
               <p className="mt-2 font-display text-base sm:text-lg">{u.title}</p>
               <p className="mt-1.5 text-xs leading-relaxed text-ink-soft">
                 {u.detail}
@@ -102,7 +102,7 @@ export default function Home() {
       <section className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
         <Reveal className="mb-14 flex flex-col items-center text-center">
           <p className="eyebrow text-gold">Curated Collections</p>
-          <h2 className="type-display mt-4 font-display italic">
+          <h2 className="type-display mt-4 font-display">
             Six categories, one workshop
           </h2>
         </Reveal>
@@ -131,7 +131,7 @@ export default function Home() {
                   <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/10 to-transparent" />
                   <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-6 text-cream">
                     <div>
-                      <p className="font-display text-xl italic sm:text-2xl">
+                      <p className="font-display text-xl sm:text-2xl">
                         {c.name}
                       </p>
                       <p className="mt-1 text-[0.62rem] uppercase tracking-widest-plus text-cream/75">
@@ -163,7 +163,7 @@ export default function Home() {
             </div>
             <Reveal className="flex flex-col justify-center px-6 py-16 lg:px-20">
               <p className="eyebrow text-gold">The Signature Weave</p>
-              <h2 className="type-display mt-5 font-display italic">
+              <h2 className="type-display mt-5 font-display">
                 {signature.name}
               </h2>
               <p className="mt-7 max-w-md text-sm leading-relaxed text-ink-soft">
@@ -189,7 +189,7 @@ export default function Home() {
       <section className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-24 lg:grid-cols-2 lg:px-10">
         <Reveal>
           <p className="eyebrow text-gold">A Family in Leather Since 1936</p>
-          <h2 className="type-display mt-5 font-display italic">
+          <h2 className="type-display mt-5 font-display">
             A workshop, before it was a brand.
           </h2>
           <p className="mt-7 max-w-md text-sm leading-relaxed text-ink-soft">
@@ -219,7 +219,7 @@ export default function Home() {
       <section className="relative overflow-hidden bg-ink py-24 text-center text-cream">
         <div className="grain" />
         <Reveal className="relative mx-auto max-w-3xl px-6">
-          <p className="font-display text-2xl italic leading-relaxed sm:text-4xl">
+          <p className="font-display text-2xl leading-relaxed sm:text-4xl">
             &ldquo;A machine can stitch a bag. It cannot braid one.&rdquo;
           </p>
           <p className="mt-8 eyebrow text-gold-soft">
@@ -232,7 +232,7 @@ export default function Home() {
       <section className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
         <Reveal className="mb-14 flex flex-col items-center text-center">
           <p className="eyebrow text-gold">The Collection</p>
-          <h2 className="type-display mt-4 font-display italic">
+          <h2 className="type-display mt-4 font-display">
             Favourites from the workshop
           </h2>
         </Reveal>
