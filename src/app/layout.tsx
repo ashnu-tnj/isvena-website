@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Jost } from "next/font/google";
+import { Cormorant, Jost } from "next/font/google";
 import "./globals.css";
 import SiteHeader from "@/components/site-header";
 import SiteFooter from "@/components/site-footer";
@@ -9,7 +9,9 @@ import { CartProvider } from "@/lib/cart-context";
 import { site, SITE_URL } from "@/lib/site";
 import { organizationSchema, websiteSchema } from "@/lib/structured-data";
 
-const displaySerif = Fraunces({
+// Display / brand serif chosen to echo the Isvena wordmark — a delicate,
+// high-contrast fashion serif.
+const displaySerif = Cormorant({
   variable: "--font-display",
   subsets: ["latin"],
   style: ["normal", "italic"],

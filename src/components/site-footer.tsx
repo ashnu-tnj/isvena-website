@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { categories } from "@/data/categories";
 import NewsletterForm from "@/components/newsletter-form";
 
@@ -9,8 +10,14 @@ export default function SiteFooter() {
       <div className="relative mx-auto max-w-7xl px-6 py-20 lg:px-10">
         <div className="grid gap-14 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
           <div>
-            <p className="font-display text-3xl italic">Isvena</p>
-            <p className="mt-5 max-w-xs text-sm leading-relaxed text-cream/65">
+            <Image
+              src="/brand/isvena-wordmark-cream.png"
+              alt="Isvena"
+              width={599}
+              height={106}
+              className="h-7 w-auto"
+            />
+            <p className="mt-6 max-w-xs text-sm leading-relaxed text-cream/65">
               Hand-braided, vegetable-tanned leather goods from a family workshop
               in Tamil Nadu, India — crafting premium bags, wallets and
               accessories for a global wardrobe since 2016.
