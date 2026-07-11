@@ -12,7 +12,7 @@ export default function CheckoutSuccessPage() {
     <div className="mx-auto flex max-w-2xl flex-col items-center px-6 py-32 text-center lg:px-10">
       <ClearCartOnMount />
       <p className="reveal eyebrow text-gold">Order Confirmed</p>
-      <h1 className="reveal type-display mt-5 font-display" style={{ animationDelay: "0.1s" }}>
+      <h1 className="reveal type-display mt-5 font-display italic" style={{ animationDelay: "0.1s" }}>
         Thank you.
       </h1>
       <p
