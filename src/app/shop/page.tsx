@@ -25,7 +25,7 @@ export default function ShopPage() {
     <div>
       <section className="border-b hairline px-6 py-20 text-center lg:px-10">
         <p className="reveal eyebrow text-gold">The Collection</p>
-        <h1 className="reveal type-display mt-5 font-display italic" style={{ animationDelay: "0.1s" }}>
+        <h1 className="reveal type-display mt-5 font-display" style={{ animationDelay: "0.1s" }}>
           Shop Isvena
         </h1>
         <p
@@ -51,7 +51,7 @@ export default function ShopPage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
                   <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-6 text-cream">
                     <div>
-                      <p className="font-display text-2xl italic">{c.name}</p>
+                      <p className="font-display text-2xl">{c.name}</p>
                       <p className="mt-1 text-[0.62rem] uppercase tracking-widest-plus text-cream/75">
                         {c.tagline}
                       </p>

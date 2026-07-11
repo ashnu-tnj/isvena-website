@@ -110,7 +110,7 @@ export default async function ProductPage({
 
         <div className="lg:sticky lg:top-32 lg:self-start">
           {category && <p className="eyebrow text-gold">{category.name}</p>}
-          <h1 className="mt-4 font-display text-3xl italic sm:text-[2.75rem] sm:leading-[1.05]">
+          <h1 className="mt-4 font-display text-3xl sm:text-[2.75rem] sm:leading-[1.05]">
             {product.name}
           </h1>
           <p className="mt-4 font-display text-2xl">${product.price.toLocaleString()}</p>
@@ -146,7 +146,7 @@ export default async function ProductPage({
         <section className="border-t hairline bg-cream">
           <div className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
             <p className="eyebrow text-gold text-center">You May Also Like</p>
-            <h2 className="type-display mt-4 text-center font-display italic">
+            <h2 className="type-display mt-4 text-center font-display">
               More from {category?.name}
             </h2>
             <div className="mt-12 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">

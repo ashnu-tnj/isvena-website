@@ -54,16 +54,18 @@ h4,
 }
 
 /* ─── Fluid editorial type scale ──────────────────────────────── */
+/* Positive tracking suits Italiana's delicate, flared letterforms —
+   echoing the wide-tracked brand wordmark. */
 .type-hero {
   font-size: clamp(2.75rem, 8vw, 7rem);
-  line-height: 0.98;
-  letter-spacing: -0.02em;
+  line-height: 1.02;
+  letter-spacing: 0.02em;
 }
 
 .type-display {
   font-size: clamp(2rem, 4.5vw, 3.5rem);
-  line-height: 1.02;
-  letter-spacing: -0.015em;
+  line-height: 1.06;
+  letter-spacing: 0.025em;
 }
 
 /* ─── Eyebrow label ───────────────────────────────────────────── */
