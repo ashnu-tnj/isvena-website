@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import PlaceholderArt from "@/components/placeholder-art";
 import ProductCard from "@/components/product-card";
 import ProductPurchasePanel from "@/components/product-purchase-panel";
@@ -91,22 +92,59 @@ export default async function ProductPage({
       </nav>
 
       <section className="mx-auto mt-8 grid max-w-7xl gap-10 px-6 pb-24 lg:grid-cols-2 lg:gap-16 lg:px-10">
-        <div className="grid grid-cols-2 gap-2 sm:gap-3">
-          <div className="relative col-span-2 aspect-[4/5]">
-            <PlaceholderArt
-              tone={product.tone}
-              label={product.label}
-              alt={`${product.name} in ${product.materials}`}
-              className="h-full w-full"
-            />
+        {product.images && product.images.length > 0 ? (
+          <div className="grid grid-cols-2 gap-2 sm:gap-3">
+            <div className="relative col-span-2 aspect-[4/5] overflow-hidden bg-sand">
+              <Image
+                src={product.images[0]}
+                alt={`${product.name} in ${product.materials}`}
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover object-center"
+              />
+            </div>
+            {product.images.slice(1, 3).map((src, i) => (
+              <div key={src} className="relative aspect-square overflow-hidden bg-sand">
+                <Image
+                  src={src}
+                  alt={`${product.name} — view ${i + 2}`}
+                  fill
+                  sizes="(max-width: 1024px) 50vw, 25vw"
+                  className="object-cover object-center"
+                />
+              </div>
+            ))}
+            {/* Fill any remaining gallery slot with a woven motif panel */}
+            {product.images.length < 2 && (
+              <>
+                <div className="relative aspect-square">
+                  <PlaceholderArt tone={product.tone} pattern="grain" className="h-full w-full" />
+                </div>
+                <div className="relative aspect-square">
+                  <PlaceholderArt tone={product.tone} pattern="plain" className="h-full w-full" />
+                </div>
+              </>
+            )}
           </div>
-          <div className="relative aspect-square">
-            <PlaceholderArt tone={product.tone} pattern="grain" className="h-full w-full" />
+        ) : (
+          <div className="grid grid-cols-2 gap-2 sm:gap-3">
+            <div className="relative col-span-2 aspect-[4/5]">
+              <PlaceholderArt
+                tone={product.tone}
+                label={product.label}
+                alt={`${product.name} in ${product.materials}`}
+                className="h-full w-full"
+              />
+            </div>
+            <div className="relative aspect-square">
+              <PlaceholderArt tone={product.tone} pattern="grain" className="h-full w-full" />
+            </div>
+            <div className="relative aspect-square">
+              <PlaceholderArt tone={product.tone} pattern="plain" className="h-full w-full" />
+            </div>
           </div>
-          <div className="relative aspect-square">
-            <PlaceholderArt tone={product.tone} pattern="plain" className="h-full w-full" />
-          </div>
-        </div>
+        )}
 
         <div className="lg:sticky lg:top-32 lg:self-start">
           {category && <p className="eyebrow text-gold">{category.name}</p>}
