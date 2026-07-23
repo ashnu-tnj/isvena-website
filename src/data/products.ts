@@ -16,7 +16,16 @@ export interface Product {
   /** Short word rendered on the placeholder art panel */
   label: string;
   featured?: boolean;
+  /**
+   * Real product photography under /public/products. First entry is the
+   * primary image (cards, hero); the rest fill the detail-page gallery.
+   * When absent, the woven PlaceholderArt is shown instead.
+   */
+  images?: string[];
 }
+
+/** Base path for product photography in /public. */
+const IMG = "/products";
 
 /**
  * Catalog populated from P.M. Rahamathulla & Co's own listings — the
@@ -30,6 +39,7 @@ export const products: Product[] = [
   // ── Hand-Braided Totes ────────────────────────────────────────────
   {
     slug: "signature-hand-braided-tote",
+    images: [`${IMG}/dark-tote_packshot.jpg`, `${IMG}/dark-tote_lifestyle.jpg`],
     label: "Braided",
     name: "Signature Hand-Braided Tote",
     category: "tote-bags",
@@ -48,6 +58,7 @@ export const products: Product[] = [
   },
   {
     slug: "woven-braided-laptop-tote",
+    images: [`${IMG}/set2_tan-shoulder-tote_packshot.jpg`],
     label: "Laptop",
     name: "Braided Laptop Tote",
     category: "tote-bags",
@@ -65,6 +76,7 @@ export const products: Product[] = [
   },
   {
     slug: "mini-laptop-tote",
+    images: [`${IMG}/mini-tote_packshot.jpg`, `${IMG}/mini-tote_lifestyle.jpg`],
     label: "Mini",
     name: "Mini Laptop Tote",
     category: "tote-bags",
@@ -81,6 +93,7 @@ export const products: Product[] = [
   },
   {
     slug: "rose-rectangular-tote",
+    images: [`${IMG}/tan-tote_packshot.jpg`, `${IMG}/tan-tote_lifestyle.jpg`],
     label: "Rose",
     name: "Rectangular Tote in Rose",
     category: "tote-bags",
@@ -98,6 +111,7 @@ export const products: Product[] = [
   },
   {
     slug: "woven-leather-tote",
+    images: [`${IMG}/set2_black-hobo_packshot.jpg`],
     label: "Woven",
     name: "Woven Leather Tote",
     category: "tote-bags",
@@ -116,6 +130,7 @@ export const products: Product[] = [
   // ── Sling & Crossbody ─────────────────────────────────────────────
   {
     slug: "braided-sling-bag",
+    images: [`${IMG}/set2_tan-tote_packshot.jpg`],
     label: "Sling",
     name: "Braided Sling Bag",
     category: "sling-crossbody",
@@ -133,6 +148,7 @@ export const products: Product[] = [
   },
   {
     slug: "sling-clutch-convertible",
+    images: [`${IMG}/hobo_packshot.jpg`, `${IMG}/hobo_lifestyle.jpg`],
     label: "Duet",
     name: "Sling-Clutch Convertible",
     category: "sling-crossbody",
@@ -149,6 +165,7 @@ export const products: Product[] = [
   },
   {
     slug: "green-crossbody",
+    images: [`${IMG}/set2_red-crossbody_packshot.jpg`],
     label: "Green",
     name: "Crossbody in Green",
     category: "sling-crossbody",
@@ -167,6 +184,7 @@ export const products: Product[] = [
   // ── Baskets & Home ────────────────────────────────────────────────
   {
     slug: "leather-basket",
+    images: [`${IMG}/set2_brown-bucket_packshot.jpg`],
     label: "Basket",
     name: "Leather Basket",
     category: "woven-basket-bags",
@@ -185,6 +203,7 @@ export const products: Product[] = [
   },
   {
     slug: "leather-box-bag",
+    images: [`${IMG}/set2_espresso-tote_packshot.jpg`],
     label: "Box",
     name: "Leather Box Bag",
     category: "woven-basket-bags",

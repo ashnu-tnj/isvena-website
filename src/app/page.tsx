@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import PlaceholderArt from "@/components/placeholder-art";
 import ProductCard from "@/components/product-card";
 import Reveal from "@/components/reveal";
@@ -154,12 +155,22 @@ export default function Home() {
         <section className="bg-cream">
           <div className="mx-auto grid max-w-7xl items-stretch gap-0 lg:grid-cols-2">
             <div className="relative aspect-[4/5] overflow-hidden lg:aspect-auto lg:min-h-[680px]">
-              <PlaceholderArt
-                tone={signature.tone}
-                label={signature.label}
-                caption="Signature Piece"
-                className="h-full w-full"
-              />
+              {signature.images && signature.images.length > 0 ? (
+                <Image
+                  src={signature.images[signature.images.length - 1]}
+                  alt={`${signature.name} — ${signature.materials}`}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover object-center"
+                />
+              ) : (
+                <PlaceholderArt
+                  tone={signature.tone}
+                  label={signature.label}
+                  caption="Signature Piece"
+                  className="h-full w-full"
+                />
+              )}
             </div>
             <Reveal className="flex flex-col justify-center px-6 py-16 lg:px-20">
               <p className="eyebrow text-gold">The Signature Weave</p>

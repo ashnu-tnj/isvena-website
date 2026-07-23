@@ -1,17 +1,29 @@
 import Link from "next/link";
+import Image from "next/image";
 import PlaceholderArt from "@/components/placeholder-art";
 import type { Product } from "@/data/products";
 
 export default function ProductCard({ product }: { product: Product }) {
+  const photo = product.images?.[0];
   return (
     <Link href={`/product/${product.slug}`} className="group block">
       <div className="relative aspect-[4/5] overflow-hidden bg-sand">
-        <PlaceholderArt
-          tone={product.tone}
-          label={product.label}
-          alt={`${product.name} — ${product.materials}`}
-          className="h-full w-full transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
-        />
+        {photo ? (
+          <Image
+            src={photo}
+            alt={`${product.name} — ${product.materials}`}
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            className="object-cover object-center transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
+          />
+        ) : (
+          <PlaceholderArt
+            tone={product.tone}
+            label={product.label}
+            alt={`${product.name} — ${product.materials}`}
+            className="h-full w-full transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
+          />
+        )}
 
         {product.featured && (
           <span className="absolute left-3 top-3 bg-cream/90 px-2.5 py-1 text-[0.55rem] uppercase tracking-widest-plus text-ink">

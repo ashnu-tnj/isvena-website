@@ -106,7 +106,10 @@ export function productSchema(product: Product, category?: Category) {
     "@id": `${absoluteUrl(`/product/${product.slug}`)}#product`,
     name: product.name,
     description: product.description,
-    image: absoluteUrl(ogImage.url),
+    image: (product.images && product.images.length > 0
+      ? product.images
+      : [ogImage.url]
+    ).map((src) => absoluteUrl(src)),
     sku: product.slug,
     category: category?.name,
     material: product.materials,
