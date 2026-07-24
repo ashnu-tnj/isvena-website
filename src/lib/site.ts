@@ -15,7 +15,7 @@ export const site = {
   url: SITE_URL,
   /** Short, factual one-liner reused as the default meta description. */
   description:
-    "Isvena crafts hand-braided, vegetable-tanned leather goods — totes, slings, wallets, clutches, belts and baskets — made to order by artisans in Chennai, Tamil Nadu, India, and shipped worldwide. A family in leather since 1936.",
+    "Isvena crafts hand-braided, vegetable-tanned leather goods — totes, slings, clutches and baskets — made to order by artisans in Chennai, Tamil Nadu, India, and shipped worldwide. A family in leather since 1936.",
   tagline: "Hand-braided, vegetable-tanned leather, woven by hand since 1936.",
   foundingYear: "1936",
   brandLaunchYear: "2016",

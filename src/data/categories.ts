@@ -25,7 +25,7 @@ export const categories: Category[] = [
     shortName: "Slings",
     tagline: "Vegetable-tanned, hands-free, braided light",
     description:
-      "Braided vegetable-tanned, chrome-free leather slings and crossbody bags — compact companions that carry the essentials, leave your hands free, and are safe for daily wear against your skin.",
+      "Braided vegetable-tanned, chrome-free leather slings, crossbody and waist bags — compact companions that carry the essentials, leave your hands free, and are safe for daily wear against your skin.",
     tone: "umber",
   },
   {
@@ -45,24 +45,6 @@ export const categories: Category[] = [
     description:
       "Hand-finished clutch purses in the workshop's full colour range — pink, red, blue, yellow, green and brown — alongside the braided clutch and the traditional potli bag.",
     tone: "ink",
-  },
-  {
-    slug: "leather-wallets",
-    name: "Leather Wallets",
-    shortName: "Wallets",
-    tagline: "Vegetable-tanned, chrome-free, precisely built",
-    description:
-      "Men's wallets cut from vegetable-tanned, chrome-free hide — safe to carry next to your skin, fully biodegradable, and built to last a lifetime. The woven-top six-slot, the braided bifold in sea blue and tan, and the classic four-slot — each edge-finished by hand.",
-    tone: "sand",
-  },
-  {
-    slug: "belts-waist-bags",
-    name: "Belts & Waist Bags",
-    shortName: "Belts",
-    tagline: "The original hand-braid",
-    description:
-      "Where the workshop's braid began: unisex braided belts in brown and black, cut to your size, alongside the leather waist bag built on our export pattern.",
-    tone: "cream",
   },
 ];
 

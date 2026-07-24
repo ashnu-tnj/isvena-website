@@ -8,7 +8,7 @@ import { ogImage } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Shop All Leather Goods",
   description:
-    "Browse the full Isvena collection of hand-braided, vegetable-tanned leather goods — totes, slings, wallets, clutches, belts and baskets, made to order in Chennai and shipped worldwide.",
+    "Browse the full Isvena collection of hand-braided, vegetable-tanned leather goods — totes, slings, clutches and baskets, made to order in Chennai and shipped worldwide.",
   alternates: { canonical: "/shop" },
   openGraph: {
     type: "website",
@@ -38,9 +38,9 @@ export default function ShopPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map((c, i) => (
-            <Reveal key={c.slug} delay={(i % 3) * 90}>
+            <Reveal key={c.slug} delay={(i % 4) * 80}>
               <Link href={`/shop/${c.slug}`} className="group block">
                 <div className="relative aspect-[4/5] overflow-hidden">
                   <PlaceholderArt

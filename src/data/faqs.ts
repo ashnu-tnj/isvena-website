@@ -7,7 +7,7 @@
 export const faqs: { q: string; a: string }[] = [
   {
     q: "What is Isvena?",
-    a: "Isvena is a leather goods house that makes hand-braided, vegetable-tanned leather bags, wallets, clutches, belts and baskets. It is the direct-to-consumer brand of P.M. Rahamathulla & Co., a family leather workshop in Periyamet, Chennai, Tamil Nadu, India, whose leather heritage dates back to 1936.",
+    a: "Isvena is a leather goods house that makes hand-braided, vegetable-tanned leather totes, slings, crossbody bags, clutches and baskets. It is the direct-to-consumer brand of P.M. Rahamathulla & Co., a family leather workshop in Periyamet, Chennai, Tamil Nadu, India, whose leather heritage dates back to 1936.",
   },
   {
     q: "What does vegetable-tanned, chrome-free leather mean and why does it matter?",
@@ -27,7 +27,7 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "What is hand-braided leather?",
-    a: "Hand-braided leather is made by cutting full-grain hide into narrow strips — some as fine as 4mm — and interlacing them entirely by hand into a woven pattern. A single tote can take more than a full day to braid. It is the signature technique behind Isvena's totes, slings, clutches, wallets and belts.",
+    a: "Hand-braided leather is made by cutting full-grain hide into narrow strips — some as fine as 4mm — and interlacing them entirely by hand into a woven pattern. A single tote can take more than a full day to braid. It is the signature technique behind Isvena's totes, slings, crossbody bags and clutches.",
   },
   {
     q: "How do I care for vegetable-tanned leather?",
@@ -39,7 +39,7 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "What colours does Isvena offer?",
-    a: "Depending on the piece, Isvena leather is available in tan, brown, dark brown, black, red, rose, pink, green, sea blue, blue, yellow and white, alongside natural sea grass and water reed finishes.",
+    a: "Depending on the piece, Isvena leather is available in tan, brown, black, red, rose, pink, green, blue, yellow and white, alongside natural sea grass and water reed finishes.",
   },
   {
     q: "What payment methods does Isvena accept?",

@@ -196,7 +196,7 @@ export const products: Product[] = [
     craftsmanship:
       "Traditional basketry worked in vegetable-tanned leather over a holding form — a hallway catch-all that will outlast any cane basket it replaces, fully biodegradable and safe for the home.",
     description:
-      "For the hall table: a vegetable-tanned, chrome-free leather basket for keys, wallet and phone, in green, white or black. Built to last generations.",
+      "For the hall table: a vegetable-tanned, chrome-free leather basket for keys, cards and phone, in green, white or black. Built to last generations.",
     colors: ["Green", "White", "Black"],
     tone: "olive",
     featured: true,
@@ -334,80 +334,11 @@ export const products: Product[] = [
     tone: "sand",
   },
 
-  // ── Leather Wallets ───────────────────────────────────────────────
-  {
-    slug: "woven-top-mens-wallet",
-    label: "Woven",
-    name: "Woven-Top Men's Wallet",
-    category: "leather-wallets",
-    price: 95,
-    currency: "USD",
-    materials: "Vegetable-tanned, chrome-free premium leather, woven top layer, button snap",
-    dimensions: "9 × 11.5 cm closed (3.5 × 4.5 in) · ≈ 115 g",
-    craftsmanship:
-      "A woven vegetable-tanned leather top layer over a classic body: six card slots, two cash compartments, and a button-snap close. Chrome-free and safe to carry against your skin daily.",
-    description:
-      "Our most finished wallet — the house weave on the outside, six slots of organisation within. Vegetable-tanned, chrome-free, and designed to develop character with age.",
-    colors: ["Dark Brown", "Black", "Tan"],
-    tone: "umber",
-    featured: true,
-  },
-  {
-    slug: "mens-braided-bifold",
-    label: "Bifold",
-    name: "Men's Braided Bifold",
-    category: "leather-wallets",
-    price: 85,
-    currency: "USD",
-    materials: "Chrome-free braided leather",
-    dimensions: "Standard bifold sizing",
-    craftsmanship:
-      "The braid worked into a bifold face, in colours few wallet racks carry — sea blue among them — with edges burnished by hand.",
-    description:
-      "A braided bifold in sea blue, tan, brown or black — the everyday wallet with the workshop's signature texture.",
-    colors: ["Sea Blue", "Tan", "Brown", "Black"],
-    tone: "cognac",
-  },
-  {
-    slug: "classic-mens-bifold",
-    label: "Classic",
-    name: "Classic Men's Bifold",
-    category: "leather-wallets",
-    price: 70,
-    currency: "USD",
-    materials: "Vegetable-tanned, chrome-free leather",
-    dimensions: "Standard bifold sizing · 4 card slots",
-    craftsmanship:
-      "Vegetable-tanned, chrome-free hide folded into the simplest possible bifold: four card slots, one note compartment, edges finished in multiple hand passes. Safe for daily use against your skin.",
-    description:
-      "The plain, honest bifold — A-grade vegetable-tanned, chrome-free leather and nothing it doesn't need. Fully biodegradable and built to last.",
-    colors: ["Brown", "Blue"],
-    tone: "sand",
-  },
-
-  // ── Belts & Waist Bags ────────────────────────────────────────────
-  {
-    slug: "braided-leather-belt",
-    label: "Braided",
-    name: "Braided Leather Belt",
-    category: "belts-waist-bags",
-    price: 75,
-    currency: "USD",
-    materials: "Vegetable-tanned, chrome-free braided leather, metal buckle",
-    dimensions: "Made to size · 3 cm width",
-    craftsmanship:
-      "Vegetable-tanned, chrome-free leather cords braided under tension around a stitched core — the casual alternative to the classic belt, safe for your skin, and the technique our whole woven range grew from.",
-    description:
-      "The unisex braided belt in brown or black — braided to order and cut to your exact size. Vegetable-tanned and fully biodegradable.",
-    colors: ["Brown", "Black"],
-    tone: "cream",
-    featured: true,
-  },
   {
     slug: "leather-waist-bag",
     label: "Waist",
     name: "Leather Waist Bag",
-    category: "belts-waist-bags",
+    category: "sling-crossbody",
     price: 150,
     currency: "USD",
     materials: "Full-grain leather, metal buckle",
