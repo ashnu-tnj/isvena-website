@@ -54,8 +54,8 @@ export default function Home() {
             style={{ animationDelay: "0.55s" }}
           >
             Isvena is the design house built on the workshop of P.M. Rahamathulla
-            &amp; Co — hand-braided bags, wallets and accessories, made one hide
-            at a time.
+            &amp; Co — hand-braided totes, slings, clutches and baskets, made one
+            hide at a time.
           </p>
           <div
             className="reveal mt-10 flex flex-wrap items-center justify-center gap-4"
@@ -104,26 +104,18 @@ export default function Home() {
         <Reveal className="mb-14 flex flex-col items-center text-center">
           <p className="eyebrow text-gold">Curated Collections</p>
           <h2 className="type-display mt-4 font-display italic">
-            Six categories, one workshop
+            Four categories, one workshop
           </h2>
         </Reveal>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map((c, i) => (
-            <Reveal
-              key={c.slug}
-              delay={(i % 3) * 90}
-              className={i === 0 ? "sm:col-span-2 lg:col-span-2 lg:row-span-2" : ""}
-            >
+            <Reveal key={c.slug} delay={(i % 4) * 80}>
               <Link
                 href={`/shop/${c.slug}`}
                 className="group relative block h-full overflow-hidden"
               >
-                <div
-                  className={`relative ${
-                    i === 0 ? "aspect-[4/3] lg:aspect-[16/13]" : "aspect-[4/3]"
-                  }`}
-                >
+                <div className="relative aspect-[4/5]">
                   <PlaceholderArt
                     tone={c.tone}
                     pattern="weave"

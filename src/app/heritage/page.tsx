@@ -46,12 +46,12 @@ const milestones = [
   {
     year: "2000",
     title: "Back to the Trade",
-    body: "The family returns to the leather trade in Chennai as a wholesale trader, exporter and importer — waist bags, baskets, braided belts and straw bags moving through the city's Periyamet leather quarter.",
+    body: "The family returns to the leather trade in Chennai as a wholesale trader, exporter and importer — waist bags, baskets, woven totes and straw bags moving through the city's Periyamet leather quarter.",
   },
   {
     year: "2016",
     title: "A New Workshop",
-    body: "The family name returns to leather: P.M. Rahamathulla & Co is founded in Periyamet, Chennai — this time as a manufacturer and exporter of finished goods, from hand-braided totes to chrome-free wallets.",
+    body: "The family name returns to leather: P.M. Rahamathulla & Co is founded in Periyamet, Chennai — this time as a manufacturer and exporter of finished goods, from hand-braided totes to woven baskets.",
   },
   {
     year: "Today",
@@ -147,8 +147,8 @@ export default function HeritagePage() {
           <p>
             The current workshop, P.M. Rahamathulla &amp; Co, was founded in 2016 in Chennai,
             Tamil Nadu — returning the family to the material it has worked since 1936. For
-            years, it has produced hand-braided totes, basket and water-reed weaves, wallets,
-            belts and clutches for buyers around the world, refining a weaving technique few
+            years, it has produced hand-braided totes, basket and water-reed weaves, slings
+            and clutches for buyers around the world, refining a weaving technique few
             workshops still practice at this scale.
           </p>
           <p>

@@ -77,13 +77,11 @@ function colorDot(name: string): string {
   const map: Record<string, string> = {
     Tan: "#c19a6b",
     Brown: "#6b4423",
-    "Dark Brown": "#3d2817",
     Black: "#1a1512",
     Red: "#8f2d23",
     Rose: "#c98a8a",
     Pink: "#d9a5b3",
     Green: "#4a5d3a",
-    "Sea Blue": "#3a5a6b",
     Blue: "#2f4a63",
     Yellow: "#c9a542",
     White: "#f0ece3",

@@ -19,8 +19,8 @@ export default function SiteFooter() {
             />
             <p className="mt-6 max-w-xs text-sm leading-relaxed text-cream/65">
               Hand-braided, vegetable-tanned leather goods from a family workshop
-              in Tamil Nadu, India — crafting premium bags, wallets and
-              accessories for a global wardrobe since 2016.
+              in Tamil Nadu, India — crafting premium totes, slings, clutches and
+              baskets for a global wardrobe since 2016.
             </p>
           </div>
 
