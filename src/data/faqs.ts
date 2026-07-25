@@ -39,7 +39,7 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "What colours does Isvena offer?",
-    a: "Depending on the piece, Isvena leather is available in tan, brown, black, red, rose, pink, green, blue, yellow and white, alongside natural sea grass and water reed finishes.",
+    a: "Depending on the piece, Isvena leather is available in tan, brown, black, red, rose, pink, green, blue, yellow, white and a soft metallic silver.",
   },
   {
     q: "What payment methods does Isvena accept?",

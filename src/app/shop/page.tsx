@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import PlaceholderArt from "@/components/placeholder-art";
 import Reveal from "@/components/reveal";
 import { categories } from "@/data/categories";
@@ -43,12 +44,22 @@ export default function ShopPage() {
             <Reveal key={c.slug} delay={(i % 4) * 80}>
               <Link href={`/shop/${c.slug}`} className="group block">
                 <div className="relative aspect-[4/5] overflow-hidden">
-                  <PlaceholderArt
-                    tone={c.tone}
-                    pattern="weave"
-                    className="h-full w-full transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
+                  {c.image ? (
+                    <Image
+                      src={c.image}
+                      alt={c.name}
+                      fill
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
+                      className="object-cover object-center transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+                    />
+                  ) : (
+                    <PlaceholderArt
+                      tone={c.tone}
+                      pattern="weave"
+                      className="h-full w-full transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/25 to-ink/5" />
                   <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-6 text-cream">
                     <div>
                       <p className="font-display text-2xl italic">{c.name}</p>

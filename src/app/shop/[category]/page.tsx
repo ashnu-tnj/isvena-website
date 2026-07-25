@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import PlaceholderArt from "@/components/placeholder-art";
 import ProductCard from "@/components/product-card";
 import Reveal from "@/components/reveal";
@@ -57,12 +58,23 @@ export default async function CategoryPage({
       <JsonLd data={collectionSchema(cat, items)} />
       <JsonLd data={breadcrumbs} />
       <section className="relative h-[52vh] min-h-[360px] w-full overflow-hidden">
-        <PlaceholderArt
-          tone={cat.tone}
-          pattern="weave"
-          className="ken-burns absolute inset-0 h-full w-full"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/25 to-ink/50" />
+        {cat.image ? (
+          <Image
+            src={cat.image}
+            alt={cat.name}
+            fill
+            priority
+            sizes="100vw"
+            className="ken-burns object-cover object-center"
+          />
+        ) : (
+          <PlaceholderArt
+            tone={cat.tone}
+            pattern="weave"
+            className="ken-burns absolute inset-0 h-full w-full"
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/50 via-ink/40 to-ink/55" />
         <div className="relative flex h-full flex-col items-center justify-center px-6 text-center text-cream">
           <p className="reveal eyebrow text-cream/80" style={{ animationDelay: "0.1s" }}>
             {cat.tagline}

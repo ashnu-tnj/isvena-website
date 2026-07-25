@@ -7,6 +7,8 @@ export interface Category {
   tagline: string;
   description: string;
   tone: Tone;
+  /** Representative product photo used for category tiles and hero. */
+  image?: string;
 }
 
 export const categories: Category[] = [
@@ -18,6 +20,7 @@ export const categories: Category[] = [
     description:
       "Our signature line and the heart of the workshop: totes braided by hand from vegetable-tanned, chrome-free, full-grain leather strips — safe for your skin, fully biodegradable, and woven to outlast a lifetime. From the classic open carryall to laptop-ready silhouettes in red, tan, rose, brown, black and green.",
     tone: "cognac",
+    image: "/products/dark-tote_lifestyle.jpg",
   },
   {
     slug: "sling-crossbody",
@@ -27,6 +30,7 @@ export const categories: Category[] = [
     description:
       "Braided vegetable-tanned, chrome-free leather slings, crossbody and waist bags — compact companions that carry the essentials, leave your hands free, and are safe for daily wear against your skin.",
     tone: "umber",
+    image: "/products/hobo_lifestyle.jpg",
   },
   {
     slug: "woven-basket-bags",
@@ -34,8 +38,9 @@ export const categories: Category[] = [
     shortName: "Baskets",
     tagline: "Basketry for the wardrobe and the hallway",
     description:
-      "Leather baskets and box bags for the home, sea grass and water reed totes for the market, the bottle bag for the table — and our woven leather wall tiles, the workshop's quietest surprise.",
+      "Traditional basketry worked in leather: the hallway catch-all leather basket and the architectural box bag — hand-woven over a holding form to outlast any cane basket they replace.",
     tone: "olive",
+    image: "/products/set2_brown-bucket_packshot.jpg",
   },
   {
     slug: "clutches",
@@ -45,6 +50,7 @@ export const categories: Category[] = [
     description:
       "Hand-finished clutch purses in the workshop's full colour range — pink, red, blue, yellow, green and brown — alongside the braided clutch and the traditional potli bag.",
     tone: "ink",
+    image: "/products/potli.jpg",
   },
 ];
 
