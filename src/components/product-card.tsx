@@ -84,6 +84,7 @@ function colorDot(name: string): string {
     Green: "#4a5d3a",
     Blue: "#2f4a63",
     Yellow: "#c9a542",
+    Silver: "#b8bcc0",
     White: "#f0ece3",
     Natural: "#d9c9ae",
     "Natural Brown": "#b89968",
