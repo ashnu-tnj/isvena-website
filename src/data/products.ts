@@ -93,7 +93,7 @@ export const products: Product[] = [
   },
   {
     slug: "rose-rectangular-tote",
-    images: [`${IMG}/tan-tote_packshot.jpg`, `${IMG}/tan-tote_lifestyle.jpg`],
+    images: [`${IMG}/rose-tote.jpg`],
     label: "Rose",
     name: "Rectangular Tote in Rose",
     category: "tote-bags",
@@ -165,7 +165,7 @@ export const products: Product[] = [
   },
   {
     slug: "green-crossbody",
-    images: [`${IMG}/set2_red-crossbody_packshot.jpg`],
+    images: [`${IMG}/green-tote.jpg`],
     label: "Green",
     name: "Crossbody in Green",
     category: "sling-crossbody",
@@ -286,6 +286,7 @@ export const products: Product[] = [
   // ── Clutches & Potli ──────────────────────────────────────────────
   {
     slug: "ladies-leather-clutch-purse",
+    images: [`${IMG}/ladies-clutch.jpg`],
     label: "Clutch",
     name: "Leather Clutch Purse",
     category: "clutches",
@@ -303,6 +304,7 @@ export const products: Product[] = [
   },
   {
     slug: "braided-leather-clutch",
+    images: [`${IMG}/braided-clutch.jpg`],
     label: "Braided",
     name: "Braided Leather Clutch",
     category: "clutches",
@@ -313,12 +315,13 @@ export const products: Product[] = [
     craftsmanship:
       "The signature braid scaled down to an evening panel — pure vegetable, chrome-free leather, woven and mounted by hand.",
     description:
-      "Our hand-braid at its most concentrated: a full woven face on a clean evening clutch.",
-    colors: ["Brown", "Tan", "Black"],
+      "Our hand-braid at its most concentrated: a full woven face on a clean evening clutch — including a soft metallic silver for evening.",
+    colors: ["Silver", "Brown", "Tan", "Black"],
     tone: "cognac",
   },
   {
     slug: "potli-bag",
+    images: [`${IMG}/potli.jpg`],
     label: "Potli",
     name: "Potli Bag",
     category: "clutches",
@@ -336,6 +339,7 @@ export const products: Product[] = [
 
   {
     slug: "leather-waist-bag",
+    images: [`${IMG}/waist-bag.jpg`],
     label: "Waist",
     name: "Leather Waist Bag",
     category: "sling-crossbody",

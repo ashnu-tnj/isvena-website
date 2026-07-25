@@ -197,11 +197,12 @@ export default function Home() {
           </Link>
         </Reveal>
         <Reveal delay={120} className="relative aspect-[4/3] overflow-hidden">
-          <PlaceholderArt
-            tone="olive"
-            pattern="grain"
-            caption="The Atelier"
-            className="h-full w-full"
+          <Image
+            src="/products/workshop.jpg"
+            alt="The family leather workshop — the atelier where Isvena pieces are made"
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover object-center"
           />
         </Reveal>
       </section>
