@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import PlaceholderArt from "@/components/placeholder-art";
 import ProductCard from "@/components/product-card";
+import AutoVideo from "@/components/auto-video";
 import Reveal from "@/components/reveal";
 import { categories } from "@/data/categories";
 import { getFeaturedProducts } from "@/data/products";
@@ -21,7 +22,7 @@ export default function Home() {
     <div>
       {/* ─── Hero (split editorial) ───────────────────────────── */}
       <section className="border-b hairline">
-        <div className="mx-auto grid max-w-[1600px] lg:min-h-[90vh] lg:grid-cols-2">
+        <div className="mx-auto grid max-w-[1600px] lg:grid-cols-2">
           {/* Copy panel */}
           <div className="order-2 flex flex-col justify-center px-6 py-16 sm:px-10 lg:order-1 lg:px-20 lg:py-24">
             <p className="reveal eyebrow text-gold" style={{ animationDelay: "0.1s" }}>
@@ -54,15 +55,17 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Editorial image */}
-          <div className="relative order-1 aspect-[4/5] w-full overflow-hidden lg:order-2 lg:aspect-auto lg:min-h-[90vh]">
+          {/* Editorial image — rendered at its own 3:4 ratio so the model and
+              bag are never cropped. */}
+          <div className="order-1 w-full overflow-hidden lg:order-2">
             <Image
               src="/products/hero-editorial.jpg"
               alt="A model carrying the Isvena tan hand-braided woven leather shoulder bag"
-              fill
+              width={896}
+              height={1200}
               priority
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover object-[center_28%] lg:object-center"
+              className="h-auto w-full"
             />
           </div>
         </div>
@@ -185,6 +188,26 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      {/* ─── The weave, in motion ─────────────────────────────── */}
+      <section className="relative overflow-hidden bg-ink">
+        <AutoVideo
+          src="/video/red-crossbody.mp4"
+          poster="/video/red-crossbody.jpg"
+          label="A hand-braided Isvena bag turning slowly on an ivory studio surface"
+          className="h-[46vw] max-h-[560px] min-h-[300px] w-full object-cover"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/40 to-ink/20" />
+        <div className="absolute inset-x-0 bottom-0 px-6 pb-10 text-center text-cream sm:pb-14 lg:px-10">
+          <p className="eyebrow text-gold-soft">In Motion</p>
+          <h2 className="mt-3 font-display text-2xl italic sm:text-4xl">
+            Every side, braided by hand.
+          </h2>
+          <Link href="/shop" className="btn btn-ghost pointer-events-auto mt-6">
+            Shop the Collection
+          </Link>
+        </div>
+      </section>
 
       {/* ─── Heritage teaser ──────────────────────────────────── */}
       <section className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-24 lg:grid-cols-2 lg:px-10">
