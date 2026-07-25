@@ -141,6 +141,15 @@ h4,
   border-color: var(--cream);
   background: color-mix(in srgb, var(--cream) 8%, transparent);
 }
+/* Outline button for light backgrounds */
+.btn-outline {
+  border: 1px solid color-mix(in srgb, var(--ink) 30%, transparent);
+  color: var(--ink);
+}
+.btn-outline:hover {
+  border-color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
+}
 
 /* ─── Editorial reveal-on-scroll ──────────────────────────────── */
 .reveal {

@@ -19,64 +19,52 @@ export default function Home() {
 
   return (
     <div>
-      {/* ─── Hero ─────────────────────────────────────────────── */}
-      <section className="relative flex min-h-[92vh] w-full items-center justify-center overflow-hidden py-32 sm:py-28">
-        <PlaceholderArt
-          tone="umber"
-          pattern="weave"
-          className="ken-burns absolute inset-0 h-full w-full"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/45 via-ink/25 to-ink/55" />
-
-        <div className="relative z-10 flex flex-col items-center px-6 text-center text-cream">
-          <p
-            className="reveal eyebrow text-cream/80"
-            style={{ animationDelay: "0.1s" }}
-          >
-            Since 1936 &middot; Chennai, Tamil Nadu
-          </p>
-          <h1 className="mt-6 max-w-4xl">
-            <span
-              className="reveal type-hero block font-display italic"
+      {/* ─── Hero (split editorial) ───────────────────────────── */}
+      <section className="border-b hairline">
+        <div className="mx-auto grid max-w-[1600px] lg:min-h-[90vh] lg:grid-cols-2">
+          {/* Copy panel */}
+          <div className="order-2 flex flex-col justify-center px-6 py-16 sm:px-10 lg:order-1 lg:px-20 lg:py-24">
+            <p className="reveal eyebrow text-gold" style={{ animationDelay: "0.1s" }}>
+              Since 1936 &middot; Chennai, Tamil Nadu
+            </p>
+            <h1
+              className="reveal mt-6 font-display italic leading-[1.03] tracking-[-0.01em] text-[clamp(2.5rem,4.6vw,4.75rem)]"
               style={{ animationDelay: "0.25s" }}
             >
-              Leather, woven by hand
-            </span>
-            <span
-              className="reveal type-hero block font-display italic text-cream/85"
-              style={{ animationDelay: "0.4s" }}
+              Leather, woven by hand to outlast the trend.
+            </h1>
+            <p
+              className="reveal mt-7 max-w-md text-sm leading-relaxed text-ink-soft sm:text-base"
+              style={{ animationDelay: "0.45s" }}
             >
-              to outlast the trend.
-            </span>
-          </h1>
-          <p
-            className="reveal mt-8 max-w-md text-sm leading-relaxed text-cream/85 sm:text-base"
-            style={{ animationDelay: "0.55s" }}
-          >
-            Isvena is the design house built on the workshop of P.M. Rahamathulla
-            &amp; Co — hand-braided totes, slings, clutches and baskets, made one
-            hide at a time.
-          </p>
-          <div
-            className="reveal mt-10 flex flex-wrap items-center justify-center gap-4"
-            style={{ animationDelay: "0.7s" }}
-          >
-            <Link href="/shop" className="btn btn-light">
-              Shop the Collection
-            </Link>
-            <Link href="/heritage" className="btn btn-ghost">
-              Our Heritage
-            </Link>
+              Isvena is the design house built on the workshop of P.M. Rahamathulla
+              &amp; Co — hand-braided totes, slings, clutches and baskets, made one
+              hide at a time.
+            </p>
+            <div
+              className="reveal mt-9 flex flex-wrap items-center gap-4"
+              style={{ animationDelay: "0.6s" }}
+            >
+              <Link href="/shop" className="btn btn-solid">
+                Shop the Collection
+              </Link>
+              <Link href="/heritage" className="btn btn-outline">
+                Our Heritage
+              </Link>
+            </div>
           </div>
-        </div>
 
-        {/* Scroll cue — decorative; hidden where vertical space is tight
-            so it never overlaps the headline, copy, or buttons. */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-6 hidden justify-center lg:flex">
-          <span className="eyebrow flex flex-col items-center gap-2 text-cream/50">
-            Scroll
-            <span className="h-8 w-px animate-pulse bg-cream/40" />
-          </span>
+          {/* Editorial image */}
+          <div className="relative order-1 aspect-[4/5] w-full overflow-hidden lg:order-2 lg:aspect-auto lg:min-h-[90vh]">
+            <Image
+              src="/products/hero-editorial.jpg"
+              alt="A model carrying the Isvena tan hand-braided woven leather shoulder bag"
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover object-[center_28%] lg:object-center"
+            />
+          </div>
         </div>
       </section>
 
