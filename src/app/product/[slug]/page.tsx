@@ -5,6 +5,7 @@ import Image from "next/image";
 import PlaceholderArt from "@/components/placeholder-art";
 import ProductCard from "@/components/product-card";
 import ProductPurchasePanel from "@/components/product-purchase-panel";
+import AutoVideo from "@/components/auto-video";
 import JsonLd from "@/components/json-ld";
 import { getCategory } from "@/data/categories";
 import { getProduct, getProductsByCategory, products } from "@/data/products";
@@ -94,17 +95,40 @@ export default async function ProductPage({
       <section className="mx-auto mt-8 grid max-w-7xl gap-10 px-6 pb-24 lg:grid-cols-2 lg:gap-16 lg:px-10">
         {product.images && product.images.length > 0 ? (
           <div className="grid grid-cols-2 gap-2 sm:gap-3">
-            <div className="relative col-span-2 aspect-[4/5] overflow-hidden bg-sand">
-              <Image
-                src={product.images[0]}
-                alt={`${product.name} in ${product.materials}`}
-                fill
-                priority
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover object-center"
-              />
-            </div>
-            {product.images.slice(1, 3).map((src, i) => (
+            {product.video && product.videoPoster ? (
+              <div className="col-span-2 overflow-hidden bg-sand">
+                <AutoVideo
+                  src={product.video}
+                  poster={product.videoPoster}
+                  label={`${product.name} turning slowly, showing the hand-braided weave from every side`}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            ) : (
+              <div className="relative col-span-2 aspect-[4/5] overflow-hidden bg-sand">
+                <Image
+                  src={product.images[0]}
+                  alt={`${product.name} in ${product.materials}`}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover object-center"
+                />
+              </div>
+            )}
+            {/* When a film leads the gallery, the primary still becomes a thumb */}
+            {product.video && (
+              <div className="relative aspect-square overflow-hidden bg-sand">
+                <Image
+                  src={product.images[0]}
+                  alt={`${product.name} in ${product.materials}`}
+                  fill
+                  sizes="(max-width: 1024px) 50vw, 25vw"
+                  className="object-cover object-center"
+                />
+              </div>
+            )}
+            {product.images.slice(1, product.video ? 2 : 3).map((src, i) => (
               <div key={src} className="relative aspect-square overflow-hidden bg-sand">
                 <Image
                   src={src}
@@ -116,7 +140,7 @@ export default async function ProductPage({
               </div>
             ))}
             {/* Fill any remaining gallery slot with a woven motif panel */}
-            {product.images.length < 2 && (
+            {!product.video && product.images.length < 2 && (
               <>
                 <div className="relative aspect-square">
                   <PlaceholderArt tone={product.tone} pattern="grain" className="h-full w-full" />

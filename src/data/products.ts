@@ -22,10 +22,19 @@ export interface Product {
    * When absent, the woven PlaceholderArt is shown instead.
    */
   images?: string[];
+  /**
+   * Silent looping product film (slow turntable / push-in), shown as the
+   * first item in the detail-page gallery. `videoPoster` is its first
+   * frame, used before playback and for reduced-motion visitors.
+   */
+  video?: string;
+  videoPoster?: string;
 }
 
 /** Base path for product photography in /public. */
 const IMG = "/products";
+/** Base path for product films in /public. */
+const VID = "/video";
 
 /**
  * Catalog populated from P.M. Rahamathulla & Co's own listings — the
@@ -59,6 +68,8 @@ export const products: Product[] = [
   {
     slug: "woven-braided-laptop-tote",
     images: [`${IMG}/set2_tan-shoulder-tote_packshot.jpg`],
+    video: `${VID}/tan-shoulder-tote.mp4`,
+    videoPoster: `${VID}/tan-shoulder-tote.jpg`,
     label: "Laptop",
     name: "Braided Laptop Tote",
     category: "tote-bags",
@@ -77,6 +88,8 @@ export const products: Product[] = [
   {
     slug: "mini-laptop-tote",
     images: [`${IMG}/mini-tote_packshot.jpg`, `${IMG}/mini-tote_lifestyle.jpg`],
+    video: `${VID}/black-mini.mp4`,
+    videoPoster: `${VID}/black-mini.jpg`,
     label: "Mini",
     name: "Mini Laptop Tote",
     category: "tote-bags",
@@ -149,6 +162,8 @@ export const products: Product[] = [
   {
     slug: "sling-clutch-convertible",
     images: [`${IMG}/hobo_packshot.jpg`, `${IMG}/hobo_lifestyle.jpg`],
+    video: `${VID}/brown-hobo.mp4`,
+    videoPoster: `${VID}/brown-hobo.jpg`,
     label: "Duet",
     name: "Sling-Clutch Convertible",
     category: "sling-crossbody",
@@ -185,6 +200,8 @@ export const products: Product[] = [
   {
     slug: "leather-basket",
     images: [`${IMG}/set2_brown-bucket_packshot.jpg`],
+    video: `${VID}/tan-basket-tote.mp4`,
+    videoPoster: `${VID}/tan-basket-tote.jpg`,
     label: "Basket",
     name: "Leather Basket",
     category: "woven-basket-bags",
