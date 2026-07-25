@@ -104,12 +104,22 @@ export default function Home() {
                 className="group relative block h-full overflow-hidden"
               >
                 <div className="relative aspect-[4/5]">
-                  <PlaceholderArt
-                    tone={c.tone}
-                    pattern="weave"
-                    className="h-full w-full transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/10 to-transparent" />
+                  {c.image ? (
+                    <Image
+                      src={c.image}
+                      alt={c.name}
+                      fill
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
+                      className="object-cover object-center transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+                    />
+                  ) : (
+                    <PlaceholderArt
+                      tone={c.tone}
+                      pattern="weave"
+                      className="h-full w-full transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/25 to-ink/5" />
                   <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-6 text-cream">
                     <div>
                       <p className="font-display text-xl italic sm:text-2xl">

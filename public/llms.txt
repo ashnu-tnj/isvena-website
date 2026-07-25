@@ -14,7 +14,7 @@
 - Payment: Secure card payment via Stripe
 - Production: Made to order; typically ships in 2–3 weeks
 - Signature technique: Hand-braiding — full-grain hide cut into strips (as fine as 4mm) and woven entirely by hand
-- Materials: Vegetable-tanned, chrome-free full-grain leather (safe for skin, biodegradable, develops a patina); also natural sea grass and water reed
+- Materials: Vegetable-tanned, chrome-free full-grain leather (safe for skin, biodegradable, develops a patina)
 - Website: https://www.isvena.com
 
 ## What "vegetable-tanned, chrome-free" means
@@ -25,7 +25,7 @@ Isvena leather is tanned with natural plant tannins instead of chromium salts. I
 
 - Hand-Braided Totes — the signature line; open carryalls and laptop totes
 - Sling & Crossbody — compact hands-free braided slings, crossbody and waist bags
-- Baskets & Home — leather baskets, box bags, bottle bags, sea grass and water reed totes, woven leather wall tiles
+- Baskets & Home — leather baskets and structured box bags
 - Clutches & Potli — clutch purses, braided clutches, traditional potli bags
 
 ## Key pages
