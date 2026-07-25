@@ -93,6 +93,12 @@ export default async function CategoryPage({
       </section>
 
       <nav className="mx-auto mt-10 flex max-w-7xl flex-wrap justify-center gap-x-6 gap-y-3 px-6 lg:px-10">
+        <Link
+          href="/shop"
+          className="link-line text-xs uppercase tracking-widest-plus text-ink-soft transition-colors hover:text-ink"
+        >
+          All
+        </Link>
         {categories.map((c) => (
           <Link
             key={c.slug}
