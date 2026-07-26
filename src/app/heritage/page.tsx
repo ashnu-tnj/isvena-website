@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import PlaceholderArt from "@/components/placeholder-art";
 import { ogImage } from "@/lib/site";
 
@@ -221,16 +222,33 @@ export default function HeritagePage() {
         </div>
       </section>
 
-      <section className="grid gap-1 sm:grid-cols-3">
-        <div className="relative aspect-square">
-          <PlaceholderArt tone="cognac" caption="Cutting the Hide" className="h-full w-full" />
-        </div>
-        <div className="relative aspect-square">
-          <PlaceholderArt tone="umber" caption="The Braid" className="h-full w-full" />
-        </div>
-        <div className="relative aspect-square">
-          <PlaceholderArt tone="sand" caption="Hand-Finishing" className="h-full w-full" />
-        </div>
+      {/* Process imagery — a third panel ("Hand-Finishing") joins once that
+          photograph exists; two read as a deliberate pair until then. */}
+      <section className="grid gap-1 sm:grid-cols-2">
+        <figure className="relative aspect-[4/5] overflow-hidden sm:aspect-square">
+          <Image
+            src="/products/process-cutting.jpg"
+            alt="An artisan's hands cutting a vegetable-tanned hide into narrow strips against a steel rule"
+            fill
+            sizes="(max-width: 640px) 100vw, 50vw"
+            className="object-cover object-center"
+          />
+          <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 to-transparent p-6 text-[0.62rem] uppercase tracking-widest-plus text-cream">
+            Cutting the Hide
+          </figcaption>
+        </figure>
+        <figure className="relative aspect-[4/5] overflow-hidden sm:aspect-square">
+          <Image
+            src="/products/process-braiding.jpg"
+            alt="An artisan's hands interlacing tan leather strips into the workshop's hand-braided weave"
+            fill
+            sizes="(max-width: 640px) 100vw, 50vw"
+            className="object-cover object-center"
+          />
+          <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 to-transparent p-6 text-[0.62rem] uppercase tracking-widest-plus text-cream">
+            The Braid
+          </figcaption>
+        </figure>
       </section>
 
       <section className="mx-auto max-w-3xl px-6 py-24 text-center lg:px-10">

@@ -48,7 +48,7 @@ export const products: Product[] = [
   // ── Hand-Braided Totes ────────────────────────────────────────────
   {
     slug: "signature-hand-braided-tote",
-    images: [`${IMG}/dark-tote_packshot.jpg`, `${IMG}/dark-tote_lifestyle.jpg`],
+    images: [`${IMG}/dark-tote_packshot.jpg`, `${IMG}/dark-tote_lifestyle.jpg`, `${IMG}/detail_signature-hand-braided-tote.jpg`],
     label: "Braided",
     name: "Signature Hand-Braided Tote",
     category: "tote-bags",
@@ -67,7 +67,7 @@ export const products: Product[] = [
   },
   {
     slug: "woven-braided-laptop-tote",
-    images: [`${IMG}/set2_tan-shoulder-tote_packshot.jpg`],
+    images: [`${IMG}/set2_tan-shoulder-tote_packshot.jpg`, `${IMG}/detail_woven-braided-laptop-tote.jpg`],
     video: `${VID}/tan-shoulder-tote.mp4`,
     videoPoster: `${VID}/tan-shoulder-tote.jpg`,
     label: "Laptop",
@@ -106,7 +106,7 @@ export const products: Product[] = [
   },
   {
     slug: "rose-rectangular-tote",
-    images: [`${IMG}/rose-tote.jpg`],
+    images: [`${IMG}/rose-tote.jpg`, `${IMG}/detail_rose-rectangular-tote.jpg`],
     label: "Rose",
     name: "Rectangular Tote in Rose",
     category: "tote-bags",
@@ -124,7 +124,7 @@ export const products: Product[] = [
   },
   {
     slug: "woven-leather-tote",
-    images: [`${IMG}/set2_black-hobo_packshot.jpg`],
+    images: [`${IMG}/set2_black-hobo_packshot.jpg`, `${IMG}/detail_woven-leather-tote.jpg`],
     label: "Woven",
     name: "Woven Leather Tote",
     category: "tote-bags",
@@ -143,7 +143,7 @@ export const products: Product[] = [
   // ── Sling & Crossbody ─────────────────────────────────────────────
   {
     slug: "braided-sling-bag",
-    images: [`${IMG}/set2_tan-tote_packshot.jpg`],
+    images: [`${IMG}/set2_tan-tote_packshot.jpg`, `${IMG}/detail_braided-sling-bag.jpg`],
     label: "Sling",
     name: "Braided Sling Bag",
     category: "sling-crossbody",
@@ -180,7 +180,7 @@ export const products: Product[] = [
   },
   {
     slug: "green-crossbody",
-    images: [`${IMG}/green-tote.jpg`],
+    images: [`${IMG}/green-tote.jpg`, `${IMG}/detail_green-crossbody.jpg`],
     label: "Green",
     name: "Crossbody in Green",
     category: "sling-crossbody",
@@ -199,7 +199,7 @@ export const products: Product[] = [
   // ── Baskets & Home ────────────────────────────────────────────────
   {
     slug: "leather-basket",
-    images: [`${IMG}/set2_brown-bucket_packshot.jpg`],
+    images: [`${IMG}/set2_brown-bucket_packshot.jpg`, `${IMG}/detail_leather-basket.jpg`],
     video: `${VID}/tan-basket-tote.mp4`,
     videoPoster: `${VID}/tan-basket-tote.jpg`,
     label: "Basket",
@@ -220,7 +220,7 @@ export const products: Product[] = [
   },
   {
     slug: "leather-box-bag",
-    images: [`${IMG}/set2_espresso-tote_packshot.jpg`],
+    images: [`${IMG}/set2_espresso-tote_packshot.jpg`, `${IMG}/detail_leather-box-bag.jpg`],
     label: "Box",
     name: "Leather Box Bag",
     category: "woven-basket-bags",
@@ -239,7 +239,7 @@ export const products: Product[] = [
   // ── Clutches & Potli ──────────────────────────────────────────────
   {
     slug: "ladies-leather-clutch-purse",
-    images: [`${IMG}/ladies-clutch.jpg`],
+    images: [`${IMG}/ladies-clutch.jpg`, `${IMG}/detail_ladies-leather-clutch-purse.jpg`],
     label: "Clutch",
     name: "Leather Clutch Purse",
     category: "clutches",
@@ -257,7 +257,7 @@ export const products: Product[] = [
   },
   {
     slug: "braided-leather-clutch",
-    images: [`${IMG}/braided-clutch.jpg`],
+    images: [`${IMG}/braided-clutch.jpg`, `${IMG}/detail_braided-leather-clutch.jpg`],
     label: "Braided",
     name: "Braided Leather Clutch",
     category: "clutches",
@@ -274,7 +274,7 @@ export const products: Product[] = [
   },
   {
     slug: "potli-bag",
-    images: [`${IMG}/potli.jpg`],
+    images: [`${IMG}/potli.jpg`, `${IMG}/detail_potli-bag.jpg`],
     label: "Potli",
     name: "Potli Bag",
     category: "clutches",
@@ -292,7 +292,7 @@ export const products: Product[] = [
 
   {
     slug: "leather-waist-bag",
-    images: [`${IMG}/waist-bag.jpg`],
+    images: [`${IMG}/waist-bag.jpg`, `${IMG}/waist-bag_2.jpg`, `${IMG}/detail_leather-waist-bag.jpg`],
     label: "Waist",
     name: "Leather Waist Bag",
     category: "sling-crossbody",
