@@ -30,8 +30,15 @@ export const site = {
     country: "IN",
     countryName: "India",
   },
+  /** Social profiles, rendered as icon links in the footer and on contact. */
+  social: [
+    { name: "Instagram", handle: "@isvenaofficial", url: "https://www.instagram.com/isvenaofficial" },
+    { name: "Facebook", handle: "isvenaofficial", url: "https://www.facebook.com/isvenaofficial" },
+  ],
   /** Public profiles / external references that reinforce entity identity. */
   sameAs: [
+    "https://www.instagram.com/isvenaofficial",
+    "https://www.facebook.com/isvenaofficial",
     "https://www.tradeindia.com/p-m-rahamathulla-co-363125/",
   ],
   keywords: [

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import ContactForm from "@/components/contact-form";
 import JsonLd from "@/components/json-ld";
 import { localBusinessSchema } from "@/lib/structured-data";
-import { ogImage } from "@/lib/site";
+import { ogImage, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact & Trade Enquiries",
@@ -59,6 +59,23 @@ export default function ContactPage() {
           <div>
             <p className="eyebrow text-gold">Email</p>
             <p className="mt-2 text-ink-soft">hello@isvena.com</p>
+          </div>
+          <div>
+            <p className="eyebrow text-gold">Follow</p>
+            <ul className="mt-2 space-y-1.5 text-ink-soft">
+              {site.social.map((s) => (
+                <li key={s.name}>
+                  <a
+                    href={s.url}
+                    target="_blank"
+                    rel="me noopener noreferrer"
+                    className="link-line transition-colors hover:text-ink"
+                  >
+                    {s.name} — {s.handle}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
           <div>
             <p className="eyebrow text-gold">Trade &amp; Wholesale</p>

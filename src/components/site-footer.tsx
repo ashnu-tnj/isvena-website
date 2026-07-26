@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { categories } from "@/data/categories";
 import NewsletterForm from "@/components/newsletter-form";
+import SocialLinks from "@/components/social-links";
 
 export default function SiteFooter() {
   return (
@@ -22,6 +23,10 @@ export default function SiteFooter() {
               in Tamil Nadu, India — crafting premium totes, slings, clutches and
               baskets for a global wardrobe since 2016.
             </p>
+            <SocialLinks
+              className="-ml-2.5 mt-6"
+              linkClassName="text-cream/60 hover:text-gold-soft"
+            />
           </div>
 
           <div>
