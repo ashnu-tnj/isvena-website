@@ -28,28 +28,19 @@ Open [http://localhost:3000](http://localhost:3000).
   `localStorage`)
 - `src/app/api/checkout` — creates a Stripe Checkout Session (prices are
   always read from the server-side catalog, never trusted from the client)
-- `src/app/api/webhooks/stripe` — Stripe webhook; on
-  `checkout.session.completed` it creates the shipment order in Shiprocket
-- `src/lib/shiprocket.ts` — minimal Shiprocket API client (auth + create
-  order); a logged no-op until credentials are configured
 
 ## Payments & Shipping
 
-Checkout is powered by **Stripe Checkout** and fulfilment by **Shiprocket**.
-Copy `.env.example` to `.env.local` and fill in:
+Checkout is powered by **Stripe Checkout**. Shipping is complimentary
+worldwide, so no carrier integration is involved: Stripe collects the
+shipping address, email and phone, and orders are despatched manually from
+the details on the payment.
 
-1. **Stripe** — `STRIPE_SECRET_KEY` from Dashboard → Developers → API keys.
-   Then add a webhook endpoint pointing at `/api/webhooks/stripe` subscribed
-   to `checkout.session.completed`, and paste its signing secret into
-   `STRIPE_WEBHOOK_SECRET`. Until the key is set, the Checkout button
-   politely falls back to the contact/concierge flow.
-2. **Shiprocket** — create an API user (Settings → API → Configure) and set
-   `SHIPROCKET_EMAIL`, `SHIPROCKET_PASSWORD`, and
-   `SHIPROCKET_PICKUP_LOCATION`. Orders are created as **Prepaid** (Stripe
-   captures payment first) with default parcel dimensions; adjust per
-   shipment in the Shiprocket panel. Note: item prices are forwarded in the
-   store currency (USD) — set your Shiprocket account/channel up for
-   international orders (Shiprocket X) or convert as needed.
+Set `STRIPE_SECRET_KEY` and `NEXT_PUBLIC_SITE_URL` (copy `.env.example` to
+`.env.local` for local work). Until the key is set, the Checkout button
+politely falls back to the contact/concierge flow.
+
+See [SETUP.md](./SETUP.md) for the full go-live walkthrough.
 
 ## Imagery
 

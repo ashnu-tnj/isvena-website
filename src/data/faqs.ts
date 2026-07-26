@@ -23,7 +23,7 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "Does Isvena ship worldwide?",
-    a: "Yes, Isvena ships worldwide from Chennai, India. Shipping and any applicable duties or taxes are calculated at checkout, and payment is handled securely by card.",
+    a: "Yes, Isvena ships worldwide from Chennai, India, and shipping is complimentary on every order — the price you see is the price you pay. Payment is handled securely by card. Any import duties or taxes charged by the destination country are set by that country and remain the recipient's responsibility.",
   },
   {
     q: "What is hand-braided leather?",

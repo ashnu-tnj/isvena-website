@@ -130,6 +130,12 @@ export function productSchema(product: Product, category?: Category) {
           "@type": "DefinedRegion",
           name: "Worldwide",
         },
+        // Shipping is complimentary on every order, everywhere.
+        shippingRate: {
+          "@type": "MonetaryAmount",
+          value: 0,
+          currency: product.currency,
+        },
       },
     },
     additionalProperty: [
