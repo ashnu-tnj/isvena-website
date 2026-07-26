@@ -6,6 +6,7 @@ import SiteFooter from "@/components/site-footer";
 import CartDrawer from "@/components/cart-drawer";
 import JsonLd from "@/components/json-ld";
 import { CartProvider } from "@/lib/cart-context";
+import { CurrencyProvider } from "@/lib/currency-context";
 import { site, SITE_URL } from "@/lib/site";
 import { organizationSchema, websiteSchema } from "@/lib/structured-data";
 
@@ -85,12 +86,14 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-ivory text-ink">
         <JsonLd data={organizationSchema()} />
         <JsonLd data={websiteSchema()} />
-        <CartProvider>
-          <SiteHeader />
-          <main className="flex-1">{children}</main>
-          <SiteFooter />
-          <CartDrawer />
-        </CartProvider>
+        <CurrencyProvider>
+          <CartProvider>
+            <SiteHeader />
+            <main className="flex-1">{children}</main>
+            <SiteFooter />
+            <CartDrawer />
+          </CartProvider>
+        </CurrencyProvider>
       </body>
     </html>
   );

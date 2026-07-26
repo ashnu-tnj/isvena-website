@@ -4,7 +4,8 @@ Payments run on **Stripe Checkout**. There is no shipping integration —
 delivery is complimentary worldwide and arranged manually from the Stripe
 dashboard, which holds every detail the workshop needs.
 
-Two environment variables and you are live.
+Two environment variables and you are live; a third switches on local-currency
+display.
 
 **Do not paste your secret key into a chat, a commit, or a ticket.** It goes
 in the Vercel dashboard and nowhere else. `.env*` is gitignored.
@@ -47,7 +48,39 @@ Dashboard → **Settings → Personal → Notifications** → enable emails for
 **successful payments**. Without it you are relying on remembering to check
 the dashboard.
 
-## 3. Put the values in Vercel
+## 3. Charge in the customer's currency
+
+Dashboard → **Settings → Payments → Adaptive Pricing** → enable.
+
+Stripe then detects the customer's location and presents the price in their
+local currency — GBP in the UK, AED in the UAE — handling the conversion and
+the FX itself. The Checkout Session is still created in USD; nothing in the
+code changes.
+
+**Check whether your account supports it before relying on it.** Adaptive
+Pricing is not available to every account, and yours is India-based. If the
+setting isn't there, everyone is charged USD and you should leave
+`NEXT_PUBLIC_LOCAL_PRICING` unset (see below).
+
+### Showing local prices on the site
+
+Once Adaptive Pricing is live, set `NEXT_PUBLIC_LOCAL_PRICING=on`. Product
+pages, cards and the cart then show the visitor's currency instead of USD.
+
+These figures are **approximations**, marked with `≈`, because Stripe does
+not publish the rate it will use in advance — so the site cannot promise the
+exact charge, only a close guide. Rates live in `src/lib/currency.ts`,
+rounded to clean numbers (`≈ £255`, not `£252.80`). The pegged Gulf
+currencies barely move; glance at the floating ones every few months.
+
+> **Order of operations matters.** Turning this on while Adaptive Pricing is
+> off means the site quotes £255 and Stripe charges $320. Enable Adaptive
+> Pricing first, confirm it works, then set the flag.
+
+Server-rendered HTML, page titles and structured data all stay in USD, so
+search engines and the canonical price are unaffected.
+
+## 4. Put the values in Vercel
 
 Project **isvena-website** (team *aflatus*) → **Settings → Environment
 Variables**:
@@ -58,6 +91,7 @@ Variables**:
 |---|---|
 | `STRIPE_SECRET_KEY` | `sk_test_…`, later `sk_live_…` |
 | `NEXT_PUBLIC_SITE_URL` | The origin that actually serves the site |
+| `NEXT_PUBLIC_LOCAL_PRICING` | `on` once Adaptive Pricing is enabled; otherwise leave unset |
 
 Two traps:
 
@@ -68,7 +102,7 @@ Two traps:
 - **Environment variables only apply to new deployments.** Save, then
   redeploy — the running deployment does not pick them up.
 
-## 4. A caveat before real money
+## 5. A caveat before real money
 
 The site charges in **USD** and the business is registered in India. Stripe
 India accounts have specific rules about accepting international payments

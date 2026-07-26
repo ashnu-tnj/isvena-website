@@ -3,9 +3,12 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useCart } from "@/lib/cart-context";
+import { useCurrency } from "@/lib/currency-context";
+import Price from "@/components/price";
 
 export default function CartDrawer() {
   const { lines, isOpen, closeCart, removeItem, updateQty, subtotal } = useCart();
+  const { approximate, currency } = useCurrency();
   const [checkingOut, setCheckingOut] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
@@ -84,9 +87,10 @@ export default function CartDrawer() {
                       >
                         {line.name}
                       </Link>
-                      <span className="whitespace-nowrap text-sm">
-                        ${(line.price * line.qty).toLocaleString()}
-                      </span>
+                      <Price
+                        usd={line.price * line.qty}
+                        className="whitespace-nowrap text-sm"
+                      />
                     </div>
                     <p className="text-xs uppercase tracking-wide text-ink-soft">{line.color}</p>
                     <div className="mt-2 flex items-center gap-3">
@@ -125,12 +129,19 @@ export default function CartDrawer() {
           <div className="border-t hairline px-6 py-6">
             <div className="mb-4 flex items-center justify-between text-sm">
               <span className="eyebrow text-gold">Subtotal</span>
-              <span className="font-display text-lg">${subtotal.toLocaleString()}</span>
+              <Price usd={subtotal} className="font-display text-lg" />
             </div>
             <p className="mb-4 text-xs leading-relaxed text-ink-soft">
               Each piece is woven or stitched to order and ships in 2–3 weeks.
               Secure payment by card via Stripe, with complimentary shipping
               worldwide.
+              {approximate && (
+                <>
+                  {" "}
+                  Totals are shown in {currency} as a guide — the exact amount
+                  is set at checkout.
+                </>
+              )}
             </p>
             {checkoutError && (
               <p className="mb-3 text-xs leading-relaxed text-cognac-dark">

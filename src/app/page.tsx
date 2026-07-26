@@ -3,6 +3,7 @@ import Image from "next/image";
 import PlaceholderArt from "@/components/placeholder-art";
 import ProductCard from "@/components/product-card";
 import AutoVideo from "@/components/auto-video";
+import Price from "@/components/price";
 import Reveal from "@/components/reveal";
 import { categories } from "@/data/categories";
 import { getFeaturedProducts } from "@/data/products";
@@ -200,9 +201,7 @@ export default function Home() {
                 <Link href={`/product/${signature.slug}`} className="btn btn-solid">
                   Discover the Weave
                 </Link>
-                <span className="font-display text-lg">
-                  ${signature.price.toLocaleString()}
-                </span>
+                <Price usd={signature.price} className="font-display text-lg" />
               </div>
             </Reveal>
           </div>
