@@ -102,6 +102,25 @@ export function currencyForCountry(country: string | null | undefined): string {
 }
 
 /**
+ * Country from a BCP 47 locale ("en-GB" → "GB").
+ *
+ * Used when the server sends no country header — which is the normal case
+ * when self-hosting without a GeoIP module. Weaker evidence than an IP
+ * lookup (it reflects the device's language settings, not its location), but
+ * it means the currency choice works out of the box, and the visitor can
+ * override it either way.
+ */
+export function countryFromLocale(locale: string | null | undefined): string | null {
+  if (!locale) return null;
+  try {
+    return new Intl.Locale(locale).region ?? null;
+  } catch {
+    const match = /^[A-Za-z]{2,3}[-_]([A-Za-z]{2})\b/.exec(locale);
+    return match ? match[1].toUpperCase() : null;
+  }
+}
+
+/**
  * Round to a figure that looks priced rather than converted: £354.87 reads as
  * a conversion artefact, £355 reads as a price. Coarser as the number grows,
  * so ¥68,400 doesn't end in stray digits either.

@@ -166,7 +166,11 @@ unset.
 
 Once Adaptive Pricing is live, set `NEXT_PUBLIC_LOCAL_PRICING=on` and
 **rebuild**. Product pages, cards and the cart then show the visitor's
-currency.
+currency, and a **USD / local switch appears in the header** so they can
+price the collection either way. The choice is remembered per browser.
+
+The switch only appears when there is a real choice — a visitor whose
+currency is already USD never sees it.
 
 Those figures are **approximations**, marked `≈`, because Stripe does not
 publish the rate it will use in advance. Rates live in `src/lib/currency.ts`,
@@ -180,12 +184,18 @@ engines and the canonical price are unaffected.
 
 ### Country detection behind nginx
 
-`/api/geo` reads the visitor's country from an `x-geo-country` header. On a
-VPS nothing sets that for you, so **without the step below every visitor is
-treated as USD** and local pricing silently does nothing.
+Country is resolved in two steps: `/api/geo` reads an `x-geo-country`
+header, and if nothing sets one the browser's own locale is used instead
+(`en-GB` → GB). **So local pricing works out of the box on a plain VPS** —
+the header is an accuracy upgrade, not a requirement.
 
-Install the GeoIP2 module (`apt install libnginx-mod-http-geoip2` and a
-GeoLite2-Country database), then:
+Locale is weaker evidence: it reflects the device's language settings rather
+than where the visitor is, so a British expat in Dubai sees GBP. The
+currency switch in the header lets anyone correct it, and the choice is
+remembered.
+
+For IP-based accuracy, install the GeoIP2 module (`apt install
+libnginx-mod-http-geoip2` and a GeoLite2-Country database), then:
 
 ```nginx
 geoip2 /usr/share/GeoIP/GeoLite2-Country.mmdb {
@@ -199,9 +209,10 @@ proxy_set_header X-Geo-Country $geoip2_country_code;
 Verify with `curl -sI https://www.isvena.com/api/geo` and a request from a
 non-Indian IP; the JSON should carry that country.
 
-If you would rather not run GeoIP, leave `NEXT_PUBLIC_LOCAL_PRICING` unset.
-Prices stay in USD sitewide and Adaptive Pricing still converts at checkout —
-the site simply doesn't preview the local figure.
+Skipping GeoIP is fine — detection falls back to the browser locale. To turn
+the feature off entirely, leave `NEXT_PUBLIC_LOCAL_PRICING` unset: prices stay
+in USD sitewide, the currency switch disappears, and Adaptive Pricing still
+converts at checkout.
 
 ## 7. Stripe notifications
 
