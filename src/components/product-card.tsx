@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import PlaceholderArt from "@/components/placeholder-art";
+import Price from "@/components/price";
 import type { Product } from "@/data/products";
 
 export default function ProductCard({ product }: { product: Product }) {
@@ -46,9 +47,10 @@ export default function ProductCard({ product }: { product: Product }) {
             {product.materials.split(",")[0]}
           </p>
         </div>
-        <p className="whitespace-nowrap font-display text-base">
-          ${product.price.toLocaleString()}
-        </p>
+        <Price
+          usd={product.price}
+          className="whitespace-nowrap font-display text-base"
+        />
       </div>
 
       {/* Colour dots */}

@@ -7,6 +7,7 @@ import ProductCard from "@/components/product-card";
 import ProductPurchasePanel from "@/components/product-purchase-panel";
 import AutoVideo from "@/components/auto-video";
 import JsonLd from "@/components/json-ld";
+import Price from "@/components/price";
 import { getCategory } from "@/data/categories";
 import { getProduct, getProductsByCategory, products } from "@/data/products";
 import { productSchema, breadcrumbSchema } from "@/lib/structured-data";
@@ -175,7 +176,7 @@ export default async function ProductPage({
           <h1 className="mt-4 font-display text-3xl italic sm:text-[2.75rem] sm:leading-[1.05]">
             {product.name}
           </h1>
-          <p className="mt-4 font-display text-2xl">${product.price.toLocaleString()}</p>
+          <Price usd={product.price} className="mt-4 block font-display text-2xl" />
           <p className="mt-6 max-w-md text-sm leading-relaxed text-ink-soft">
             {product.description}
           </p>

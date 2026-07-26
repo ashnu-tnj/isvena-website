@@ -45,6 +45,11 @@ export async function POST(request: NextRequest) {
   }
 
   // Prices always come from the server-side catalog, never from the client.
+  //
+  // Line items stay in USD on purpose. Stripe's Adaptive Pricing (enabled in
+  // the Dashboard, not here) presents them to the customer in their local
+  // currency and owns the conversion. Setting a currency per request instead
+  // would fight that, and would mean trusting a client-supplied country.
   const lineItems = [];
   for (const line of lines) {
     const product = getProduct(line.slug);
