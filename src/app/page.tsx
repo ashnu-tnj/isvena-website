@@ -20,29 +20,6 @@ export default function Home() {
 
   return (
     <div>
-      {/* ─── The weave, in motion ─────────────────────────────────
-          Opens the page so the first thing on screen is moving. Sized as
-          a band rather than a full viewport, so the hero's headline and
-          CTAs stay within reach just below the fold. */}
-      <section className="relative overflow-hidden bg-ink">
-        <AutoVideo
-          src="/video/red-crossbody.mp4"
-          poster="/video/red-crossbody.jpg"
-          label="A hand-braided Isvena bag turning slowly on an ivory studio surface"
-          className="h-[52vw] max-h-[620px] min-h-[340px] w-full object-cover"
-        />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/40 to-ink/20" />
-        <div className="absolute inset-x-0 bottom-0 px-6 pb-10 text-center text-cream sm:pb-14 lg:px-10">
-          <p className="eyebrow text-gold-soft">In Motion</p>
-          <h2 className="mt-3 font-display text-2xl italic sm:text-4xl">
-            Every side, braided by hand.
-          </h2>
-          <Link href="/shop" className="btn btn-ghost pointer-events-auto mt-6">
-            Shop the Collection
-          </Link>
-        </div>
-      </section>
-
       {/* ─── Hero (split editorial) ───────────────────────────── */}
       <section className="border-b hairline">
         <div className="mx-auto grid max-w-[1600px] lg:grid-cols-2">
@@ -91,6 +68,26 @@ export default function Home() {
               className="h-auto w-full"
             />
           </div>
+        </div>
+      </section>
+
+      {/* ─── The weave, in motion ─────────────────────────────── */}
+      <section className="relative overflow-hidden bg-ink">
+        <AutoVideo
+          src="/video/red-crossbody.mp4"
+          poster="/video/red-crossbody.jpg"
+          label="A hand-braided Isvena bag turning slowly on an ivory studio surface"
+          className="h-[46vw] max-h-[560px] min-h-[300px] w-full object-cover"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/40 to-ink/20" />
+        <div className="absolute inset-x-0 bottom-0 px-6 pb-10 text-center text-cream sm:pb-14 lg:px-10">
+          <p className="eyebrow text-gold-soft">In Motion</p>
+          <h2 className="mt-3 font-display text-2xl italic sm:text-4xl">
+            Every side, braided by hand.
+          </h2>
+          <Link href="/shop" className="btn btn-ghost pointer-events-auto mt-6">
+            Shop the Collection
+          </Link>
         </div>
       </section>
 
