@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { categories } from "@/data/categories";
 import { useCart } from "@/lib/cart-context";
+import CurrencyToggle from "@/components/currency-toggle";
 
 const announcements = [
   "Handcrafted in Tamil Nadu",
@@ -100,7 +101,8 @@ export default function SiteHeader() {
             />
           </Link>
 
-          <div className="flex items-center gap-7">
+          <div className="flex items-center gap-5 lg:gap-7">
+            <CurrencyToggle className="hidden sm:flex" />
             <Link
               href="/heritage"
               className="link-line hidden text-xs uppercase tracking-widest-plus text-ink-soft transition-colors hover:text-ink lg:inline"
@@ -163,6 +165,8 @@ export default function SiteHeader() {
           >
             Contact
           </Link>
+          {/* Narrow screens hide the toggle in the bar, so it lives here too. */}
+          <CurrencyToggle className="mt-5 self-start sm:hidden" />
         </nav>
       </div>
     </header>
