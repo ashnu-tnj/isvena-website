@@ -93,7 +93,19 @@ export async function POST(request: NextRequest) {
     });
     return Response.json({ url: session.url });
   } catch (err) {
-    console.error("[checkout] failed to create session", err);
+    // The customer only ever sees a generic message, so Stripe's own reason
+    // has to be legible in the server log or the cause is unfindable.
+    const e = err as {
+      type?: string;
+      code?: string;
+      statusCode?: number;
+      message?: string;
+    };
+    console.error(
+      "[checkout] Stripe rejected the session — " +
+        `type=${e.type ?? "?"} code=${e.code ?? "?"} ` +
+        `status=${e.statusCode ?? "?"}: ${e.message ?? String(err)}`
+    );
     return Response.json(
       { error: "Could not start checkout. Please try again." },
       { status: 500 }
