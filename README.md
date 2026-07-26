@@ -28,6 +28,8 @@ Open [http://localhost:3000](http://localhost:3000).
   `localStorage`)
 - `src/app/api/checkout` — creates a Stripe Checkout Session (prices are
   always read from the server-side catalog, never trusted from the client)
+- `src/lib/currency.ts` + `src/app/api/geo` — approximate local-currency
+  display by visitor country, off unless `NEXT_PUBLIC_LOCAL_PRICING=on`
 
 ## Payments & Shipping
 
@@ -42,9 +44,18 @@ politely falls back to the contact/concierge flow.
 
 See [SETUP.md](./SETUP.md) for the full go-live walkthrough.
 
+## Deployment
+
+Self-hosted on a VPS: a Node process behind nginx, managed by systemd. See
+[SETUP.md](./SETUP.md) for the build, service, nginx and TLS setup, and for
+how to deploy an update.
+
 ## Imagery
 
-Real product photography isn't available yet, so `PlaceholderArt` renders
-art-directed panels (brand palette + a woven motif referencing the
-hand-braiding technique) in its place. Swap these out for real photography
-per product/category before launch.
+Products are shot for real; `PlaceholderArt` remains as the fallback for any
+product added without a photograph, rendering an art-directed panel (brand
+palette plus a woven motif referencing the hand-braiding technique) so a new
+entry never lands with a broken image.
+
+Product photography and the catalogue itself are edited through a Google
+Sheet — see [CATALOGUE.md](./CATALOGUE.md).
