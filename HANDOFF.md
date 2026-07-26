@@ -1,5 +1,12 @@
 # ISVENA WEBSITE BUILD — COMPREHENSIVE HANDOFF
 
+> **Historical snapshot — parts of this are now out of date.** It records the
+> state of the build at one point in time and is kept for context, not as a
+> description of the site today. Two things have since changed: wallets and
+> belts were dropped from the range, and the Shiprocket integration was
+> removed (shipping is complimentary worldwide and arranged manually).
+> For current setup see [SETUP.md](./SETUP.md) and [README.md](./README.md).
+
 ## 1. Primary Request and Intent
 
 Build a complete Next.js e-commerce website for Isvena, a luxury leather goods manufacturer based in Ambur/Periyamet, Chennai, India. The site must showcase hand-braided leather products (totes, wallets, belts, clutches, baskets), integrate with Stripe for payments and Shiprocket for shipping automation, include a shopping cart system, and tell the brand's heritage story dating back to 1936.

@@ -9,6 +9,11 @@ interface CheckoutLine {
 }
 
 // Countries Isvena ships to via Stripe Checkout's address collection.
+//
+// Shipping is complimentary worldwide, so no `shipping_options` are defined —
+// Stripe then charges nothing for delivery and shows the customer no shipping
+// line at all. The address and phone are still collected, because that is what
+// the workshop needs to despatch the piece.
 const SHIPPING_COUNTRIES = [
   "US", "CA", "GB", "IE", "AU", "NZ",
   "DE", "FR", "IT", "ES", "PT", "NL", "BE", "AT", "CH",

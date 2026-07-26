@@ -129,8 +129,8 @@ export default function CartDrawer() {
             </div>
             <p className="mb-4 text-xs leading-relaxed text-ink-soft">
               Each piece is woven or stitched to order and ships in 2–3 weeks.
-              Secure payment by card via Stripe; shipping and taxes are
-              calculated at checkout.
+              Secure payment by card via Stripe, with complimentary shipping
+              worldwide.
             </p>
             {checkoutError && (
               <p className="mb-3 text-xs leading-relaxed text-cognac-dark">
