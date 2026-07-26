@@ -47,12 +47,34 @@ export async function POST(request: NextRequest) {
   return Response.json({ received: true });
 }
 
+/**
+ * Warehouse SKU for a paid line: `<slug>-<colour>`, read from the product
+ * metadata set in /api/checkout. Falls back to the bare slug, then to a
+ * constant, so a shipment is never blocked by a missing SKU.
+ */
+function skuFor(item: Stripe.LineItem): string {
+  const product = item.price?.product;
+  const metadata =
+    typeof product === "object" && product !== null && "metadata" in product
+      ? product.metadata
+      : null;
+
+  const slug = metadata?.slug;
+  if (!slug) return "isvena";
+
+  const color = metadata.color?.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  return color ? `${slug}-${color}` : slug;
+}
+
 async function fulfillOrder(
   stripe: Stripe,
   session: Stripe.Checkout.Session
 ) {
+  // Expand the product so the catalog slug and colour we stashed in metadata
+  // at checkout come back with the line item; they become the warehouse SKU.
   const lineItems = await stripe.checkout.sessions.listLineItems(session.id, {
     limit: 100,
+    expand: ["data.price.product"],
   });
 
   const customer = session.customer_details;
@@ -66,7 +88,7 @@ async function fulfillOrder(
 
   const items = lineItems.data.map((item) => ({
     name: item.description ?? "Isvena piece",
-    sku: item.description?.slice(0, 40) ?? "isvena",
+    sku: skuFor(item),
     units: item.quantity ?? 1,
     selling_price: (item.amount_total ?? 0) / 100 / (item.quantity || 1),
   }));

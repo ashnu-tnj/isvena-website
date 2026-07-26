@@ -11,6 +11,26 @@
 
 const BASE = "https://apiv2.shiprocket.in/v1/external";
 
+/**
+ * Stripe charges in USD, but Shiprocket expects rupees — the figure it is
+ * given becomes the declared value on the courier manifest and the customs
+ * paperwork, so sending dollars understates a shipment roughly 88-fold.
+ * Every amount crossing into Shiprocket is therefore converted here.
+ *
+ * Set SHIPROCKET_INR_PER_USD to the rate you want declared. It affects the
+ * declared value only — never what the customer is charged.
+ */
+const DEFAULT_INR_PER_USD = 88;
+
+function usdToInr(usd: number): number {
+  const configured = Number(process.env.SHIPROCKET_INR_PER_USD);
+  const rate =
+    Number.isFinite(configured) && configured > 0
+      ? configured
+      : DEFAULT_INR_PER_USD;
+  return Math.round(usd * rate);
+}
+
 interface TokenCache {
   token: string;
   expiresAt: number;
@@ -48,6 +68,7 @@ export interface ShiprocketOrderItem {
   name: string;
   sku: string;
   units: number;
+  /** Unit price in USD — converted to INR before it reaches Shiprocket. */
   selling_price: number;
 }
 
@@ -67,6 +88,7 @@ export interface CreateOrderInput {
   orderId: string;
   items: ShiprocketOrderItem[];
   shipTo: ShiprocketAddress;
+  /** Order subtotal in USD — converted to INR before it reaches Shiprocket. */
   subTotal: number;
   /** Parcel defaults for made-to-order bags; override per shipment in the panel if needed. */
   parcel?: { length: number; breadth: number; height: number; weight: number };
@@ -104,9 +126,12 @@ export async function createShiprocketOrder(input: CreateOrderInput) {
     billing_email: input.shipTo.email,
     billing_phone: input.shipTo.phone,
     shipping_is_billing: true,
-    order_items: input.items,
+    order_items: input.items.map((item) => ({
+      ...item,
+      selling_price: usdToInr(item.selling_price),
+    })),
     payment_method: "Prepaid",
-    sub_total: input.subTotal,
+    sub_total: usdToInr(input.subTotal),
     length: parcel.length,
     breadth: parcel.breadth,
     height: parcel.height,
