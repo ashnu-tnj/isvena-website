@@ -13,44 +13,44 @@ export interface Category {
 
 export const categories: Category[] = [
   {
-    slug: "tote-bags",
-    name: "Hand-Braided Totes",
+    slug: "totes-carryalls",
+    name: "Totes & Carryalls",
     shortName: "Totes",
-    tagline: "Vegetable-tanned, chrome-free, woven strip by strip",
+    tagline: "Everyday architecture, woven by hand",
     description:
-      "Our signature line and the heart of the workshop: totes braided by hand from vegetable-tanned, chrome-free, full-grain leather strips — safe for your skin, fully biodegradable, and woven to outlast a lifetime. From the classic open carryall to laptop-ready silhouettes in red, tan, rose, brown, black and green.",
+      "The heart of the collection: six hand-woven carryalls in vegetable-tanned, chrome-free full-grain leather — from the tall, laptop-ready Verona to the grand forest-green Oliva. Each is interlaced strip by strip, unlined, and built to soften rather than wear out.",
     tone: "cognac",
-    image: "/products/dark-tote_lifestyle.jpg",
+    image: "/products/lucca-life.jpg",
   },
   {
-    slug: "sling-crossbody",
-    name: "Sling & Crossbody",
-    shortName: "Slings",
-    tagline: "Vegetable-tanned, hands-free, braided light",
+    slug: "shoulder-hobo",
+    name: "Shoulder & Hobo",
+    shortName: "Shoulder",
+    tagline: "Soft curves, worn close",
     description:
-      "Braided vegetable-tanned, chrome-free leather slings, crossbody and waist bags — compact companions that carry the essentials, leave your hands free, and are safe for daily wear against your skin.",
+      "Bags that drape rather than sit. The slouching Sofia hobo, the moon-curved Luna, and the metallic Stella flap — shoulder silhouettes cut close to the body, woven in weaves fine enough to read as texture.",
     tone: "umber",
-    image: "/products/hobo_lifestyle.jpg",
+    image: "/products/sofia-life.jpg",
   },
   {
-    slug: "woven-basket-bags",
-    name: "Baskets & Home",
-    shortName: "Baskets",
-    tagline: "Basketry for the wardrobe and the hallway",
+    slug: "crossbody-belt",
+    name: "Crossbody & Belt",
+    shortName: "Crossbody",
+    tagline: "Hands-free, never careless",
     description:
-      "Traditional basketry worked in leather: the hallway catch-all leather basket and the architectural box bag — hand-woven over a holding form to outlast any cane basket they replace.",
-    tone: "olive",
-    image: "/products/set2_brown-bucket_packshot.jpg",
-  },
-  {
-    slug: "clutches",
-    name: "Clutches & Potli",
-    shortName: "Clutches",
-    tagline: "Evening structure, quiet detail",
-    description:
-      "Hand-finished clutch purses in the workshop's full colour range — pink, red, blue, yellow, green and brown — alongside the braided clutch and the traditional potli bag.",
+      "For moving through the day: the miniature Piccola basket on a long braided strap, and the Vita belt bag with its antique-brass zip — worn at the waist or across the chest, and the most secure pieces we make.",
     tone: "ink",
-    image: "/products/potli.jpg",
+    image: "/products/vita-life.jpg",
+  },
+  {
+    slug: "clutches-minis",
+    name: "Clutches & Minis",
+    shortName: "Clutches",
+    tagline: "Small rituals, done beautifully",
+    description:
+      "The smallest pieces carry the tightest weaves. The Sera wristlet clutch with its scalloped whip-stitched border, and the Gioia drawstring bucket finished with a hand-cut tassel.",
+    tone: "sand",
+    image: "/products/gioia-life.jpg",
   },
 ];
 

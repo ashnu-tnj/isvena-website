@@ -1,6 +1,6 @@
 # Isvena
 
-> Isvena is a leather goods house making hand-braided, vegetable-tanned (chrome-free) totes, slings, crossbody bags, clutches and baskets. Every piece is made to order by artisans in the family workshop of P.M. Rahamathulla & Co. in Periyamet, Chennai, Tamil Nadu, India, and shipped worldwide. The family's leather heritage dates back to 1936.
+> Isvena is a leather goods house making hand-woven, vegetable-tanned (chrome-free) leather bags. The Signature Collection is thirteen pieces — totes and carryalls, shoulder and hobo bags, crossbody and belt bags, clutches and buckets — each named in Italian and made in a single considered colourway. Every piece is made to order by artisans in the family workshop of P.M. Rahamathulla & Co. in Periyamet, Chennai, Tamil Nadu, India, and shipped worldwide. The family's leather heritage dates back to 1936.
 
 ## Key facts
 
@@ -13,7 +13,9 @@
 - Ships: Worldwide, from Chennai, India
 - Payment: Secure card payment via Stripe
 - Production: Made to order; typically ships in 2–3 weeks
-- Signature technique: Hand-braiding — full-grain hide cut into strips (as fine as 4mm) and woven entirely by hand
+- Signature technique: Hand-weaving — full-grain hide cut into strips (as fine as 4mm) and interlaced entirely by hand
+- Collection: The Signature Collection, 2026 — 13 pieces, references ISV-001 to ISV-013
+- Shipping cost: Complimentary worldwide on every order
 - Materials: Vegetable-tanned, chrome-free full-grain leather (safe for skin, biodegradable, develops a patina)
 - Website: https://www.isvena.com
 - Instagram: https://www.instagram.com/isvenaofficial (@isvenaofficial)
@@ -25,10 +27,19 @@ Isvena leather is tanned with natural plant tannins instead of chromium salts. I
 
 ## Product categories
 
-- Hand-Braided Totes — the signature line; open carryalls and laptop totes
-- Sling & Crossbody — compact hands-free braided slings, crossbody and waist bags
-- Baskets & Home — leather baskets and structured box bags
-- Clutches & Potli — clutch purses, braided clutches, traditional potli bags
+- Totes & Carryalls — Verona (tall shoulder tote, espresso), Siena (handheld basket tote, cognac), Rosa (wide-weave market tote, antique rose), Lucca (zigzag basket tote, toffee), Oliva (grand basket tote, forest green), Capri (shoulder basket tote, caramel)
+- Shoulder & Hobo — Sofia (slouch hobo, tan), Luna (crescent shoulder bag, mahogany), Stella (flap shoulder bag, metallic silver)
+- Crossbody & Belt — Piccola (mini basket crossbody, nero), Vita (woven belt bag, cognac)
+- Clutches & Minis — Sera (wristlet clutch, dark chocolate), Gioia (drawstring bucket, chestnut)
+
+## Weaves
+
+- Diagonal intrecciato — fine hand-interlaced diagonal (Verona, Vita)
+- Wide-strap intrecciato — supple, cushioned hand-feel (Siena, Sofia)
+- Oversized checkerboard — 5 cm straps, hand-burnished (Rosa)
+- Zigzag herringbone — tight, reads as fabric from a distance (Lucca, Oliva, Capri, Luna, Piccola, Sera)
+- Fine herringbone — the tightest weave in the collection (Gioia)
+- Micro-weave metallic intrecciato — shimmers like chainmail (Stella)
 
 ## Key pages
 

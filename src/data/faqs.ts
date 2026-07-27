@@ -7,7 +7,7 @@
 export const faqs: { q: string; a: string }[] = [
   {
     q: "What is Isvena?",
-    a: "Isvena is a leather goods house that makes hand-braided, vegetable-tanned leather totes, slings, crossbody bags, clutches and baskets. It is the direct-to-consumer brand of P.M. Rahamathulla & Co., a family leather workshop in Periyamet, Chennai, Tamil Nadu, India, whose leather heritage dates back to 1936.",
+    a: "Isvena is a leather goods house that makes hand-woven, vegetable-tanned leather totes, shoulder and hobo bags, crossbody and belt bags, clutches and buckets. It is the direct-to-consumer brand of P.M. Rahamathulla & Co., a family leather workshop in Periyamet, Chennai, Tamil Nadu, India, whose leather heritage dates back to 1936.",
   },
   {
     q: "What does vegetable-tanned, chrome-free leather mean and why does it matter?",
@@ -27,7 +27,7 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "What is hand-braided leather?",
-    a: "Hand-braided leather is made by cutting full-grain hide into narrow strips — some as fine as 4mm — and interlacing them entirely by hand into a woven pattern. A single tote can take more than a full day to braid. It is the signature technique behind Isvena's totes, slings, crossbody bags and clutches.",
+    a: "Hand-braided leather is made by cutting full-grain hide into narrow strips — some as fine as 4mm — and interlacing them entirely by hand into a woven pattern. A single tote can take more than a full day to braid. It is the signature technique behind every piece in the Signature Collection, from the tall Verona tote to the crescent Luna.",
   },
   {
     q: "How do I care for vegetable-tanned leather?",
@@ -39,7 +39,7 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "What colours does Isvena offer?",
-    a: "Depending on the piece, Isvena leather is available in tan, brown, black, red, rose, pink, green, blue, yellow, white and a soft metallic silver.",
+    a: "Each piece in the Signature Collection is made in one considered colourway: espresso, cognac, antique rose, toffee, forest green, caramel, tan, mahogany, nero black, dark chocolate, chestnut, and a metallic silver. Custom colours can be discussed for made-to-order and wholesale enquiries.",
   },
   {
     q: "What payment methods does Isvena accept?",

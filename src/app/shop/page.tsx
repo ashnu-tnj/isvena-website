@@ -9,7 +9,7 @@ import { ogImage } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Shop the Full Collection",
   description:
-    "Every Isvena piece in one place — hand-braided, vegetable-tanned leather totes, slings, clutches and baskets, made to order in Chennai and shipped worldwide.",
+    "All thirteen pieces of the Isvena Signature Collection in one place — hand-woven, vegetable-tanned leather totes, shoulder bags, crossbody and belt bags, clutches and buckets, made to order in Chennai and shipped worldwide.",
   alternates: { canonical: "/shop" },
   openGraph: {
     type: "website",

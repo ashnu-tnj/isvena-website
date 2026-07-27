@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import PlaceholderArt from "@/components/placeholder-art";
 import ProductCard from "@/components/product-card";
-import AutoVideo from "@/components/auto-video";
 import Price from "@/components/price";
 import Reveal from "@/components/reveal";
 import { categories } from "@/data/categories";
@@ -40,8 +39,8 @@ export default function Home() {
               style={{ animationDelay: "0.45s" }}
             >
               Isvena is the design house built on the workshop of P.M. Rahamathulla
-              &amp; Co — hand-braided totes, slings, clutches and baskets, made one
-              hide at a time.
+              &amp; Co — thirteen hand-woven pieces, from the tall Verona tote to
+              the crescent Luna, made one hide at a time.
             </p>
             <div
               className="reveal mt-9 flex flex-wrap items-center gap-4"
@@ -56,14 +55,14 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Editorial image — rendered at its own 3:4 ratio so the model and
-              bag are never cropped. */}
+          {/* Editorial image — rendered at its own ratio so the piece is
+              never cropped. */}
           <div className="order-1 w-full overflow-hidden lg:order-2">
             <Image
               src="/products/hero-editorial.jpg"
-              alt="A model carrying the Isvena tan hand-braided woven leather shoulder bag"
-              width={896}
-              height={1200}
+              alt="The Capri caramel hand-woven leather basket tote on a sunlit stone ledge, cast with olive-branch shadows"
+              width={1122}
+              height={1402}
               priority
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="h-auto w-full"
@@ -72,19 +71,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── The weave, in motion ─────────────────────────────── */}
+      {/* ─── The weave, up close ──────────────────────────────── */}
       <section className="relative overflow-hidden bg-ink">
-        <AutoVideo
-          src="/video/red-crossbody.mp4"
-          poster="/video/red-crossbody.jpg"
-          label="A hand-braided Isvena bag turning slowly on an ivory studio surface"
-          className="h-[46vw] max-h-[560px] min-h-[300px] w-full object-cover"
-        />
+        <div className="relative h-[46vw] max-h-[560px] min-h-[300px] w-full">
+          <Image
+            src="/products/oliva-weave.jpg"
+            alt="Macro detail of the triple-dipped forest-green herringbone weave on the Oliva tote"
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        </div>
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/40 to-ink/20" />
         <div className="absolute inset-x-0 bottom-0 px-6 pb-10 text-center text-cream sm:pb-14 lg:px-10">
-          <p className="eyebrow text-gold-soft">In Motion</p>
+          <p className="eyebrow text-gold-soft">The Weave</p>
           <h2 className="mt-3 font-display text-2xl italic sm:text-4xl">
-            Every side, braided by hand.
+            Every strip, interlaced by hand.
           </h2>
           <Link href="/shop" className="btn btn-ghost pointer-events-auto mt-6">
             Shop the Collection
