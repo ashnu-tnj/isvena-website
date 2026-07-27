@@ -1,66 +1,94 @@
-# Product catalogue — Google Sheet workflow
+# Product catalogue
 
-The catalogue lives in code at `src/data/products.ts`. A mirror of it is
-maintained as a Google Sheet so products can be edited without touching
-TypeScript:
+The catalogue lives in code at `src/data/products.ts`. It holds **The
+Signature Collection, 2026** — thirteen pieces, references `ISV-001` to
+`ISV-013`, taken from the house catalogue document.
 
-**Sheet:** *Isvena — Product Catalogue (with images)*
-<https://docs.google.com/spreadsheets/d/1IVjWmTnwXJi6qQxYNelwFB-MSUTwEnAH2nmpmVJJUT8/edit>
-(kept in the same Drive folder as the product photography)
+> **The old Google Sheet is out of date.** It mirrors the previous
+> 14-product range, which has been removed entirely — different products,
+> different categories, different photography. Ask for it to be regenerated
+> from the current catalogue before editing anything there.
 
-## How to use it
+## The collection
 
-Edit the sheet, then ask for the site to be updated from it. The sheet is
-the thing you change; `products.ts` is regenerated to match.
+| Ref | Name | Piece | Category |
+|---|---|---|---|
+| ISV-001 | Verona | Tall Shoulder Tote — Espresso | Totes & Carryalls |
+| ISV-002 | Siena | Handheld Basket Tote — Cognac | Totes & Carryalls |
+| ISV-003 | Rosa | Wide-Weave Market Tote — Antique Rose | Totes & Carryalls |
+| ISV-004 | Lucca | Zigzag Basket Tote — Toffee | Totes & Carryalls |
+| ISV-005 | Oliva | Grand Basket Tote — Forest Green | Totes & Carryalls |
+| ISV-006 | Capri | Shoulder Basket Tote — Caramel | Totes & Carryalls |
+| ISV-007 | Sofia | Slouch Hobo — Tan | Shoulder & Hobo |
+| ISV-008 | Luna | Crescent Shoulder Bag — Mahogany | Shoulder & Hobo |
+| ISV-009 | Stella | Flap Shoulder Bag — Metallic Silver | Shoulder & Hobo |
+| ISV-010 | Piccola | Mini Basket Crossbody — Nero | Crossbody & Belt |
+| ISV-011 | Vita | Woven Belt Bag — Cognac | Crossbody & Belt |
+| ISV-012 | Sera | Wristlet Clutch — Dark Chocolate | Clutches & Minis |
+| ISV-013 | Gioia | Drawstring Bucket — Chestnut | Clutches & Minis |
 
-### Seeing the thumbnails
+## Photography
 
-`preview`, `preview_2`, `preview_3` and `video_preview` are live
-`=IMAGE()` formulas pointing at the deployed site. Rows import at the
-default height, so the images look like slivers until you select all rows
-and set a row height of roughly 120px — then every thumbnail scales to
-fit its cell.
+Every piece is shot three ways, named by slug in `public/products/`:
 
-They resolve against `https://isvena-website.vercel.app`. If the site
-moves to a custom domain and the Vercel URL stops serving, those formulas
-need the new host swapped in — the underlying data is unaffected.
-
-## Columns
-
-| Column | Notes |
+| Suffix | Shot |
 |---|---|
-| `preview`, `preview_2`, `preview_3` | Thumbnails of the 1st/2nd/3rd entry in `images`. Generated — edit `images`, not these. |
-| `video_preview` | Thumbnail of the film's poster frame. |
-| `slug` | **Key — do not edit.** It is the page URL (`/product/<slug>`). Changing it breaks the live URL and any links to it. To rename a product, change `name` only. |
-| `name` | Display name, shown on cards and the detail page. |
-| `category` | Must be exactly one of: `Hand-Braided Totes`, `Sling & Crossbody`, `Baskets & Home`, `Clutches & Potli`. |
-| `price_usd` | Number only, no `$`. |
-| `description` | Short selling paragraph. Also used as the meta description. |
-| `craftsmanship` | Longer "how it's made" paragraph on the detail page. |
-| `materials` | Also shown as the sub-label on product cards. |
-| `dimensions` | Free text. |
-| `weight` | Optional; leave blank if not applicable. |
-| `colors` | Comma-separated. Each becomes a selectable swatch. A colour with no swatch defined falls back to cognac — see `colorDot()` in `src/components/product-card.tsx`. |
-| `images` | Filenames under `public/products/`, separated by ` \| `. **First image is the primary** (cards, listings, social preview). |
-| `video` | Optional filename under `public/video/`. A matching `.webm` and `.jpg` poster must exist alongside it. When set, the film leads the detail gallery. |
-| `featured` | `yes` puts it on the homepage "Favourites" row and adds a *Signature* badge. Blank otherwise. |
+| `-hero.jpg` | Packshot on a plain ground — the card and listing image |
+| `-life.jpg` | Styled in a room setting |
+| `-weave.jpg` | Macro of the weave |
+
+`src/data/products.ts` builds these paths with the `shots()` helper, so a
+new product needs only a matching set of three files.
+
+`hero-editorial.jpg` is the homepage hero (currently the Capri styled
+shot). `workshop.jpg`, `process-cutting.jpg` and `process-braiding.jpg` are
+heritage-page imagery and are not tied to any product.
+
+## Prices
+
+The catalogue document carries no prices. The current ladder was set
+against size, weave complexity and finishing — Oliva at the top (largest,
+triple-dipped), Piccola at the bottom. Review before launch; they are a
+starting point, not a quote from the workshop.
+
+## Fields
+
+| Field | Notes |
+|---|---|
+| `slug` | **Key — do not edit.** It is the page URL (`/product/<slug>`). Changing it breaks the live URL and any links to it. To rename a product, change `name`. |
+| `sku` | Catalogue reference (`ISV-001`). |
+| `name` | House name — Verona, Siena, Luna. |
+| `subName` | The line beneath the name, e.g. "Tall Shoulder Tote — Espresso". Also the sub-label on product cards. |
+| `category` | One of: `totes-carryalls`, `shoulder-hobo`, `crossbody-belt`, `clutches-minis`. |
+| `price` | Number only, USD, no `$`. |
+| `description` | Short selling paragraph. Also the meta description. |
+| `craftsmanship` | How it is made — shown on the detail page. |
+| `materials`, `dimensions`, `strap`, `weave`, `fits` | Specification rows on the detail page, quoted from the catalogue. |
+| `weight` | Optional; omitted where the catalogue gives none. |
+| `note` | Closing detail — closure, finish. Shown in italic beneath the spec list. |
+| `colors` | Each piece is made in one colourway; the array drives the swatch. |
+| `images` | Built by `shots(slug)`. First entry is the primary image. |
+| `featured` | Puts it in the homepage "Favourites" row and adds a *Signature* badge. The first featured product also fills the homepage signature editorial — currently Siena, which the catalogue calls "the silhouette that defines the house". |
 | `tone` | Brand palette key used for fallback art: `cognac`, `umber`, `sand`, `ink`, `olive`, `cream`. |
 | `label` | Short word drawn on fallback art when a product has no photo. |
 
 ## Adding a product
 
-Add a row and fill at least `slug`, `name`, `category`, `price_usd`,
-`description`, `materials`, `colors`, `tone`, `label`. Use a lowercase
-hyphenated `slug`. If `images` is blank the product still renders, using
-the woven placeholder art.
+Add an entry with at least `slug`, `sku`, `name`, `subName`, `category`,
+`price`, `description`, `materials`, `dimensions`, `strap`, `weave`,
+`fits`, `colors`, `tone`, `label`. Drop the three photographs into
+`public/products/` named `<slug>-hero.jpg`, `-life.jpg`, `-weave.jpg`, and
+set `images: shots("<slug>")`. Without images the product still renders,
+using the woven placeholder art.
 
 ## Removing a product
 
-Delete the row. The product page, its sitemap entry and its structured
+Delete the entry. The product page, its sitemap entry and its structured
 data all disappear with it; the old URL then returns a 404.
 
-## What the sheet does not cover
+## What this does not cover
 
-Categories themselves (`src/data/categories.ts`), page copy, the FAQ
-(`src/data/faqs.ts`) and brand facts (`src/lib/site.ts`) are still edited
-in code.
+Categories (`src/data/categories.ts`), page copy, the FAQ
+(`src/data/faqs.ts`), brand facts (`src/lib/site.ts`) and the answer-engine
+manifest (`public/llms.txt`) are edited separately — all of them describe
+the collection and need revisiting when it changes.

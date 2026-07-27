@@ -44,7 +44,7 @@ export default function ProductCard({ product }: { product: Product }) {
             {product.name}
           </h3>
           <p className="mt-1 text-[0.68rem] uppercase tracking-widest-plus text-ink-soft">
-            {product.materials.split(",")[0]}
+            {product.subName}
           </p>
         </div>
         <Price

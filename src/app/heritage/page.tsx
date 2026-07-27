@@ -148,8 +148,8 @@ export default function HeritagePage() {
           <p>
             The current workshop, P.M. Rahamathulla &amp; Co, was founded in 2016 in Chennai,
             Tamil Nadu — returning the family to the material it has worked since 1936. For
-            years, it has produced hand-braided totes, woven leather baskets, slings
-            and clutches for buyers around the world, refining a weaving technique few
+            years, it has produced hand-woven totes, shoulder bags, belt bags and
+            clutches for buyers around the world, refining a weaving technique few
             workshops still practice at this scale.
           </p>
           <p>
