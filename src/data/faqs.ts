@@ -19,7 +19,11 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "Are Isvena products made to order, and how long does delivery take?",
-    a: "Yes. Because each piece is braided or stitched by hand, orders are made to order and typically ship in 2–3 weeks from the Chennai workshop. Tracking details are emailed once the item is dispatched.",
+    a: "Yes. Nothing is made in advance — every piece is cut, woven and finished to order, and personalised with your name if you choose, so orders ship in 6–8 weeks from the Chennai workshop. Tracking details are emailed once the item is dispatched.",
+  },
+  {
+    q: "Can I have my name engraved on an Isvena piece?",
+    a: "Yes, and it is free on every piece in the collection. Enter the name you want — your own or the recipient's — in the engraving field at checkout, up to 20 characters. It is hand-embossed into the vegetable-tanned leather in the Chennai workshop before the piece is finished. Because engraving is done during making rather than added afterwards, personalised orders ship in the same 6–8 weeks as any other, but they cannot be returned as unused stock.",
   },
   {
     q: "Does Isvena ship worldwide?",

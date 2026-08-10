@@ -60,8 +60,15 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
           {justAdded ? "Added to Bag ✓" : "Add to Bag"}
         </button>
       </div>
+      <p className="mt-4 border-l-2 border-gold/50 pl-3 text-xs leading-relaxed text-ink-soft">
+        <span className="font-display text-sm italic text-ink">
+          Free custom name engraving.
+        </span>{" "}
+        Have your name — or someone else&rsquo;s — hand-embossed into the
+        leather at no cost. Add it at checkout, up to 20 characters.
+      </p>
       <p className="mt-3 text-xs text-ink-soft">
-        Made to order · Ships in 2–3 weeks from our Chennai workshop.
+        Made to order · Ships in 6–8 weeks from our Chennai workshop.
       </p>
     </div>
   );

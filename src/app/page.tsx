@@ -11,7 +11,7 @@ const usps = [
   { n: "01", title: "Vegetable-Tanned", detail: "Chrome-free, safe for skin, fully biodegradable" },
   { n: "02", title: "Hand-Braided", detail: "Woven by artisans, one strip at a time" },
   { n: "03", title: "Made in Chennai", detail: "One family workshop, four generations" },
-  { n: "04", title: "Shipped Worldwide", detail: "From Tamil Nadu to your door" },
+  { n: "04", title: "Free Engraving", detail: "Your name, hand-embossed into the leather" },
 ];
 
 export default function Home() {

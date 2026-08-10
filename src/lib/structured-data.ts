@@ -147,7 +147,12 @@ export function productSchema(product: Product, category?: Category) {
       {
         "@type": "PropertyValue",
         name: "Production",
-        value: "Made to order, hand-braided in Chennai",
+        value: "Made to order, hand-braided in Chennai; ships in 6–8 weeks",
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Personalisation",
+        value: "Free custom name engraving, up to 20 characters",
       },
       product.dimensions && {
         "@type": "PropertyValue",
