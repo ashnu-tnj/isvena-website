@@ -41,9 +41,15 @@ Every piece is shot three ways, named by slug in `public/products/`:
 
 `src/data/products.ts` builds these paths with the `shots()` helper, so a
 new product needs only a matching set of three files. A piece with fewer
-photographs lists them explicitly instead — Treccia has only two, because
-the catalogue's braid-detail shot arrived at 104×104 and is unusable; the
-gallery fills the empty slot with woven placeholder art.
+photographs can list them explicitly instead, and the gallery fills the
+empty slot with woven placeholder art.
+
+Two of the small-leather-goods shots came in at low resolution. The
+Treccia braid detail was re-supplied at 495×481, which is usable but
+soft on high-density screens; the Milano weave macro is 362×362 and is
+the weakest image in the collection. Both are only ever rendered as small
+square tiles, so they hold up in place — but a larger export of either
+would drop straight in over the existing file.
 
 `hero-editorial.jpg` is the homepage hero (currently the Capri styled
 shot). `workshop.jpg`, `process-cutting.jpg` and `process-braiding.jpg` are
