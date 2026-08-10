@@ -402,9 +402,7 @@ export const products: Product[] = [
     note:
       "No punched holes — the braid is the adjustment · softens noticeably within a week of wear",
     label: "Treccia",
-    // Only two usable photographs supplied; the catalogue's braid-detail
-    // shot (45.jpg) came through at 104×104 and is unusable on the web.
-    images: [`${IMG}/treccia-hero.jpg`, `${IMG}/treccia-life.jpg`],
+    images: shots("treccia"),
   },
   {
     slug: "milano",
