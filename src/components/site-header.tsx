@@ -12,6 +12,7 @@ const announcements = [
   "A Family in Leather Since 1936",
   "Vegetable-Tanned · Chrome-Free",
   "Complimentary Worldwide Shipping",
+  "Free Custom Name Engraving",
 ];
 
 export default function SiteHeader() {

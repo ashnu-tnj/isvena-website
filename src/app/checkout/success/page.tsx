@@ -21,7 +21,7 @@ export default function CheckoutSuccessPage() {
       >
         Your payment has been received and your piece is joining the workshop
         queue in Chennai. Because everything we make is woven or stitched to
-        order, please allow 2–3 weeks before dispatch — we&rsquo;ll email you
+        order, please allow 6–8 weeks before dispatch — we&rsquo;ll email you
         your tracking details the moment it ships.
       </p>
       <Link href="/shop" className="btn btn-solid mt-10">

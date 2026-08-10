@@ -132,9 +132,9 @@ export default function CartDrawer() {
               <Price usd={subtotal} className="font-display text-lg" />
             </div>
             <p className="mb-4 text-xs leading-relaxed text-ink-soft">
-              Each piece is woven or stitched to order and ships in 2–3 weeks.
-              Secure payment by card via Stripe, with complimentary shipping
-              worldwide.
+              Every piece is made to order and ships in 6–8 weeks, with free
+              custom name engraving — add the name at checkout. Secure card
+              payment via Stripe, and complimentary shipping worldwide.
               {approximate && (
                 <>
                   {" "}

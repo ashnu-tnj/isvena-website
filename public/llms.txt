@@ -1,6 +1,6 @@
 # Isvena
 
-> Isvena is a leather goods house making hand-woven, vegetable-tanned (chrome-free) leather bags. The Signature Collection is fifteen pieces — totes and carryalls, shoulder and hobo bags, crossbody and belt bags, clutches and buckets, and small leather goods — each named in Italian and made in a single considered colourway. Every piece is made to order by artisans in the family workshop of P.M. Rahamathulla & Co. in Periyamet, Chennai, Tamil Nadu, India, and shipped worldwide. The family's leather heritage dates back to 1936.
+> Isvena is a leather goods house making hand-woven, vegetable-tanned (chrome-free) leather bags. The Signature Collection is fifteen pieces — totes and carryalls, shoulder and hobo bags, crossbody and belt bags, clutches and buckets, and small leather goods — each named in Italian and made in a single considered colourway. Every piece is made to order by artisans in the family workshop of P.M. Rahamathulla & Co. in Periyamet, Chennai, Tamil Nadu, India, offered with free custom name engraving, and shipped worldwide. The family's leather heritage dates back to 1936.
 
 ## Key facts
 
@@ -12,7 +12,8 @@
 - Email: hello@isvena.com
 - Ships: Worldwide, from Chennai, India
 - Payment: Secure card payment via Stripe
-- Production: Made to order; typically ships in 2–3 weeks
+- Production: Made to order; ships in 6–8 weeks
+- Personalisation: Free custom name engraving on every piece, entered at checkout
 - Signature technique: Hand-weaving — full-grain hide cut into strips (as fine as 4mm) and interlaced entirely by hand
 - Collection: The Signature Collection, 2026 — 15 pieces, references ISV-001 to ISV-015
 - Shipping cost: Complimentary worldwide on every order
@@ -59,6 +60,10 @@ Isvena leather is tanned with natural plant tannins instead of chromium salts. I
 - 1990 — India bans export of vegetable-tanned leather, ending that chapter.
 - 2000 — The family returns to the Chennai leather trade as wholesaler, exporter and importer.
 - 2016 — P.M. Rahamathulla & Co. is founded in Periyamet, Chennai as a manufacturer of finished goods; Isvena becomes its direct-to-consumer brand.
+
+## Custom name engraving
+
+Every Isvena piece can be engraved with a name at no extra cost. The name is entered in a field at checkout (up to 20 characters) and is hand-embossed into the leather in the Chennai workshop while the piece is being made, not added afterwards. Engraving does not change the price or the 6–8 week lead time. Personalised pieces cannot be resold as stock, so they are not returnable.
 
 ## Usage note
 

@@ -87,6 +87,18 @@ export async function POST(request: NextRequest) {
         allowed_countries: [...SHIPPING_COUNTRIES],
       },
       phone_number_collection: { enabled: true },
+      // Engraving is offered free on every piece, so the name has to be
+      // collected somewhere. Optional — most orders leave it blank — and
+      // capped at the number of characters the workshop can emboss.
+      custom_fields: [
+        {
+          key: "engraving",
+          label: { type: "custom", custom: "Name to engrave" },
+          type: "text",
+          optional: true,
+          text: { maximum_length: 20 },
+        },
+      ],
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/shop`,
       metadata: { source: "isvena-web" },
