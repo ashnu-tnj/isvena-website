@@ -52,6 +52,16 @@ export const categories: Category[] = [
     tone: "sand",
     image: "/products/gioia-life.jpg",
   },
+  {
+    slug: "small-leather-goods",
+    name: "Small Leather Goods",
+    shortName: "Small Goods",
+    tagline: "The everyday details, held to the same standard",
+    description:
+      "The house weave at its most disciplined scale: the Treccia belt, plaited from nine strands and adjustable at any point along its length, and the Milano bifold, woven outside and lined in plain nappa so cards slide rather than catch.",
+    tone: "umber",
+    image: "/products/treccia-hero.jpg",
+  },
 ];
 
 export function getCategory(slug: string) {

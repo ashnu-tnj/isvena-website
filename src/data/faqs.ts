@@ -7,7 +7,7 @@
 export const faqs: { q: string; a: string }[] = [
   {
     q: "What is Isvena?",
-    a: "Isvena is a leather goods house that makes hand-woven, vegetable-tanned leather totes, shoulder and hobo bags, crossbody and belt bags, clutches and buckets. It is the direct-to-consumer brand of P.M. Rahamathulla & Co., a family leather workshop in Periyamet, Chennai, Tamil Nadu, India, whose leather heritage dates back to 1936.",
+    a: "Isvena is a leather goods house that makes hand-woven, vegetable-tanned leather totes, shoulder and hobo bags, crossbody and belt bags, clutches, buckets, belts and wallets. It is the direct-to-consumer brand of P.M. Rahamathulla & Co., a family leather workshop in Periyamet, Chennai, Tamil Nadu, India, whose leather heritage dates back to 1936.",
   },
   {
     q: "What does vegetable-tanned, chrome-free leather mean and why does it matter?",
@@ -39,7 +39,7 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "What colours does Isvena offer?",
-    a: "Each piece in the Signature Collection is made in one considered colourway: espresso, cognac, antique rose, toffee, forest green, caramel, tan, mahogany, nero black, dark chocolate, chestnut, and a metallic silver. Custom colours can be discussed for made-to-order and wholesale enquiries.",
+    a: "Each piece in the Signature Collection is made in one considered colourway: espresso, cognac, antique rose, toffee, forest green, caramel, tan, mahogany, nero black, dark chocolate, chestnut, oxblood, dark brown, and a metallic silver. Custom colours can be discussed for made-to-order and wholesale enquiries.",
   },
   {
     q: "What payment methods does Isvena accept?",

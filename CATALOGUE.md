@@ -1,8 +1,8 @@
 # Product catalogue
 
 The catalogue lives in code at `src/data/products.ts`. It holds **The
-Signature Collection, 2026** — thirteen pieces, references `ISV-001` to
-`ISV-013`, taken from the house catalogue document.
+Signature Collection, 2026** — fifteen pieces, references `ISV-001` to
+`ISV-015`, taken from the house catalogue document.
 
 > **The old Google Sheet is out of date.** It mirrors the previous
 > 14-product range, which has been removed entirely — different products,
@@ -26,6 +26,8 @@ Signature Collection, 2026** — thirteen pieces, references `ISV-001` to
 | ISV-011 | Vita | Woven Belt Bag — Cognac | Crossbody & Belt |
 | ISV-012 | Sera | Wristlet Clutch — Dark Chocolate | Clutches & Minis |
 | ISV-013 | Gioia | Drawstring Bucket — Chestnut | Clutches & Minis |
+| ISV-014 | Treccia | Hand-Braided Belt — Dark Brown | Small Leather Goods |
+| ISV-015 | Milano | Woven Bifold Wallet — Oxblood | Small Leather Goods |
 
 ## Photography
 
@@ -38,7 +40,10 @@ Every piece is shot three ways, named by slug in `public/products/`:
 | `-weave.jpg` | Macro of the weave |
 
 `src/data/products.ts` builds these paths with the `shots()` helper, so a
-new product needs only a matching set of three files.
+new product needs only a matching set of three files. A piece with fewer
+photographs lists them explicitly instead — Treccia has only two, because
+the catalogue's braid-detail shot arrived at 104×104 and is unusable; the
+gallery fills the empty slot with woven placeholder art.
 
 `hero-editorial.jpg` is the homepage hero (currently the Capri styled
 shot). `workshop.jpg`, `process-cutting.jpg` and `process-braiding.jpg` are
@@ -59,11 +64,12 @@ starting point, not a quote from the workshop.
 | `sku` | Catalogue reference (`ISV-001`). |
 | `name` | House name — Verona, Siena, Luna. |
 | `subName` | The line beneath the name, e.g. "Tall Shoulder Tote — Espresso". Also the sub-label on product cards. |
-| `category` | One of: `totes-carryalls`, `shoulder-hobo`, `crossbody-belt`, `clutches-minis`. |
+| `category` | One of: `totes-carryalls`, `shoulder-hobo`, `crossbody-belt`, `clutches-minis`, `small-leather-goods`. |
 | `price` | Number only, USD, no `$`. |
 | `description` | Short selling paragraph. Also the meta description. |
 | `craftsmanship` | How it is made — shown on the detail page. |
 | `materials`, `dimensions`, `strap`, `weave`, `fits` | Specification rows on the detail page, quoted from the catalogue. |
+| `strapLabel` | Optional heading for the `strap` row (defaults to "Strap"). Treccia uses "Sizes", Milano uses "Interior". |
 | `weight` | Optional; omitted where the catalogue gives none. |
 | `note` | Closing detail — closure, finish. Shown in italic beneath the spec list. |
 | `colors` | Each piece is made in one colourway; the array drives the swatch. |
