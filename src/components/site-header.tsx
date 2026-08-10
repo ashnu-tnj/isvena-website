@@ -72,8 +72,8 @@ export default function SiteHeader() {
             {menuOpen ? "Close" : "Menu"}
           </button>
 
-          <nav className="hidden items-center gap-8 lg:flex">
-            {categories.slice(0, 4).map((c) => (
+          <nav className="hidden items-center gap-6 lg:flex xl:gap-8">
+            {categories.map((c) => (
               <Link
                 key={c.slug}
                 href={`/shop/${c.slug}`}

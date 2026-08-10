@@ -15,6 +15,11 @@ export interface Product {
   dimensions: string;
   /** Strap or handle drop, and how the piece is carried. */
   strap: string;
+  /**
+   * Heading for the `strap` row. Defaults to "Strap"; the small leather
+   * goods use it for sizing and interior layout instead.
+   */
+  strapLabel?: string;
   /** The weave used, and any structural detail of it. */
   weave: string;
   /** What the piece is sized to hold. */
@@ -48,7 +53,7 @@ const shots = (slug: string) => [
 ];
 
 /**
- * The Signature Collection, 2026 — thirteen pieces, taken from the house
+ * The Signature Collection, 2026 — fifteen pieces, taken from the house
  * catalogue. Every specification here (dimensions, drops, weave, materials)
  * is quoted from that document; prices are D2C retail, scaled to size,
  * weave complexity and finishing.
@@ -369,6 +374,65 @@ export const products: Product[] = [
     label: "Gioia",
     featured: true,
     images: shots("gioia"),
+  },
+
+  // ── Small Leather Goods ───────────────────────────────────────────
+  {
+    slug: "treccia",
+    sku: "ISV-014",
+    name: "Treccia",
+    subName: "Hand-Braided Belt — Dark Brown",
+    category: "small-leather-goods",
+    price: 185,
+    currency: "USD",
+    materials:
+      "Full-grain vegetable-tanned leather; smooth leather tip & keeper; solid antique-brass roller buckle, saddle-stitched",
+    dimensions: "3.2 cm (1.25″) wide — fits standard belt loops",
+    strap:
+      "Sizes 85 / 90 / 95 / 100 / 105 / 110 cm — fits approx. 71–96 cm (28–38″) waist",
+    strapLabel: "Sizes",
+    weave: "Nine-strand flat hand braid; infinitely adjustable",
+    fits: "Standard belt loops",
+    craftsmanship:
+      "Nine strands plaited by hand into a supple flat band. Because the prong passes between the strands rather than through punched holes, it adjusts at any point along its length — no eyelets, no wrong notch, no worn-out hole after a season.",
+    description:
+      "Its name means simply “the braid.” The softest belt in the collection, and the one that ages best.",
+    colors: ["Dark Brown"],
+    tone: "umber",
+    note:
+      "No punched holes — the braid is the adjustment · softens noticeably within a week of wear",
+    label: "Treccia",
+    // Only two usable photographs supplied; the catalogue's braid-detail
+    // shot (45.jpg) came through at 104×104 and is unusable on the web.
+    images: [`${IMG}/treccia-hero.jpg`, `${IMG}/treccia-life.jpg`],
+  },
+  {
+    slug: "milano",
+    sku: "ISV-015",
+    name: "Milano",
+    subName: "Woven Bifold Wallet — Oxblood",
+    category: "small-leather-goods",
+    price: 165,
+    currency: "USD",
+    materials:
+      "Full-grain calfskin exterior; smooth nappa lining; burnished edges",
+    dimensions:
+      "Closed 11.5 W × 9.5 H × 2 D cm (4.5″ × 3.7″ × 0.8″) · open 23 W × 9.5 H cm (9″ × 3.7″)",
+    strap:
+      "8 card slots · 2 full-length note compartments · 2 hidden slip pockets",
+    strapLabel: "Interior",
+    weave: "Fine diagonal intrecciato, hand-interlaced exterior",
+    fits: "Notes flat and uncreased, incl. euro, sterling & dollar",
+    weight: "approx. 85 g",
+    craftsmanship:
+      "The exterior is hand-woven in a fine diagonal intrecciato and edged in smooth burnished leather; inside, everything switches to plain nappa so cards slide rather than catch.",
+    description:
+      "The house weave, reduced to its most disciplined scale. Enough for a full wallet, slim enough for a jacket pocket — our most-gifted piece.",
+    colors: ["Oxblood"],
+    tone: "umber",
+    note: "Hand-burnished edges · pairs with the Treccia belt as a gift set",
+    label: "Milano",
+    images: shots("milano"),
   },
 ];
 

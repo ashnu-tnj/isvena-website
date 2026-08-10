@@ -121,16 +121,18 @@ export default async function ProductPage({
                 />
               </div>
             ))}
-            {/* Fill any remaining gallery slot with a woven motif panel */}
-            {product.images.length < 2 && (
-              <>
-                <div className="relative aspect-square">
-                  <PlaceholderArt tone={product.tone} pattern="grain" className="h-full w-full" />
+            {/* Not every piece has all three shots — fill the row so the
+                grid never ends on a gap. */}
+            {Array.from({ length: Math.max(0, 3 - product.images.length) }).map(
+              (_, i) => (
+                <div key={`fill-${i}`} className="relative aspect-square">
+                  <PlaceholderArt
+                    tone={product.tone}
+                    pattern={i === 0 ? "grain" : "plain"}
+                    className="h-full w-full"
+                  />
                 </div>
-                <div className="relative aspect-square">
-                  <PlaceholderArt tone={product.tone} pattern="plain" className="h-full w-full" />
-                </div>
-              </>
+              )
             )}
           </div>
         ) : (
@@ -182,7 +184,7 @@ export default async function ProductPage({
               </dd>
             </div>
             <div>
-              <dt className="eyebrow text-gold">Strap</dt>
+              <dt className="eyebrow text-gold">{product.strapLabel ?? "Strap"}</dt>
               <dd className="mt-1.5 text-ink-soft">{product.strap}</dd>
             </div>
             <div>
