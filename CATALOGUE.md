@@ -44,12 +44,16 @@ new product needs only a matching set of three files. A piece with fewer
 photographs can list them explicitly instead, and the gallery fills the
 empty slot with woven placeholder art.
 
-Two of the small-leather-goods shots came in at low resolution. The
-Treccia braid detail was re-supplied at 495×481, which is usable but
-soft on high-density screens; the Milano weave macro is 362×362 and is
-the weakest image in the collection. Both are only ever rendered as small
-square tiles, so they hold up in place — but a larger export of either
-would drop straight in over the existing file.
+Two of the small-leather-goods macros were supplied at low resolution.
+The Treccia braid detail was re-supplied at 495×481. The Milano weave
+macro only ever existed at 362×362, so it has been resampled to 724×724
+(Lanczos plus a restrained unsharp pass) to stop high-density screens
+scaling it up themselves — sharper edges, but no detail that was not in
+the original.
+
+Both are only ever rendered as small square tiles, so they hold up. A
+genuine re-export of either at 1000px or more would drop straight in over
+the existing file and is worth doing if the originals still exist.
 
 `hero-editorial.jpg` is the homepage hero (currently the Capri styled
 shot). `workshop.jpg`, `process-cutting.jpg` and `process-braiding.jpg` are
