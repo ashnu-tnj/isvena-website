@@ -6,6 +6,7 @@ import PlaceholderArt from "@/components/placeholder-art";
 import ProductCard from "@/components/product-card";
 import ProductPurchasePanel from "@/components/product-purchase-panel";
 import JsonLd from "@/components/json-ld";
+import Product360 from "@/components/product-360";
 import Price from "@/components/price";
 import { getCategory } from "@/data/categories";
 import { getProduct, getProductsByCategory, products } from "@/data/products";
@@ -95,6 +96,21 @@ export default async function ProductPage({
       <section className="mx-auto mt-8 grid max-w-7xl gap-10 px-6 pb-24 lg:grid-cols-2 lg:gap-16 lg:px-10">
         {product.images && product.images.length > 0 ? (
           <div className="grid grid-cols-2 gap-2 sm:gap-3">
+            {/* The turntable leads, at its own 4:3 — the stills below sit in
+                4:5 and 1:1 frames, so giving the film either would crop it. */}
+            {product.video && product.videoPoster && (
+              <div className="relative col-span-2 aspect-[4/3] overflow-hidden bg-sand">
+                <Product360
+                  src={product.video}
+                  poster={product.videoPoster}
+                  label={`${product.name} rotating slowly, showing the piece from every side`}
+                />
+                <span className="pointer-events-none absolute left-4 top-4 bg-ink/70 px-2.5 py-1 text-[0.6rem] uppercase tracking-widest-plus text-cream">
+                  360°
+                </span>
+              </div>
+            )}
+
             {/* Each piece is shot three ways: packshot, styled, weave macro. */}
             <div className="relative col-span-2 aspect-[4/5] overflow-hidden bg-sand">
               <Image

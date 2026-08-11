@@ -40,10 +40,22 @@ export interface Product {
    * Each piece is shot three ways: packshot, lifestyle, weave macro.
    */
   images?: string[];
+  /** Silent 360° turntable film under /public/video, and its poster frame. */
+  video?: string;
+  videoPoster?: string;
 }
 
 /** Base path for product photography in /public. */
 const IMG = "/products";
+
+/** Base path for the 360° turntable films in /public. */
+const VID = "/video";
+
+/** The 360° film and its poster frame for a piece. */
+const spin = (slug: string) => ({
+  video: `${VID}/${slug}-360.mp4`,
+  videoPoster: `${VID}/${slug}-360.jpg`,
+});
 
 /** Photography set for a piece: packshot, styled shot, weave close-up. */
 const shots = (slug: string) => [
@@ -83,6 +95,7 @@ export const products: Product[] = [
     note: "Open top · interior slip pocket recommended",
     label: "Verona",
     images: shots("verona"),
+    ...spin("verona"),
   },
   {
     slug: "siena",
@@ -107,6 +120,7 @@ export const products: Product[] = [
     label: "Siena",
     featured: true,
     images: shots("siena"),
+    ...spin("siena"),
   },
   {
     slug: "rosa",
@@ -131,6 +145,7 @@ export const products: Product[] = [
     note: "Each bag is dyed individually — tonal variation is part of the design",
     label: "Rosa",
     images: shots("rosa"),
+    ...spin("rosa"),
   },
   {
     slug: "lucca",
@@ -155,6 +170,7 @@ export const products: Product[] = [
     note: "Whip-stitched rim · braided handles",
     label: "Lucca",
     images: shots("lucca"),
+    ...spin("lucca"),
   },
   {
     slug: "oliva",
@@ -179,6 +195,7 @@ export const products: Product[] = [
     label: "Oliva",
     featured: true,
     images: shots("oliva"),
+    ...spin("oliva"),
   },
   {
     slug: "capri",
@@ -202,6 +219,7 @@ export const products: Product[] = [
     note: "Braided straps soften and settle to the shoulder within days",
     label: "Capri",
     images: shots("capri"),
+    ...spin("capri"),
   },
 
   // ── Shoulder & Hobo ───────────────────────────────────────────────
@@ -228,6 +246,7 @@ export const products: Product[] = [
     label: "Sofia",
     featured: true,
     images: shots("sofia"),
+    ...spin("sofia"),
   },
   {
     slug: "luna",
@@ -252,6 +271,7 @@ export const products: Product[] = [
     note: "Signature knot detail at strap base",
     label: "Luna",
     images: shots("luna"),
+    ...spin("luna"),
   },
   {
     slug: "stella",
@@ -275,6 +295,7 @@ export const products: Product[] = [
     note: "Flap keeps contents secure · the collection's occasion piece",
     label: "Stella",
     images: shots("stella"),
+    ...spin("stella"),
   },
 
   // ── Crossbody & Belt ──────────────────────────────────────────────
@@ -300,6 +321,7 @@ export const products: Product[] = [
     note: "Wear crossbody, on the shoulder, or carried by hand",
     label: "Piccola",
     images: shots("piccola"),
+    ...spin("piccola"),
   },
   {
     slug: "vita",
@@ -324,6 +346,7 @@ export const products: Product[] = [
     label: "Vita",
     featured: true,
     images: shots("vita"),
+    ...spin("vita"),
   },
 
   // ── Clutches & Minis ──────────────────────────────────────────────
@@ -349,6 +372,7 @@ export const products: Product[] = [
     note: "Doubles as a pouch-organiser inside larger totes",
     label: "Sera",
     images: shots("sera"),
+    ...spin("sera"),
   },
   {
     slug: "gioia",
@@ -374,6 +398,7 @@ export const products: Product[] = [
     label: "Gioia",
     featured: true,
     images: shots("gioia"),
+    ...spin("gioia"),
   },
 
   // ── Small Leather Goods ───────────────────────────────────────────
@@ -403,6 +428,7 @@ export const products: Product[] = [
       "No punched holes — the braid is the adjustment · softens noticeably within a week of wear",
     label: "Treccia",
     images: shots("treccia"),
+    ...spin("treccia"),
   },
   {
     slug: "milano",
@@ -431,6 +457,7 @@ export const products: Product[] = [
     note: "Hand-burnished edges · pairs with the Treccia belt as a gift set",
     label: "Milano",
     images: shots("milano"),
+    ...spin("milano"),
   },
 ];
 

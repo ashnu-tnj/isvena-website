@@ -55,6 +55,29 @@ Both are only ever rendered as small square tiles, so they hold up. A
 genuine re-export of either at 1000px or more would drop straight in over
 the existing file and is worth doing if the originals still exist.
 
+## 360° films
+
+Every piece has a silent turntable clip in `public/video/`, named by slug:
+
+| File | |
+|---|---|
+| `<slug>-360.mp4` | H.264, the universal fallback |
+| `<slug>-360.webm` | VP9, ~15% smaller, offered first |
+| `<slug>-360.jpg` | Poster frame, shown before playback |
+
+`products.ts` attaches them with the `spin()` helper, so a new product needs
+only a matching set of three files. Source clips were 4:3 at 864–960px wide;
+they are encoded to 800px wide, 24fps, silent.
+
+The film leads the detail gallery in a 4:3 frame of its own. It is
+deliberately *not* placed in the 4:5 or 1:1 frames the stills use, since
+either would crop a landscape clip.
+
+`Product360` gives it `preload="none"` and a poster, so no video is fetched
+until playback actually starts, and an IntersectionObserver pauses it once
+it scrolls out of view. Under `prefers-reduced-motion` it never autoplays —
+the poster stands in and native controls appear instead.
+
 `hero-editorial.jpg` is the homepage hero (currently the Capri styled
 shot). `workshop.jpg`, `process-cutting.jpg` and `process-braiding.jpg` are
 heritage-page imagery and are not tied to any product.
