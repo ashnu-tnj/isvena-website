@@ -47,13 +47,17 @@ export default function SiteHeader() {
           scrolled ? "border-b hairline shadow-[0_1px_20px_rgba(32,27,22,0.05)]" : ""
         }`}
       >
+        {/* Three tracks, not justify-between: the outer two are equal 1fr, so
+            the wordmark in the auto-width centre track is optically centred no
+            matter how many categories the nav carries. */}
         <div
-          className={`mx-auto flex max-w-7xl items-center justify-between px-6 transition-all duration-500 lg:px-10 ${
+          className={`mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-6 transition-all duration-500 lg:px-10 ${
             scrolled ? "py-3" : "py-5"
           }`}
         >
+          <div className="flex min-w-0 items-center justify-start">
           <button
-            className="flex items-center gap-2 text-xs uppercase tracking-widest-plus lg:hidden"
+            className="flex items-center gap-2 text-xs uppercase tracking-widest-plus xl:hidden"
             onClick={() => setMenuOpen((v) => !v)}
             aria-label="Toggle menu"
             aria-expanded={menuOpen}
@@ -73,21 +77,22 @@ export default function SiteHeader() {
             {menuOpen ? "Close" : "Menu"}
           </button>
 
-          <nav className="hidden items-center gap-6 lg:flex xl:gap-8">
+          <nav className="hidden items-center gap-5 xl:flex xl:gap-6">
             {categories.map((c) => (
               <Link
                 key={c.slug}
                 href={`/shop/${c.slug}`}
-                className="link-line text-xs uppercase tracking-widest-plus text-ink-soft transition-colors hover:text-ink"
+                className="link-line whitespace-nowrap text-xs uppercase tracking-widest-plus text-ink-soft transition-colors hover:text-ink"
               >
                 {c.shortName}
               </Link>
             ))}
           </nav>
+          </div>
 
           <Link
             href="/"
-            className="transition-opacity hover:opacity-70"
+            className="justify-self-center px-6 transition-opacity hover:opacity-70"
             aria-label="Isvena — home"
           >
             <Image
@@ -102,17 +107,17 @@ export default function SiteHeader() {
             />
           </Link>
 
-          <div className="flex items-center gap-5 lg:gap-7">
+          <div className="flex min-w-0 items-center justify-end gap-5 lg:gap-7">
             <CurrencyToggle className="hidden sm:flex" />
             <Link
               href="/heritage"
-              className="link-line hidden text-xs uppercase tracking-widest-plus text-ink-soft transition-colors hover:text-ink lg:inline"
+              className="link-line hidden whitespace-nowrap text-xs uppercase tracking-widest-plus text-ink-soft transition-colors hover:text-ink xl:inline"
             >
               Heritage
             </Link>
             <Link
               href="/contact"
-              className="link-line hidden text-xs uppercase tracking-widest-plus text-ink-soft transition-colors hover:text-ink lg:inline"
+              className="link-line hidden whitespace-nowrap text-xs uppercase tracking-widest-plus text-ink-soft transition-colors hover:text-ink xl:inline"
             >
               Contact
             </Link>
@@ -136,7 +141,7 @@ export default function SiteHeader() {
 
       {/* Mobile drawer */}
       <div
-        className={`overflow-hidden bg-ivory transition-[max-height] duration-500 ease-out lg:hidden ${
+        className={`overflow-hidden bg-ivory transition-[max-height] duration-500 ease-out xl:hidden ${
           menuOpen ? "max-h-[70vh] border-b hairline" : "max-h-0"
         }`}
       >
