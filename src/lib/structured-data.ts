@@ -1,4 +1,5 @@
 import { site, absoluteUrl, ogImage } from "@/lib/site";
+import { colourNames } from "@/data/colors";
 import type { Product } from "@/data/products";
 import type { Category } from "@/data/categories";
 
@@ -113,7 +114,9 @@ export function productSchema(product: Product, category?: Category) {
     sku: product.slug,
     category: category?.name,
     material: product.materials,
-    color: product.colors,
+    // Genuinely the whole range: nothing is stocked, so every silhouette is
+    // available in every house colour.
+    color: colourNames,
     brand: { "@type": "Brand", name: site.name },
     manufacturer: { "@id": ORG_ID },
     offers: {

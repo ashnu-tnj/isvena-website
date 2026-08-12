@@ -27,7 +27,11 @@ export interface Product {
   weight?: string;
   craftsmanship: string;
   description: string;
-  colors: string[];
+  /**
+   * The colour this piece was photographed in. Not a restriction — every
+   * silhouette is made to order in any of the house colours (`colors.ts`).
+   */
+  photographedIn: string;
   tone: Tone;
   /** Closing detail from the catalogue — closure, finish, weight. */
   note?: string;
@@ -90,7 +94,7 @@ export const products: Product[] = [
       "Woven in a fine diagonal intrecciato that catches the light like polished wood, then set on slim double straps cut to sit flat on the shoulder rather than roll.",
     description:
       "A tall, quietly structured tote in deep espresso. The generous North–South body swallows a 14″ laptop, a book and everything in between. The workhorse of the collection — boardroom in the morning, aperitivo by evening.",
-    colors: ["Espresso"],
+    photographedIn: "Espresso",
     tone: "umber",
     note: "Open top · interior slip pocket recommended",
     label: "Verona",
@@ -114,7 +118,7 @@ export const products: Product[] = [
       "A softly flared East–West basket gathered into a single rounded handle finished with a braided crown. The wide intrecciato gives it a supple, almost cushioned hand-feel that moulds to whatever it carries.",
     description:
       "The silhouette that defines the house. Warm cognac, effortless with linen in summer and a camel coat in winter.",
-    colors: ["Cognac"],
+    photographedIn: "Cognac",
     tone: "cognac",
     note: "Softly slouches with wear · develops a rich patina over time",
     label: "Siena",
@@ -140,7 +144,7 @@ export const products: Product[] = [
       "Woven from extra-wide leather straps and hand-burnished so every panel carries its own cloud-like shading. Contrasting chocolate handles are anchored with exposed hand-stitching — a nod to traditional saddlery.",
     description:
       "Bold and sculptural in a faded antique rose. The statement piece: one colour, maximum presence.",
-    colors: ["Antique Rose"],
+    photographedIn: "Antique Rose",
     tone: "sand",
     note: "Each bag is dyed individually — tonal variation is part of the design",
     label: "Rosa",
@@ -165,7 +169,7 @@ export const products: Product[] = [
       "Woven in a herringbone zigzag so fine it reads as fabric from a distance. Braided round handles, a whip-stitched rim and a wide, stable base make it as practical as it is beautiful.",
     description:
       "Our homage to the classic mercato basket, reimagined entirely in leather. The forever summer bag that refuses to stay seasonal.",
-    colors: ["Toffee"],
+    photographedIn: "Toffee",
     tone: "cognac",
     note: "Whip-stitched rim · braided handles",
     label: "Lucca",
@@ -189,7 +193,7 @@ export const products: Product[] = [
       "The saturated botanical hue is achieved through triple-dipped hand dyeing, giving the surface a lacquered depth that turns almost emerald in sunlight.",
     description:
       "The Lucca's grander, moodier sister — scaled up for real life: weekends, work, the market run.",
-    colors: ["Forest Green"],
+    photographedIn: "Forest Green",
     tone: "olive",
     note: "Our largest silhouette · rich patina develops with wear",
     label: "Oliva",
@@ -214,7 +218,7 @@ export const products: Product[] = [
       "Long, fully braided straps tuck cleanly over the shoulder. The dense zigzag weave holds its shape without stiffness, and the compact footprint keeps it elegant on a crowded train or a café chair.",
     description:
       "The refined commuter — a neat East–West basket in golden caramel. Hands free, lines clean.",
-    colors: ["Caramel"],
+    photographedIn: "Caramel",
     tone: "cognac",
     note: "Braided straps soften and settle to the shoulder within days",
     label: "Capri",
@@ -240,7 +244,7 @@ export const products: Product[] = [
       "A wide intrecciato body gathers into a single braided strap, creating a deep-slouch profile under the arm. The tonal contrast within the weave — light straps over shadowed gaps — gives the surface a quiet zigzag rhythm at the edges.",
     description:
       "Relaxed and unhurried, the Sofia drapes rather than sits. The bag you reach for without thinking.",
-    colors: ["Tan"],
+    photographedIn: "Tan",
     tone: "cognac",
     note: "Designed to slouch — the drape is the design",
     label: "Sofia",
@@ -266,7 +270,7 @@ export const products: Product[] = [
       "Woven in a whisper-fine zigzag, with a slender braided strap knotted at each end — a detail borrowed from fishermen's rope work.",
     description:
       "Named for its moon-curve silhouette. Small in footprint, exact in proportion; it holds the essentials and nothing that isn't.",
-    colors: ["Mahogany"],
+    photographedIn: "Mahogany",
     tone: "umber",
     note: "Signature knot detail at strap base",
     label: "Luna",
@@ -290,7 +294,7 @@ export const products: Product[] = [
       "A trapeze-line flap bag woven from metallic leather so fine it shimmers like chainmail. The tall triangular strap doubles as a sculptural element when the bag is set down.",
     description:
       "The evening star. Structured enough for dinner, luminous enough for midnight — and unexpectedly striking with denim at noon.",
-    colors: ["Metallic Silver"],
+    photographedIn: "Metallic Silver",
     tone: "ink",
     note: "Flap keeps contents secure · the collection's occasion piece",
     label: "Stella",
@@ -316,7 +320,7 @@ export const products: Product[] = [
       "A miniature basket complete with twin top handles, smooth leather trim and a long braided crossbody strap, woven in a dense zigzag that reads almost as texture rather than pattern.",
     description:
       "“Piccola” — the little one. Deceptively roomy for its size, and the easiest black bag you'll ever own.",
-    colors: ["Nero"],
+    photographedIn: "Nero",
     tone: "ink",
     note: "Wear crossbody, on the shoulder, or carried by hand",
     label: "Piccola",
@@ -340,7 +344,7 @@ export const products: Product[] = [
       "A half-moon sling in burnished cognac with an antique-brass zip and a woven strap. The intrecciato surface takes on knocks and scuffs as character, not damage.",
     description:
       "In Italian, vita means both “waist” and “life” — fitting for a bag built to move through yours.",
-    colors: ["Cognac"],
+    photographedIn: "Cognac",
     tone: "cognac",
     note: "Zip closure — the collection's most secure everyday piece",
     label: "Vita",
@@ -367,7 +371,7 @@ export const products: Product[] = [
       "Hand-woven edge to edge with a scalloped whip-stitched border and a braided wrist loop that slips over the hand like a bracelet.",
     description:
       "Named for the Italian evening. Carries phone, cards and keys on its own — or organises the inside of any larger Isvena tote.",
-    colors: ["Dark Chocolate"],
+    photographedIn: "Dark Chocolate",
     tone: "umber",
     note: "Doubles as a pouch-organiser inside larger totes",
     label: "Sera",
@@ -392,7 +396,7 @@ export const products: Product[] = [
       "Cinched by a braided drawstring that ends in a hand-cut tassel, with a braided top handle for carrying like a lantern. The tightest weave in the collection.",
     description:
       "Pure joy in miniature — gioia means exactly that. Playful in shape, serious in craft.",
-    colors: ["Chestnut"],
+    photographedIn: "Chestnut",
     tone: "cognac",
     note: "Drawstring closure · hand-cut tassel",
     label: "Gioia",
@@ -422,7 +426,7 @@ export const products: Product[] = [
       "Nine strands plaited by hand into a supple flat band. Because the prong passes between the strands rather than through punched holes, it adjusts at any point along its length — no eyelets, no wrong notch, no worn-out hole after a season.",
     description:
       "Its name means simply “the braid.” The softest belt in the collection, and the one that ages best.",
-    colors: ["Dark Brown"],
+    photographedIn: "Dark Brown",
     tone: "umber",
     note:
       "No punched holes — the braid is the adjustment · softens noticeably within a week of wear",
@@ -452,7 +456,7 @@ export const products: Product[] = [
       "The exterior is hand-woven in a fine diagonal intrecciato and edged in smooth burnished leather; inside, everything switches to plain nappa so cards slide rather than catch.",
     description:
       "The house weave, reduced to its most disciplined scale. Enough for a full wallet, slim enough for a jacket pocket — our most-gifted piece.",
-    colors: ["Oxblood"],
+    photographedIn: "Oxblood",
     tone: "umber",
     note: "Hand-burnished edges · pairs with the Treccia belt as a gift set",
     label: "Milano",

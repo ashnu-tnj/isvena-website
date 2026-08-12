@@ -1,6 +1,6 @@
 # Isvena
 
-> Isvena is a leather goods house making hand-woven, vegetable-tanned (chrome-free) leather bags. The Signature Collection is fifteen pieces — totes and carryalls, shoulder and hobo bags, crossbody and belt bags, clutches and buckets, and small leather goods — each named in Italian and made in a single considered colourway. Every piece is made to order by artisans in the family workshop of P.M. Rahamathulla & Co. in Periyamet, Chennai, Tamil Nadu, India, offered with free custom name engraving, and shipped worldwide. The family's leather heritage dates back to 1936.
+> Isvena is a leather goods house making hand-woven, vegetable-tanned (chrome-free) leather bags. The Signature Collection is fifteen pieces — totes and carryalls, shoulder and hobo bags, crossbody and belt bags, clutches and buckets, and small leather goods — each named in Italian and available in any of fourteen house colours. Every piece is made to order by artisans in the family workshop of P.M. Rahamathulla & Co. in Periyamet, Chennai, Tamil Nadu, India, offered with free custom name engraving, and shipped worldwide. The family's leather heritage dates back to 1936.
 
 ## Key facts
 
@@ -14,6 +14,7 @@
 - Payment: Secure card payment via Stripe
 - Production: Made to order; ships in 6–8 weeks
 - Personalisation: Free custom name engraving on every piece, entered at checkout
+- Colours: Every piece can be made in any of the fourteen house colours
 - Signature technique: Hand-weaving — full-grain hide cut into strips (as fine as 4mm) and interlaced entirely by hand
 - Collection: The Signature Collection, 2026 — 15 pieces, references ISV-001 to ISV-015
 - Shipping cost: Complimentary worldwide on every order
@@ -25,6 +26,15 @@
 ## What "vegetable-tanned, chrome-free" means
 
 Isvena leather is tanned with natural plant tannins instead of chromium salts. It contains no heavy metals, is safe to wear against the skin, is less likely to cause allergic reactions, is fully biodegradable, and develops a rich patina with age.
+
+## Colour range
+
+Nothing is held in stock, so every silhouette below can be woven in any of
+these fourteen. The colour named beside a product is the one it was
+photographed in, not a restriction.
+
+Tan, Cognac, Caramel, Toffee, Chestnut, Mahogany, Oxblood, Dark Brown, Dark
+Chocolate, Espresso, Nero, Forest Green, Antique Rose, Metallic Silver.
 
 ## Product categories
 
