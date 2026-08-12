@@ -29,6 +29,22 @@ Signature Collection, 2026** — fifteen pieces, references `ISV-001` to
 | ISV-014 | Treccia | Hand-Braided Belt — Dark Brown | Small Leather Goods |
 | ISV-015 | Milano | Woven Bifold Wallet — Oxblood | Small Leather Goods |
 
+## Colours
+
+The house range lives in `src/data/colors.ts` — fourteen colours, one per
+piece in the collection, with the swatch hex **sampled from that piece's
+own packshot** rather than guessed, so a dot on the site matches the
+leather in the photograph.
+
+Nothing is held in stock: every piece is cut and woven to order, so any
+silhouette can be made in any of the fourteen. The table above names the
+colour each piece was *photographed* in, which is what `photographedIn`
+records — it leads the swatch row and the card dots (`coloursFor()`) so the
+first swatch matches the images beside it, and it is the fallback the
+checkout uses when a submitted colour is not one the workshop makes.
+
+Adding a colour means one entry in `colors.ts`; every product picks it up.
+
 ## Photography
 
 Every piece is shot three ways, named by slug in `public/products/`:
@@ -105,7 +121,7 @@ starting point, not a quote from the workshop.
 | `strapLabel` | Optional heading for the `strap` row (defaults to "Strap"). Treccia uses "Sizes", Milano uses "Interior". |
 | `weight` | Optional; omitted where the catalogue gives none. |
 | `note` | Closing detail — closure, finish. Shown in italic beneath the spec list. |
-| `colors` | Each piece is made in one colourway; the array drives the swatch. |
+| `photographedIn` | The house colour this piece was shot in. **Not a restriction** — see [Colours](#colours). It leads the swatch row so the first dot matches the photographs. |
 | `images` | Built by `shots(slug)`. First entry is the primary image. |
 | `featured` | Puts it in the homepage "Favourites" row and adds a *Signature* badge. The first featured product also fills the homepage signature editorial — currently Siena, which the catalogue calls "the silhouette that defines the house". |
 | `tone` | Brand palette key used for fallback art: `cognac`, `umber`, `sand`, `ink`, `olive`, `cream`. |
@@ -115,7 +131,7 @@ starting point, not a quote from the workshop.
 
 Add an entry with at least `slug`, `sku`, `name`, `subName`, `category`,
 `price`, `description`, `materials`, `dimensions`, `strap`, `weave`,
-`fits`, `colors`, `tone`, `label`. Drop the three photographs into
+`fits`, `photographedIn`, `tone`, `label`. Drop the three photographs into
 `public/products/` named `<slug>-hero.jpg`, `-life.jpg`, `-weave.jpg`, and
 set `images: shots("<slug>")`. Without images the product still renders,
 using the woven placeholder art.

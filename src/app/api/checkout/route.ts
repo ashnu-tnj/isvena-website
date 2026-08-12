@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { getStripe } from "@/lib/stripe";
 import { getProduct } from "@/data/products";
+import { isHouseColour } from "@/data/colors";
 
 interface CheckoutLine {
   slug: string;
@@ -60,8 +61,10 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    const color =
-      product.colors.find((c) => c === line.color) ?? product.colors[0];
+    // Any piece can be woven in any house colour, so the check is against the
+    // range rather than the product — but it is still a check, since the
+    // colour reaches the workshop on the order and cannot be free text.
+    const color = isHouseColour(line.color) ? line.color : product.photographedIn;
     lineItems.push({
       quantity: qty,
       price_data: {

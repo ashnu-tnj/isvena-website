@@ -2,10 +2,15 @@ import Link from "next/link";
 import Image from "next/image";
 import PlaceholderArt from "@/components/placeholder-art";
 import Price from "@/components/price";
+import { coloursFor } from "@/data/colors";
 import type { Product } from "@/data/products";
 
 export default function ProductCard({ product }: { product: Product }) {
   const photo = product.images?.[0];
+  // Anything can be made in anything, so the dots are the house range — with
+  // the colour this piece was photographed in leading, so the first dot
+  // matches the image above it.
+  const colours = coloursFor(product.photographedIn);
   return (
     <Link href={`/product/${product.slug}`} className="group block">
       <div className="relative aspect-[4/5] overflow-hidden bg-sand">
@@ -54,43 +59,21 @@ export default function ProductCard({ product }: { product: Product }) {
       </div>
 
       {/* Colour dots */}
-      {product.colors.length > 0 && (
-        <div className="mt-2.5 flex items-center gap-1.5">
-          {product.colors.slice(0, 5).map((c) => (
-            <span
-              key={c}
-              title={c}
-              className="h-2.5 w-2.5 rounded-full ring-1 ring-inset ring-black/10"
-              style={{ backgroundColor: colorDot(c) }}
-            />
-          ))}
-          {product.colors.length > 5 && (
-            <span className="text-[0.6rem] text-ink-soft">
-              +{product.colors.length - 5}
-            </span>
-          )}
-        </div>
-      )}
+      <div className="mt-2.5 flex items-center gap-1.5">
+        {colours.slice(0, 6).map((c) => (
+          <span
+            key={c.name}
+            title={c.name}
+            className="h-2.5 w-2.5 rounded-full ring-1 ring-inset ring-black/10"
+            style={{ backgroundColor: c.hex }}
+          />
+        ))}
+        {colours.length > 6 && (
+          <span className="text-[0.6rem] text-ink-soft">
+            +{colours.length - 6}
+          </span>
+        )}
+      </div>
     </Link>
   );
-}
-
-function colorDot(name: string): string {
-  const map: Record<string, string> = {
-    Tan: "#c19a6b",
-    Brown: "#6b4423",
-    Black: "#1a1512",
-    Red: "#8f2d23",
-    Rose: "#c98a8a",
-    Pink: "#d9a5b3",
-    Green: "#4a5d3a",
-    Blue: "#2f4a63",
-    Yellow: "#c9a542",
-    Silver: "#b8bcc0",
-    White: "#f0ece3",
-    Natural: "#d9c9ae",
-    "Natural Brown": "#b89968",
-    "Natural / Tan trim": "#cdb891",
-  };
-  return map[name] ?? "#a25a34";
 }

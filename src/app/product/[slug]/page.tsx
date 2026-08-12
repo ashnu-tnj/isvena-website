@@ -30,7 +30,7 @@ export async function generateMetadata({
   return {
     title: product.name,
     description: product.description,
-    keywords: [product.name, ...product.colors, product.materials],
+    keywords: [product.name, product.photographedIn, product.materials],
     alternates: { canonical },
     openGraph: {
       type: "website",

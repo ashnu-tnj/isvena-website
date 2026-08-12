@@ -39,11 +39,11 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "Can I order custom sizes, colours, or wholesale quantities?",
-    a: "Yes. Many Isvena pieces are available in standard and custom sizes and in the workshop's full colour range. Isvena also continues the export and wholesale relationships built by P.M. Rahamathulla & Co., so bulk and private-label enquiries are welcome via the contact page.",
+    a: "Yes. Every Isvena piece is available in the workshop's full colour range, and many in standard and custom sizes. Isvena also continues the export and wholesale relationships built by P.M. Rahamathulla & Co., so bulk and private-label enquiries are welcome via the contact page.",
   },
   {
     q: "What colours does Isvena offer?",
-    a: "Each piece in the Signature Collection is made in one considered colourway: espresso, cognac, antique rose, toffee, forest green, caramel, tan, mahogany, nero black, dark chocolate, chestnut, oxblood, dark brown, and a metallic silver. Custom colours can be discussed for made-to-order and wholesale enquiries.",
+    a: "The house range is fourteen colours: tan, cognac, caramel, toffee, chestnut, mahogany, oxblood, dark brown, dark chocolate, espresso, nero black, forest green, antique rose, and metallic silver. Because nothing is held in stock and every piece is woven to order, any silhouette in the Signature Collection can be made in any of the fourteen — the colour shown in a product's photographs is simply the one the studio shot. Further custom colours can be discussed for made-to-order and wholesale enquiries.",
   },
   {
     q: "What payment methods does Isvena accept?",
