@@ -44,16 +44,15 @@ new product needs only a matching set of three files. A piece with fewer
 photographs can list them explicitly instead, and the gallery fills the
 empty slot with woven placeholder art.
 
-Two of the small-leather-goods macros were supplied at low resolution.
-The Treccia braid detail was re-supplied at 495×481. The Milano weave
-macro only ever existed at 362×362, so it has been resampled to 724×724
-(Lanczos plus a restrained unsharp pass) to stop high-density screens
-scaling it up themselves — sharper edges, but no detail that was not in
-the original.
+The Milano weave macro only ever existed at 362×362, so it has been
+resampled to 724×724 (Lanczos plus a restrained unsharp pass) to stop
+high-density screens scaling it up themselves — sharper edges, but no
+detail that was not in the original. It is the one soft image left in the
+collection; a re-export at 1000px or more would drop straight in over it.
 
-Both are only ever rendered as small square tiles, so they hold up. A
-genuine re-export of either at 1000px or more would drop straight in over
-the existing file and is worth doing if the originals still exist.
+Weave macros are the one place cropping is wanted: the tile is 1:1 and the
+texture should fill it, so a wide macro is centre-cropped rather than
+padded.
 
 ## 360° films
 
