@@ -69,9 +69,10 @@ Every piece has a silent turntable clip in `public/video/`, named by slug:
 only a matching set of three files. Source clips were 4:3 at 864–960px wide;
 they are encoded to 800px wide, 24fps, silent.
 
-The film leads the detail gallery in a 4:3 frame of its own. It is
-deliberately *not* placed in the 4:5 or 1:1 frames the stills use, since
-either would crop a landscape clip.
+The film closes the detail gallery — packshot, then the two detail tiles,
+then the turntable — in a 4:3 frame of its own. It is deliberately *not*
+placed in the 4:5 or 1:1 frames the stills use, since either would crop a
+landscape clip.
 
 `Product360` gives it `preload="none"` and a poster, so no video is fetched
 until playback actually starts, and an IntersectionObserver pauses it once
