@@ -93,6 +93,13 @@ NEXT_PUBLIC_LOCAL_PRICING=
 
 Then `chmod 600 .env.local` so only the owner can read it.
 
+> **This file never arrives with a deploy.** It is gitignored — that is the
+> point of it — so `git pull` will not create it and will not update it. On a
+> new server, or the first deploy after a variable is added or renamed, you
+> have to write it by hand. Symptom if you forget: checkout says *"Online
+> payment is not configured yet"* and `journalctl -u isvena` names the
+> missing variable.
+
 Two things that catch people:
 
 - **`NEXT_PUBLIC_*` values are compiled into the JavaScript at build time.**
