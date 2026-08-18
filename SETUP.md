@@ -109,45 +109,59 @@ Two things that catch people:
 - **A running Node process does not re-read `.env.local`.** Restart the
   service after any change.
 
-### If it runs in a container
+### How it is actually deployed
 
-The deployment lives at `/docker/isvena`, which holds a `Dockerfile`, a
-`docker-compose.yml`, and the checkout of this repository in `app/`.
+`/docker/isvena` holds a `Dockerfile`, a `docker-compose.yml`, and this
+repository in `app/`. The image is built on the box, and traefik terminates
+TLS in front of it — so nginx and systemd (sections 4 and 5) describe a
+deployment that is **not** the one in use. They are kept for reference.
 
-**Because the app runs inside
-Docker, a `.env.local` sitting in that directory does nothing on its own** —
-the container has its own filesystem and its own environment, and neither
-inherits from the host.
+Two consequences follow, and both have bitten already:
 
-Deliver the variables to the container instead, by whichever route the
-compose file already uses:
+**The env file is `.env.production`, not `.env.local`.** Compose names it:
 
 ```yaml
-services:
-  isvena:
-    env_file: .env.local          # read from the host at container start
-    # or, equivalently:
-    environment:
-      - RAZORPAY_KEY_ID=${RAZORPAY_KEY_ID}
-      - RAZORPAY_KEY_SECRET=${RAZORPAY_KEY_SECRET}
+env_file:
+  - .env.production
 ```
 
-Then `docker compose up -d --build`. The rebuild matters for the same reason
-it does on the host: `NEXT_PUBLIC_*` values are compiled into the JavaScript,
-so they must be present **at image build time**, not only at run time. A
-variable passed only through `environment:` reaches the server code but never
-reaches the browser bundle — pass `NEXT_PUBLIC_RAZORPAY_KEY_ID` as a build
-arg too, or bake it in before `npm run build` runs.
+That path is relative to the compose file, so it is
+`/docker/isvena/.env.production` — *outside* `app/`. A `.env.local` in either
+directory is read by nobody: compose does not reference it, and the build
+context copies only `app/`. Runtime variables go in `.env.production` and
+reach the container as real environment variables, which is what
+`process.env.RAZORPAY_KEY_SECRET` reads.
 
-Confirm what the running container actually sees:
+**`output: "standalone"` is required.** The Dockerfile's runner stage copies
+`/app/.next/standalone`, which Next.js only writes when `next.config.ts` asks
+for it — it is not a default. Remove it and the image build fails on the
+COPY.
+
+### Which changes need a rebuild
+
+| Change | Command |
+|---|---|
+| A value in `.env.production` | `docker compose up -d --force-recreate isvena` |
+| Code, or any `NEXT_PUBLIC_*` | `docker compose up -d --build isvena` |
+
+Runtime variables are injected when the container starts, so a value change
+needs no rebuild. `NEXT_PUBLIC_*` values are compiled into the JavaScript
+during `npm run build`, which happens *inside the image build* — so those
+must be passed as build `args` in `docker-compose.yml` and given an `ARG` in
+the Dockerfile, as `NEXT_PUBLIC_SITE_URL` already is. Putting one only in
+`.env.production` gets it to the server and never to the browser.
+
+`NEXT_PUBLIC_RAZORPAY_KEY_ID` is the exception that needs none of this:
+`/api/create-order` returns the key id in its response and the checkout form
+prefers that over the compiled-in value, so the browser gets it at runtime.
+Setting it is optional here.
+
+### Checking what the container sees
 
 ```bash
-docker compose exec isvena printenv | grep RAZORPAY
-docker compose logs -f isvena | grep razorpay
+docker exec isvena printenv | grep RAZORPAY
+docker logs --tail 50 isvena | grep -i razorpay
 ```
-
-Everywhere below that says `systemctl` or `journalctl` has a `docker compose`
-equivalent — `restart` and `logs -f` respectively.
 
 ## 4. Run it as a service
 
