@@ -1,16 +1,16 @@
 /**
  * Local-currency display.
  *
- * Catalogue prices live in USD (`src/data/products.ts`). Stripe's Adaptive
- * Pricing converts them on the hosted checkout page using Stripe's own rate,
- * which Stripe does not expose to us ahead of time — so the figures produced
- * here can never be guaranteed to match the final charge to the cent.
+ * Catalogue prices live in USD (`src/data/products.ts`). Razorpay bills a
+ * single currency — rupees, unless International Payments is on — and the
+ * customer's own bank converts that into whatever their card is denominated
+ * in, at a rate nobody here can see in advance.
  *
- * They are therefore presented as approximations ("≈ £355"), rounded to clean
- * numbers, with the exact amount confirmed at checkout. That is also why the
- * whole feature is gated behind NEXT_PUBLIC_LOCAL_PRICING: showing a local
- * price while Stripe is still charging USD would be a straight lie, so the
- * flag must only be turned on once Adaptive Pricing is live.
+ * So the figures produced here are approximations ("≈ £355"), rounded to
+ * clean numbers, with the real amount shown on Razorpay's payment window
+ * before the customer confirms. The feature stays behind
+ * NEXT_PUBLIC_LOCAL_PRICING because a local price is a helpful guide on a
+ * catalogue priced in dollars, not a quote.
  *
  * SEO is unaffected — structured data, page titles and the server-rendered
  * HTML all stay in USD.
@@ -53,8 +53,8 @@ const RATES: Record<string, number> = {
 };
 
 /**
- * Country → currency, covering every country in SHIPPING_COUNTRIES
- * (`src/app/api/checkout/route.ts`). Anywhere else falls back to USD.
+ * Country → currency, covering every country in `src/data/shipping.ts`.
+ * Anywhere else falls back to USD.
  */
 const COUNTRY_CURRENCY: Record<string, string> = {
   US: "USD",
@@ -93,7 +93,7 @@ const COUNTRY_CURRENCY: Record<string, string> = {
   FI: "EUR",
 };
 
-/** Currencies Stripe treats as zero-decimal — ¥1650, never 165000. */
+/** Zero-decimal currencies — ¥1650 is billed as 1650, never 165000. */
 const ZERO_DECIMAL = new Set(["JPY", "KRW"]);
 
 export function currencyForCountry(country: string | null | undefined): string {
@@ -158,7 +158,7 @@ export function formatMoney(amount: number, currency: string): string {
   }
 }
 
-/** True when the amount is only an estimate of what Stripe will charge. */
+/** True when the amount is only an estimate of what will be charged. */
 export function isApproximate(currency: string): boolean {
   return currency !== BASE_CURRENCY;
 }

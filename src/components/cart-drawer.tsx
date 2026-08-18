@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 import { useCart } from "@/lib/cart-context";
 import { useCurrency } from "@/lib/currency-context";
 import Price from "@/components/price";
@@ -9,35 +8,6 @@ import Price from "@/components/price";
 export default function CartDrawer() {
   const { lines, isOpen, closeCart, removeItem, updateQty, subtotal } = useCart();
   const { approximate, currency } = useCurrency();
-  const [checkingOut, setCheckingOut] = useState(false);
-  const [checkoutError, setCheckoutError] = useState<string | null>(null);
-
-  async function startCheckout() {
-    setCheckingOut(true);
-    setCheckoutError(null);
-    try {
-      const res = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          lines: lines.map((l) => ({ slug: l.slug, color: l.color, qty: l.qty })),
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok || !data.url) {
-        setCheckoutError(
-          data.error ?? "Could not start checkout. Please try again."
-        );
-        return;
-      }
-      window.location.href = data.url;
-    } catch {
-      setCheckoutError("Could not start checkout. Please try again.");
-    } finally {
-      setCheckingOut(false);
-    }
-  }
-
   return (
     <>
       <div
@@ -134,7 +104,7 @@ export default function CartDrawer() {
             <p className="mb-4 text-xs leading-relaxed text-ink-soft">
               Every piece is made to order and ships in 6–8 weeks, with free
               custom name engraving — add the name at checkout. Secure card
-              payment via Stripe, and complimentary shipping worldwide.
+              payment via Razorpay, and complimentary shipping worldwide.
               {approximate && (
                 <>
                   {" "}
@@ -143,26 +113,13 @@ export default function CartDrawer() {
                 </>
               )}
             </p>
-            {checkoutError && (
-              <p className="mb-3 text-xs leading-relaxed text-cognac-dark">
-                {checkoutError}{" "}
-                <Link
-                  href="/contact"
-                  onClick={closeCart}
-                  className="underline underline-offset-4"
-                >
-                  Order via our concierge instead
-                </Link>
-                .
-              </p>
-            )}
-            <button
-              onClick={startCheckout}
-              disabled={checkingOut}
-              className="btn btn-solid w-full disabled:opacity-60"
+            <Link
+              href="/checkout"
+              onClick={closeCart}
+              className="btn btn-solid block w-full text-center"
             >
-              {checkingOut ? "Preparing Checkout…" : "Checkout"}
-            </button>
+              Checkout
+            </Link>
           </div>
         )}
       </aside>
