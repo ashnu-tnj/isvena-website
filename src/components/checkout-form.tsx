@@ -133,8 +133,14 @@ export default function CheckoutForm() {
             return;
           }
           // The success page clears the bag, so it is still intact if
-          // anything above went wrong.
-          router.push("/checkout/success");
+          // anything above went wrong. The order number rides in the URL —
+          // it is the only reference the customer gets, and there is no
+          // account for them to look it up in later.
+          router.push(
+            data.orderNumber
+              ? `/checkout/success?order=${encodeURIComponent(data.orderNumber)}`
+              : "/checkout/success"
+          );
         } catch {
           setError(
             "Your payment went through but we could not confirm it. Reference " +

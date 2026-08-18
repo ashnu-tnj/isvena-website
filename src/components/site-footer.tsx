@@ -3,6 +3,7 @@ import Image from "next/image";
 import { categories } from "@/data/categories";
 import NewsletterForm from "@/components/newsletter-form";
 import SocialLinks from "@/components/social-links";
+import { site } from "@/lib/site";
 
 export default function SiteFooter() {
   return (
@@ -74,15 +75,29 @@ export default function SiteFooter() {
               Join our list for new releases and workshop stories.
             </p>
             <NewsletterForm />
+            <p className="mt-6 text-sm text-cream/65">
+              Orders and enquiries —{" "}
+              <a
+                href={`mailto:${site.email}`}
+                className="link-line text-cream/85 hover:text-gold-soft"
+              >
+                {site.email}
+              </a>
+            </p>
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-cream/15 pt-7 text-xs text-cream/50 sm:flex-row">
-          <p>
-            © {new Date().getFullYear()} Isvena. A legacy of P.M. Rahamathulla
-            &amp; Co. — in leather since 1936.
+        <div className="mt-16 border-t border-cream/15 pt-7 text-xs text-cream/50">
+          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <p>
+              © {new Date().getFullYear()} Isvena. A legacy of P.M.
+              Rahamathulla &amp; Co. — in leather since 1936.
+            </p>
+            <p>Chennai, Tamil Nadu, India — Shipping Worldwide</p>
+          </div>
+          <p className="mt-6 text-center text-[0.66rem] tracking-wide text-cream/35">
+            Designed &amp; Developed by AFLATUS OPC PVT LTD, Chennai
           </p>
-          <p>Chennai, Tamil Nadu, India — Shipping Worldwide</p>
         </div>
       </div>
     </footer>

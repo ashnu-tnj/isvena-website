@@ -19,7 +19,7 @@ export const site = {
   tagline: "Hand-braided, vegetable-tanned leather, woven by hand since 1936.",
   foundingYear: "1936",
   brandLaunchYear: "2016",
-  email: "hello@isvena.com",
+  email: "info@isvena.com",
   gst: "33ATYPS6349H1ZV",
   locale: "en_US",
   address: {

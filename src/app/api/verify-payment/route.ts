@@ -4,6 +4,7 @@ import {
   getRazorpay,
   verifyPaymentSignature,
 } from "@/lib/razorpay";
+import { sendOrderEmail } from "@/lib/mailer";
 
 /**
  * Confirm a payment the browser claims succeeded.
@@ -67,13 +68,41 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // No database, so this line is the order record. Razorpay's dashboard
-    // holds the rest: the notes on the order carry the address and engraving.
+    // The address, engraving and order number were written onto the order at
+    // creation, so read them back from there rather than trusting the browser
+    // to send them again after payment.
+    const order = await razorpay.orders.fetch(orderId);
+    const notes = (order.notes ?? {}) as Record<string, string>;
+    const orderNumber = notes.order_number ?? String(order.receipt ?? orderId);
+
     console.log(
-      `[verify-payment] Paid — order=${orderId} payment=${paymentId} ` +
+      `[verify-payment] Paid — ${orderNumber} order=${orderId} payment=${paymentId} ` +
         `${payment.currency} ${Number(payment.amount) / 100} status=${payment.status}`
     );
-    return Response.json({ ok: true, orderId, paymentId });
+
+    // The workshop has no admin screen, so this email is how it learns the
+    // order exists. It is deliberately awaited — the confirmation page should
+    // not claim success before the notification has at least been attempted —
+    // but it can never fail the request: the customer has already paid, and
+    // sendOrderEmail logs the full order rather than throwing.
+    const emailed = await sendOrderEmail({
+      orderNumber,
+      items: (notes.items ?? "").split("; ").filter(Boolean),
+      catalogueTotalUsd: Number(notes.catalogue_usd ?? 0),
+      chargedAmount: Number(payment.amount) / 100,
+      chargedCurrency: payment.currency,
+      customer: {
+        name: notes.customer ?? "",
+        email: notes.email ?? "",
+        phone: notes.phone ?? "",
+      },
+      address: notes.address ?? "",
+      engraving: notes.engraving === "—" ? "" : (notes.engraving ?? ""),
+      razorpayOrderId: orderId,
+      razorpayPaymentId: paymentId,
+    });
+
+    return Response.json({ ok: true, orderNumber, orderId, paymentId, emailed });
   } catch (err) {
     console.error(
       "[verify-payment] Could not fetch the payment — " + describeRazorpayError(err)

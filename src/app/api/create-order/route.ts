@@ -9,6 +9,7 @@ import {
 import { getProduct } from "@/data/products";
 import { isHouseColour } from "@/data/colors";
 import { isShippingCountry } from "@/data/shipping";
+import { newOrderNumber } from "@/lib/order-number";
 
 interface OrderLine {
   slug: string;
@@ -124,13 +125,18 @@ export async function POST(request: NextRequest) {
     return Response.json({ error: "Order total is too small." }, { status: 400 });
   }
 
+  // Assigned before payment, so the reference exists on the Razorpay order
+  // itself even for a customer who never comes back to complete it.
+  const orderNumber = newOrderNumber();
+
   try {
     const order = await razorpay.orders.create({
       amount,
       currency: CHARGE_CURRENCY,
       // Receipts must be unique and at most 40 characters.
-      receipt: `isv_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`,
+      receipt: orderNumber,
       notes: {
+        order_number: orderNumber,
         customer: note(name),
         email: note(email),
         phone: note(phone),
@@ -147,6 +153,7 @@ export async function POST(request: NextRequest) {
 
     return Response.json({
       orderId: order.id,
+      orderNumber,
       amount: order.amount,
       currency: order.currency,
       keyId: process.env.RAZORPAY_KEY_ID,
