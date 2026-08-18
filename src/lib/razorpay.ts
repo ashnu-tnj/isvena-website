@@ -16,14 +16,26 @@ export function getRazorpay(): Razorpay | null {
   const key_secret = process.env.RAZORPAY_KEY_SECRET;
   if (!key_id || !key_secret) {
     // The customer only sees a polite fallback, so without this the cause is
-    // invisible in the logs. Note .env.example is a template — Next.js reads
-    // .env.local and the platform environment, never that file.
+    // invisible in the logs. Name the variable actually missing rather than
+    // both, so the fix is obvious from one log line.
+    const missing = [
+      !key_id && "RAZORPAY_KEY_ID",
+      !key_secret && "RAZORPAY_KEY_SECRET",
+    ].filter(Boolean);
     console.error(
-      "[razorpay] RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET are not both set — " +
-        "checkout will return 503. Set them in .env.local (see SETUP.md)."
+      `[razorpay] ${missing.join(" and ")} not set — checkout will return ` +
+        "503. These go in .env.local in the project root, which is " +
+        "gitignored and therefore never arrives with a deploy: create it on " +
+        "the server by hand and restart. Note .env.example is a template — " +
+        "Next.js reads .env.local and the platform environment, never that " +
+        "file. See SETUP.md section 3."
     );
     cached = null;
     return cached;
+  }
+
+  if (key_id.startsWith("rzp_live_") && process.env.NODE_ENV !== "production") {
+    console.warn("[razorpay] Live keys in a non-production build.");
   }
 
   cached = new Razorpay({ key_id, key_secret });
