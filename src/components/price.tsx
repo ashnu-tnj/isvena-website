@@ -7,8 +7,8 @@ import { useCurrency } from "@/lib/currency-context";
  *
  * Renders USD on the server and on first paint, so crawlers, no-JS visitors
  * and the structured data all agree on the canonical price. When a local
- * currency is active the figure is prefixed with "≈", because Stripe settles
- * the exact conversion on its own checkout page.
+ * currency is active the figure is prefixed with "≈", because Razorpay bills
+ * in a single currency and the customer's bank sets the final conversion.
  */
 export default function Price({
   usd,
