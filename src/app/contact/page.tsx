@@ -58,7 +58,14 @@ export default function ContactPage() {
           </div>
           <div>
             <p className="eyebrow text-gold">Email</p>
-            <p className="mt-2 text-ink-soft">hello@isvena.com</p>
+            <p className="mt-2 text-ink-soft">
+              <a
+                href={`mailto:${site.email}`}
+                className="link-line transition-colors hover:text-ink"
+              >
+                {site.email}
+              </a>
+            </p>
           </div>
           <div>
             <p className="eyebrow text-gold">Follow</p>

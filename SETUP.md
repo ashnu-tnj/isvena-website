@@ -320,6 +320,60 @@ Every order arrives with the customer's name, email, phone, full delivery
 address and engraving name in its **Notes** (Dashboard → Transactions →
 Orders → the order). That is what you despatch from.
 
+## 8. Order notification email
+
+Every paid order is emailed to `info@isvena.com` (override with
+`ORDER_EMAIL_TO`). There is no database and no admin screen, so **that email
+is the order**: it carries the order number, the pieces and colours, the
+engraving name, the full delivery address, phone, and the Razorpay payment
+id. Replying to it reaches the customer.
+
+Add to `.env.production` and recreate the container:
+
+```bash
+SMTP_HOST=smtp.your-provider.com
+SMTP_PORT=587
+SMTP_USER=info@isvena.com
+SMTP_PASS=…
+```
+
+Port 465 is implicit TLS, 587 upgrades via STARTTLS; leave `SMTP_SECURE`
+unset to derive it from the port. If your mailbox uses 2FA, this needs an
+**app password**, not the account password.
+
+**Nothing is lost if SMTP is unconfigured or the mail server is down.** The
+full order is written to the container log instead, and the customer's
+payment still succeeds — a mail outage must never turn a completed payment
+into an error on their screen. Find those with:
+
+```bash
+docker logs isvena | grep -A25 '\[mail\]'
+```
+
+### Order numbers
+
+Assigned at order creation as `ISV-260818-K4F7` — the date, then a suffix
+drawn from an alphabet with no `0/O` or `1/I/5/S` in it, so a number read off
+a screen and typed into an email survives the trip. It is written to the
+Razorpay order's `receipt` and its notes, shown to the customer on the
+confirmation page, and used as the email subject, so all four name the same
+order.
+
+There is no database, so uniqueness is probabilistic rather than enforced:
+456,976 suffixes per day. At current volume a clash is far-fetched; it is
+worth knowing rather than assuming.
+
+### The gap worth knowing about
+
+The email is sent when the browser returns from Razorpay and
+`/api/verify-payment` runs. **If a customer pays and closes the tab
+immediately, that never happens** — the money is captured, the order sits in
+the Razorpay dashboard with its notes intact, and no email arrives.
+
+Nothing is lost, but you would only find it by looking. If it ever happens,
+the fix is a Razorpay webhook on `payment.captured` calling the same code,
+which does not depend on the customer's browser at all.
+
 ---
 
 ## Deploying an update
