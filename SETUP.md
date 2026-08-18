@@ -46,8 +46,8 @@ the contact page. The site is safe to leave in that state.
 ## 2. Get the code and build
 
 ```bash
-git clone https://github.com/ashnu-tnj/isvena-website.git /var/docker/isvena
-cd /var/docker/isvena
+git clone https://github.com/ashnu-tnj/isvena-website.git /docker/isvena
+cd /docker/isvena
 npm ci
 ```
 
@@ -63,7 +63,7 @@ pins, so the server builds what was tested.
 
 ## 3. Environment variables
 
-Create `/var/docker/isvena/.env.local`:
+Create `/docker/isvena/.env.local`:
 
 ```bash
 # Razorpay keys — Dashboard → Account & Settings → API Keys
@@ -111,10 +111,13 @@ Two things that catch people:
 
 ### If it runs in a container
 
-The deployment lives at `/var/docker/isvena`. **If the app runs inside
-Docker rather than directly on the host, a `.env.local` sitting in that
-directory does nothing on its own** — the container has its own filesystem
-and its own environment, and neither inherits from the host.
+The deployment lives at `/docker/isvena`, which holds a `Dockerfile`, a
+`docker-compose.yml`, and the checkout of this repository in `app/`.
+
+**Because the app runs inside
+Docker, a `.env.local` sitting in that directory does nothing on its own** —
+the container has its own filesystem and its own environment, and neither
+inherits from the host.
 
 Deliver the variables to the container instead, by whichever route the
 compose file already uses:
@@ -158,7 +161,7 @@ After=network.target
 [Service]
 Type=simple
 User=www-data
-WorkingDirectory=/var/docker/isvena
+WorkingDirectory=/docker/isvena
 ExecStart=/usr/bin/npm start
 Restart=always
 RestartSec=5
@@ -308,7 +311,7 @@ Orders → the order). That is what you despatch from.
 ## Deploying an update
 
 ```bash
-cd /var/docker/isvena
+cd /docker/isvena
 git pull
 npm ci
 npm run build
