@@ -46,8 +46,8 @@ the contact page. The site is safe to leave in that state.
 ## 2. Get the code and build
 
 ```bash
-git clone https://github.com/ashnu-tnj/isvena-website.git /var/www/isvena
-cd /var/www/isvena
+git clone https://github.com/ashnu-tnj/isvena-website.git /var/docker/isvena
+cd /var/docker/isvena
 npm ci
 ```
 
@@ -63,7 +63,7 @@ pins, so the server builds what was tested.
 
 ## 3. Environment variables
 
-Create `/var/www/isvena/.env.local`:
+Create `/var/docker/isvena/.env.local`:
 
 ```bash
 # Razorpay keys — Dashboard → Account & Settings → API Keys
@@ -109,6 +109,43 @@ Two things that catch people:
 - **A running Node process does not re-read `.env.local`.** Restart the
   service after any change.
 
+### If it runs in a container
+
+The deployment lives at `/var/docker/isvena`. **If the app runs inside
+Docker rather than directly on the host, a `.env.local` sitting in that
+directory does nothing on its own** — the container has its own filesystem
+and its own environment, and neither inherits from the host.
+
+Deliver the variables to the container instead, by whichever route the
+compose file already uses:
+
+```yaml
+services:
+  isvena:
+    env_file: .env.local          # read from the host at container start
+    # or, equivalently:
+    environment:
+      - RAZORPAY_KEY_ID=${RAZORPAY_KEY_ID}
+      - RAZORPAY_KEY_SECRET=${RAZORPAY_KEY_SECRET}
+```
+
+Then `docker compose up -d --build`. The rebuild matters for the same reason
+it does on the host: `NEXT_PUBLIC_*` values are compiled into the JavaScript,
+so they must be present **at image build time**, not only at run time. A
+variable passed only through `environment:` reaches the server code but never
+reaches the browser bundle — pass `NEXT_PUBLIC_RAZORPAY_KEY_ID` as a build
+arg too, or bake it in before `npm run build` runs.
+
+Confirm what the running container actually sees:
+
+```bash
+docker compose exec isvena printenv | grep RAZORPAY
+docker compose logs -f isvena | grep razorpay
+```
+
+Everywhere below that says `systemctl` or `journalctl` has a `docker compose`
+equivalent — `restart` and `logs -f` respectively.
+
 ## 4. Run it as a service
 
 `/etc/systemd/system/isvena.service`:
@@ -121,7 +158,7 @@ After=network.target
 [Service]
 Type=simple
 User=www-data
-WorkingDirectory=/var/www/isvena
+WorkingDirectory=/var/docker/isvena
 ExecStart=/usr/bin/npm start
 Restart=always
 RestartSec=5
@@ -140,9 +177,9 @@ journalctl -u isvena -f      # live logs
 ```
 
 That last command is where the app's own diagnostics appear — including the
-`[razorpay] RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET are not both set` line if
-checkout is misconfigured, and the `[create-order]` and `[verify-payment]`
-lines carrying Razorpay's own reason when it refuses something.
+`[razorpay] … not set` line naming the exact variable if checkout is
+misconfigured, and the `[create-order]` and `[verify-payment]` lines carrying
+Razorpay's own reason when it refuses something.
 
 ## 5. nginx
 
@@ -271,7 +308,7 @@ Orders → the order). That is what you despatch from.
 ## Deploying an update
 
 ```bash
-cd /var/www/isvena
+cd /var/docker/isvena
 git pull
 npm ci
 npm run build
