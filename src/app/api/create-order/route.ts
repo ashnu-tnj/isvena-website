@@ -21,9 +21,26 @@ interface OrderLine {
 /** Cashfree's own minimum; the catalogue clears it many times over anyway. */
 const MIN_CHARGE_AMOUNT = 1;
 
-/** order_tags allows at most 10 keys and, conservatively, modest value lengths. */
+/**
+ * order_tags allows at most 10 keys, and Cashfree's validator rejects a
+ * value containing HTML, a URL, a line break, or anything wide enough of
+ * plain ASCII that it reads as emoji-like to it — which turned out to
+ * include ordinary typographic characters this app used without a second
+ * thought, like the multiplication sign in "×2" and the em dash used as an
+ * empty-engraving placeholder. NFKD-normalising first means an accented
+ * name degrades to its plain-ASCII base letters instead of being silently
+ * dropped by the strip that follows.
+ */
 function tag(value: string): string {
-  return value.slice(0, 250);
+  return value
+    .normalize("NFKD")
+    .replace(/[‘’]/g, "'")
+    .replace(/[“”]/g, '"')
+    .replace(/[–—]/g, "-")
+    .replace(/[×]/g, "x")
+    .replace(/[^\x20-\x7E]/g, "")
+    .trim()
+    .slice(0, 250);
 }
 
 function str(value: unknown, max: number): string {
@@ -143,7 +160,10 @@ export async function POST(request: NextRequest) {
       order_currency: CHARGE_CURRENCY,
       customer_details: {
         customer_id: customerIdFor(email),
-        customer_name: name,
+        // Cashfree disallows special characters here too — the same
+        // sanitising as order_tags, so a name like "José" or "O'Brien"
+        // (plausible for a brand that ships worldwide) doesn't 400 the order.
+        customer_name: tag(name),
         customer_email: email,
         customer_phone: phone,
       },
@@ -162,8 +182,10 @@ export async function POST(request: NextRequest) {
         address: tag(
           [line1, line2, city, region, postcode, country].filter(Boolean).join(", ")
         ),
-        country,
-        engraving: engraving || "—",
+        country: tag(country),
+        // "none" rather than an em dash, which is exactly the kind of
+        // character Cashfree's order_tags validator rejects.
+        engraving: tag(engraving || "none"),
         items: tag(summary.join("; ")),
         // Kept so the charge can be reconciled against the catalogue.
         catalogue_usd: String(usdTotal),

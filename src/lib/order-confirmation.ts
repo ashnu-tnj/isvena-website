@@ -78,7 +78,7 @@ export async function confirmOrderPaid(orderId: string): Promise<ConfirmationRes
         phone: tags.phone ?? "",
       },
       address: tags.address ?? "",
-      engraving: tags.engraving === "—" ? "" : (tags.engraving ?? ""),
+      engraving: tags.engraving === "none" ? "" : (tags.engraving ?? ""),
       gatewayOrderId: orderId,
       gatewayPaymentId: String(successful.cf_payment_id ?? ""),
     });
