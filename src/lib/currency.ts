@@ -1,13 +1,13 @@
 /**
  * Local-currency display.
  *
- * Catalogue prices live in USD (`src/data/products.ts`). Razorpay bills a
+ * Catalogue prices live in USD (`src/data/products.ts`). Cashfree bills a
  * single currency — rupees, unless International Payments is on — and the
  * customer's own bank converts that into whatever their card is denominated
  * in, at a rate nobody here can see in advance.
  *
  * So the figures produced here are approximations ("≈ £355"), rounded to
- * clean numbers, with the real amount shown on Razorpay's payment window
+ * clean numbers, with the real amount shown on Cashfree's payment window
  * before the customer confirms. The feature stays behind
  * NEXT_PUBLIC_LOCAL_PRICING because a local price is a helpful guide on a
  * catalogue priced in dollars, not a quote.

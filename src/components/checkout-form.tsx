@@ -7,16 +7,12 @@ import { useCart } from "@/lib/cart-context";
 import { useCurrency } from "@/lib/currency-context";
 import Price from "@/components/price";
 import { shippingCountries } from "@/data/shipping";
-import {
-  loadRazorpayCheckout,
-  type RazorpayFailure,
-  type RazorpaySuccess,
-} from "@/lib/razorpay-checkout";
+import { loadCashfreeCheckout, type CashfreeCheckoutResult } from "@/lib/cashfree-checkout";
 
 const FIELD =
   "mt-2 w-full border-b hairline bg-transparent py-2.5 text-sm transition-colors focus:border-cognac focus:outline-none";
 
-type Stage = "idle" | "creating" | "paying" | "verifying";
+type Stage = "idle" | "creating" | "paying" | "confirming";
 
 export default function CheckoutForm() {
   const { lines, subtotal, hydrated } = useCart();
@@ -55,9 +51,8 @@ export default function CheckoutForm() {
     setStage("creating");
     let order: {
       orderId: string;
-      amount: number;
-      currency: string;
-      keyId?: string;
+      paymentSessionId: string;
+      environment: "sandbox" | "production";
     };
     try {
       // The order is priced and created on the server; the browser only ever
@@ -68,13 +63,13 @@ export default function CheckoutForm() {
         body: JSON.stringify(payload),
       });
       const data = await res.json();
-      if (!res.ok || !data.orderId) {
+      if (!res.ok || !data.paymentSessionId) {
         setError(data.error ?? "Could not start checkout. Please try again.");
         setStage("idle");
         return;
       }
       order = data;
-      await loadRazorpayCheckout();
+      await loadCashfreeCheckout();
     } catch {
       setError(
         "Could not reach the payment provider. Check your connection and try again."
@@ -83,83 +78,35 @@ export default function CheckoutForm() {
       return;
     }
 
-    const key = order.keyId ?? process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
-    if (!key || !window.Razorpay) {
+    if (!window.Cashfree) {
       setError("Payment is not available right now. Please contact us to order.");
       setStage("idle");
       return;
     }
 
     setStage("paying");
-    const rzp = new window.Razorpay({
-      key,
-      amount: order.amount,
-      currency: order.currency,
-      name: "Isvena",
-      description:
-        lines.length === 1
-          ? `${lines[0].name} — made to order`
-          : `${lines.length} pieces — made to order`,
-      order_id: order.orderId,
-      prefill: {
-        name: customer.name,
-        email: customer.email,
-        contact: customer.phone,
-      },
-      theme: { color: "#7B3F2E" },
-      modal: {
-        // Closing the window is a decision, not a failure — say nothing and
-        // leave the form filled in so paying is one click away.
-        ondismiss: () => setStage("idle"),
-      },
-      handler: async (response: RazorpaySuccess) => {
-        setStage("verifying");
-        try {
-          // The browser claiming success proves nothing; the server checks
-          // the signature against Razorpay before the order counts as paid.
-          const res = await fetch("/api/verify-payment", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(response),
-          });
-          const data = await res.json();
-          if (!res.ok || !data.ok) {
-            setError(
-              (data.error ?? "We could not verify that payment.") +
-                ` Your payment reference is ${response.razorpay_payment_id} — ` +
-                "please send it to us and we will sort it out."
-            );
-            setStage("idle");
-            return;
-          }
-          // The success page clears the bag, so it is still intact if
-          // anything above went wrong. The order number rides in the URL —
-          // it is the only reference the customer gets, and there is no
-          // account for them to look it up in later.
-          router.push(
-            data.orderNumber
-              ? `/checkout/success?order=${encodeURIComponent(data.orderNumber)}`
-              : "/checkout/success"
-          );
-        } catch {
-          setError(
-            "Your payment went through but we could not confirm it. Reference " +
-              `${response.razorpay_payment_id} — please contact us and we will follow it up.`
-          );
-          setStage("idle");
-        }
-      },
-    });
+    const cashfree = window.Cashfree({ mode: order.environment });
 
-    rzp.on("payment.failed", (failure: RazorpayFailure) => {
+    // Whatever this resolves with is a UX hint at best — the browser
+    // reporting its own outcome proves nothing. The success page is what
+    // actually confirms payment, by asking Cashfree directly, and it is
+    // reached the same way whether this resolves with success, a decline,
+    // or the modal being closed.
+    const result: CashfreeCheckoutResult = await cashfree
+      .checkout({ paymentSessionId: order.paymentSessionId, redirectTarget: "_modal" })
+      .catch(() => ({ error: { message: "Could not open the payment window." } }));
+
+    if (result.error && !result.paymentDetails) {
       setError(
-        failure.error?.description ??
-          "That payment did not go through. Please try again or use another card."
+        result.error.message ??
+          "That payment didn't go through, or the window was closed. Please try again."
       );
       setStage("idle");
-    });
+      return;
+    }
 
-    rzp.open();
+    setStage("confirming");
+    router.push(`/checkout/success?order_id=${encodeURIComponent(order.orderId)}`);
   }
 
   if (hydrated && lines.length === 0) {
@@ -287,7 +234,7 @@ export default function CheckoutForm() {
         <button type="submit" disabled={busy} className="btn btn-solid w-full disabled:opacity-60">
           {stage === "creating" && "Preparing…"}
           {stage === "paying" && "Complete Payment"}
-          {stage === "verifying" && "Confirming Payment…"}
+          {stage === "confirming" && "Confirming Payment…"}
           {stage === "idle" && "Pay Securely"}
         </button>
       </form>

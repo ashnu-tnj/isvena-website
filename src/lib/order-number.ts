@@ -3,10 +3,11 @@ import crypto from "node:crypto";
 /**
  * A human-readable reference for an order: `ISV-260818-K4F7`.
  *
- * Generated at order creation and carried on the Razorpay order — as the
- * `receipt` and in the notes — so the customer, the confirmation email and
- * the Razorpay dashboard all name the same order. There is no database, so
- * this is the only handle anyone has on it.
+ * Generated at order creation and used directly as Cashfree's own
+ * `order_id` — so the customer, the confirmation email and the Cashfree
+ * dashboard all name the same order, with no separate gateway-issued id to
+ * reconcile against it. There is no database, so this is the only handle
+ * anyone has on it.
  *
  * The date makes it sortable and tells you at a glance when it was placed;
  * the suffix keeps two orders on the same day apart.

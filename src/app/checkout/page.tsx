@@ -14,7 +14,7 @@ export default function CheckoutPage() {
       <p className="eyebrow text-gold">Checkout</p>
       <h1 className="type-display mt-4 font-display italic">Your order.</h1>
       <p className="mt-5 max-w-md text-sm leading-relaxed text-ink-soft">
-        Card details are entered on Razorpay&rsquo;s secure payment window —
+        Card details are entered on Cashfree&rsquo;s secure payment window —
         they never touch this site.
       </p>
       <div className="mt-14 border-t hairline pt-14">

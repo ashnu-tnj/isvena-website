@@ -104,7 +104,7 @@ export default function CartDrawer() {
             <p className="mb-4 text-xs leading-relaxed text-ink-soft">
               Every piece is made to order and ships in 6–8 weeks, with free
               custom name engraving — add the name at checkout. Secure card
-              payment via Razorpay, and complimentary shipping worldwide.
+              payment via Cashfree, and complimentary shipping worldwide.
               {approximate && (
                 <>
                   {" "}

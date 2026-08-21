@@ -1,9 +1,9 @@
 # Deploying Isvena on a VPS
 
 The site is a Next.js 16 application running as a long-lived Node process
-behind nginx. Payments run on **Razorpay Standard Checkout**; there is no
-shipping integration, because delivery is complimentary worldwide and
-arranged by hand from the details captured at checkout.
+behind nginx. Payments run on **Cashfree Standard (Drop-in) Checkout**;
+there is no shipping integration, because delivery is complimentary
+worldwide and arranged by hand from the details captured at checkout.
 
 **Never put a real key in a file that git tracks.** Secrets live in
 `.env.local` on the server, which is gitignored. `.env.example` is a
@@ -15,23 +15,44 @@ template listing variable *names* only.
 
 1. Customer hits **Checkout** in the cart drawer and lands on `/checkout`.
 2. They fill in **name, email, phone, delivery address** and, if they want
-   it, the **engraving name**. Razorpay's payment window collects a payment
+   it, the **engraving name**. Cashfree's payment window collects a payment
    method and nothing else, so this page is the only place those details are
    ever asked for.
 3. `POST /api/create-order` prices the bag from `src/data/products.ts`
-   **server-side** — the browser cannot set a price — and opens a Razorpay
-   order carrying the address and engraving in its `notes`.
-4. Razorpay's window opens over the page. Card details go straight to
-   Razorpay and never touch this server.
-5. `POST /api/verify-payment` checks the signature Razorpay hands back, then
-   asks Razorpay directly whether the payment really succeeded. Only then is
-   the order treated as paid.
-6. The customer lands on `/checkout/success` and the cart clears.
-7. You despatch using the **notes on the order** in the Razorpay dashboard.
+   **server-side** — the browser cannot set a price — and opens a Cashfree
+   order carrying the address and engraving in its `order_tags`. The order's
+   own id, generated here, is a human-readable reference like
+   `ISV-260821-K4F7` — there is no separate gateway-issued id to reconcile
+   against it.
+4. Cashfree's checkout opens in a modal over the page. Card details go
+   straight to Cashfree and never touch this server.
+5. Two independent things confirm the payment and email the order to
+   `info@isvena.com` — see below. Neither trusts anything the browser
+   reports; both re-check the true state against Cashfree's API.
+6. The customer lands on `/checkout/success`, which shows **paid**,
+   **still confirming** (rare — a few seconds' race with the webhook), or
+   **not completed** (a decline or a closed window; the cart is left intact
+   so nothing is lost).
+7. You despatch using the **tags on the order** in the Cashfree dashboard,
+   or straight from the confirmation email.
 
-Until `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET` are both set,
+Until `CASHFREE_APP_ID` and `CASHFREE_SECRET_KEY` are both set,
 `/api/create-order` returns 503 and checkout tells the customer to order via
 the contact page. The site is safe to leave in that state.
+
+### The two confirmation paths
+
+- **The webhook** (`POST /api/webhooks/cashfree`) — Cashfree calls this
+  server-to-server the moment a payment settles, regardless of what the
+  customer's browser does. This is the reliable path: it still fires if
+  someone pays and closes the tab immediately.
+- **The success page** — when the browser does come back, it checks
+  Cashfree directly too, so the confirmation email usually goes out within
+  the same second rather than waiting on the webhook.
+
+Both call the same idempotent check, so a webhook retry or a page refresh
+never sends the order email twice. See section 7 for the one thing the
+webhook needs to actually work.
 
 ---
 
@@ -66,30 +87,25 @@ pins, so the server builds what was tested.
 Create `/docker/isvena/.env.local`:
 
 ```bash
-# Razorpay keys — Dashboard → Account & Settings → API Keys
-RAZORPAY_KEY_ID=rzp_live_…
-RAZORPAY_KEY_SECRET=…
-
-# The key id again, for the browser. Razorpay's payment window needs it
-# client-side and it is publishable by design. Must match RAZORPAY_KEY_ID.
-NEXT_PUBLIC_RAZORPAY_KEY_ID=rzp_live_…
+# Cashfree keys — Dashboard → Developers → API Keys. Sandbox and production
+# are two entirely separate credential pairs.
+CASHFREE_APP_ID=…
+CASHFREE_SECRET_KEY=…
+CASHFREE_ENV=production
 
 # What the customer is charged in, and the rate used to get there from the
 # USD catalogue. See section 6.
-RAZORPAY_CURRENCY=INR
-RAZORPAY_INR_PER_USD=88
+CASHFREE_CURRENCY=INR
+CASHFREE_INR_PER_USD=88
 
-# The public origin. Every canonical URL, sitemap entry and Open Graph tag.
+# The public origin. Every canonical URL, sitemap entry, Open Graph tag, and
+# the URL Cashfree's webhook is registered against (section 7) — that one
+# needs this to be an https:// origin.
 NEXT_PUBLIC_SITE_URL=https://www.isvena.com
 
 # Local-currency display (section 6).
 NEXT_PUBLIC_LOCAL_PRICING=
 ```
-
-> **`NEXT_PUBLIC_RAZORPAY_KEY_ID` is the only Razorpay value that may carry
-> that prefix.** Anything named `NEXT_PUBLIC_*` is compiled into the
-> JavaScript every visitor downloads. Giving the *secret* that prefix would
-> publish it to the world.
 
 Then `chmod 600 .env.local` so only the owner can read it.
 
@@ -104,8 +120,8 @@ Two things that catch people:
 
 - **`NEXT_PUBLIC_*` values are compiled into the JavaScript at build time.**
   Changing one means running `npm run build` again — restarting is not
-  enough. `RAZORPAY_KEY_SECRET`, `RAZORPAY_CURRENCY` and
-  `RAZORPAY_INR_PER_USD` are read at runtime, so those only need a restart.
+  enough. Every Cashfree variable above is read at runtime, so those only
+  need a restart.
 - **A running Node process does not re-read `.env.local`.** Restart the
   service after any change.
 
@@ -130,7 +146,7 @@ That path is relative to the compose file, so it is
 directory is read by nobody: compose does not reference it, and the build
 context copies only `app/`. Runtime variables go in `.env.production` and
 reach the container as real environment variables, which is what
-`process.env.RAZORPAY_KEY_SECRET` reads.
+`process.env.CASHFREE_SECRET_KEY` reads.
 
 **`output: "standalone"` is required.** The Dockerfile's runner stage copies
 `/app/.next/standalone`, which Next.js only writes when `next.config.ts` asks
@@ -148,19 +164,18 @@ Runtime variables are injected when the container starts, so a value change
 needs no rebuild. `NEXT_PUBLIC_*` values are compiled into the JavaScript
 during `npm run build`, which happens *inside the image build* — so those
 must be passed as build `args` in `docker-compose.yml` and given an `ARG` in
-the Dockerfile, as `NEXT_PUBLIC_SITE_URL` already is. Putting one only in
-`.env.production` gets it to the server and never to the browser.
+the Dockerfile, as `NEXT_PUBLIC_SITE_URL` already is.
 
-`NEXT_PUBLIC_RAZORPAY_KEY_ID` is the exception that needs none of this:
-`/api/create-order` returns the key id in its response and the checkout form
-prefers that over the compiled-in value, so the browser gets it at runtime.
-Setting it is optional here.
+Cashfree needs no `NEXT_PUBLIC_*` value at all: `/api/create-order` returns
+everything the browser needs (the payment session id, and which of
+sandbox/production to initialise the SDK against) in its response, so
+nothing gateway-related has to be baked into the JavaScript bundle.
 
 ### Checking what the container sees
 
 ```bash
-docker exec isvena printenv | grep RAZORPAY
-docker logs --tail 50 isvena | grep -i razorpay
+docker exec isvena printenv | grep CASHFREE
+docker logs --tail 50 isvena | grep -i cashfree
 ```
 
 ## 4. Run it as a service
@@ -194,9 +209,10 @@ journalctl -u isvena -f      # live logs
 ```
 
 That last command is where the app's own diagnostics appear — including the
-`[razorpay] … not set` line naming the exact variable if checkout is
-misconfigured, and the `[create-order]` and `[verify-payment]` lines carrying
-Razorpay's own reason when it refuses something.
+`[cashfree] … not set` line naming the exact variable if checkout is
+misconfigured, and the `[create-order]`, `[webhook:cashfree]` and
+`[order-confirmation]` lines carrying Cashfree's own reason when it refuses
+something.
 
 ## 5. nginx
 
@@ -229,50 +245,51 @@ server {
 Get certificates with `sudo certbot --nginx -d isvena.com -d www.isvena.com`.
 Decide whether `isvena.com` redirects to `www` or the other way round, and
 make `NEXT_PUBLIC_SITE_URL` match the one you keep — otherwise every
-canonical URL points at a redirect.
+canonical URL points at a redirect, **and the webhook URL registered with
+Cashfree (section 7) points at one too.**
 
 ## 6. Currency
 
-**The catalogue is priced in USD. Razorpay bills in one currency.** Those
+**The catalogue is priced in USD. Cashfree bills in one currency.** Those
 two facts have to be reconciled somewhere, and that somewhere is
-`RAZORPAY_CURRENCY` plus `RAZORPAY_INR_PER_USD`.
+`CASHFREE_CURRENCY` plus `CASHFREE_INR_PER_USD`.
 
-An Indian Razorpay account settles in **INR** unless *International
-Payments* has been activated on it (Dashboard → **Account & Settings →
-Configuration → International Payments**; Razorpay reviews the request, it
-is not a toggle). So:
+An Indian Cashfree account settles in **INR** unless *International
+Payments* has been activated on it — this is a request Cashfree reviews, not
+a self-service toggle. So:
 
 | Situation | Set | Effect |
 |---|---|---|
-| International Payments **off** (the default) | `RAZORPAY_CURRENCY=INR` | A $365 bag is charged as ₹32,120 at the rate below. Foreign cards are converted by the customer's own bank. |
-| International Payments **on** | `RAZORPAY_CURRENCY=USD` | The catalogue price is billed as-is and `RAZORPAY_INR_PER_USD` is ignored. |
+| International Payments **off** (the default, and where this account is right now) | `CASHFREE_CURRENCY=INR` | A $365 bag is charged as ₹32,120 at the rate below. Foreign cards are converted by the customer's own bank. |
+| International Payments **on** | `CASHFREE_CURRENCY=USD` | The catalogue price is billed as-is and `CASHFREE_INR_PER_USD` is ignored. |
 
-`RAZORPAY_INR_PER_USD` is **the rate you sell at**, not a display estimate:
+`CASHFREE_INR_PER_USD` is **the rate you sell at**, not a display estimate:
 it decides what the customer's card is actually debited. It is deliberately
 a setting rather than a live FX call, so a third-party outage can never sit
 between a customer and the pay button — which means **you own keeping it
 current**. Review it when the rupee moves; the default of 88 was set in
 2026 and will drift.
 
-Whatever it is set to, Razorpay's own payment window shows the customer the
+Whatever it is set to, Cashfree's own payment window shows the customer the
 exact amount before they confirm.
 
 ### Showing local prices on the site
 
-Set `NEXT_PUBLIC_LOCAL_PRICING=on` and **rebuild**. Product pages, cards and the cart then show the visitor's
-currency, and a **USD / local switch appears in the header** so they can
-price the collection either way. The choice is remembered per browser.
+Set `NEXT_PUBLIC_LOCAL_PRICING=on` and **rebuild**. Product pages, cards and
+the cart then show the visitor's currency, and a **USD / local switch
+appears in the header** so they can price the collection either way. The
+choice is remembered per browser.
 
 The switch only appears when there is a real choice — a visitor whose
 currency is already USD never sees it.
 
 Those figures are **approximations**, marked `≈`, because the customer's own
-bank sets the final conversion from whatever Razorpay bills. Rates live in
+bank sets the final conversion from whatever Cashfree bills. Rates live in
 `src/lib/currency.ts`, rounded to clean numbers (`≈ £255`, not `£252.80`).
 
-> These display rates are **separate** from `RAZORPAY_INR_PER_USD`, which is
+> These display rates are **separate** from `CASHFREE_INR_PER_USD`, which is
 > what gets charged. Keep the two roughly in step — the INR figure shown to
-> an Indian visitor comes from `currency.ts`, the one Razorpay charges comes
+> an Indian visitor comes from `currency.ts`, the one Cashfree charges comes
 > from the environment, and a visitor who compares them will notice.
 
 Server-rendered HTML, page titles and structured data stay in USD, so search
@@ -307,25 +324,42 @@ non-Indian IP; the JSON should carry that country.
 
 Skipping GeoIP is fine — detection falls back to the browser locale. To turn
 the feature off entirely, leave `NEXT_PUBLIC_LOCAL_PRICING` unset: prices
-stay in USD sitewide and the currency switch disappears. What Razorpay
+stay in USD sitewide and the currency switch disappears. What Cashfree
 charges is unaffected either way.
 
-## 7. Razorpay notifications
+## 7. The webhook
 
-Dashboard → **Account & Settings → Notifications** → enable emails for
-**successful payments**. Nothing else tells you a sale happened; there is no
-webhook and no order database.
+`/api/create-order` registers `{origin}/api/webhooks/cashfree` as the
+order's `notify_url` — **but only when `NEXT_PUBLIC_SITE_URL` is an
+`https://` address.** Cashfree requires HTTPS for this URL and silently
+receives nothing if it were ever pointed at plain `http://`, so it is
+omitted rather than sent and rejected — meaning **on a correctly deployed
+production site this needs no setup at all.** It only matters for local
+development over `http://localhost`, where the webhook path is simply
+unreachable and the browser-return path (section "What happens on an order")
+is the only one that runs. That is a fine way to test the checkout flow
+itself; it does not exercise the webhook.
+
+Every request to this endpoint is checked against Cashfree's HMAC-SHA256
+signature (`x-webhook-signature` / `x-webhook-timestamp` headers) before
+anything in the body is trusted — an unsigned or wrongly-signed POST is
+rejected outright and never reaches the confirmation logic.
+
+**Also enable Dashboard → Account & Settings → Notifications → emails for
+successful payments**, as a second line of sight independent of this
+application entirely.
 
 Every order arrives with the customer's name, email, phone, full delivery
-address and engraving name in its **Notes** (Dashboard → Transactions →
-Orders → the order). That is what you despatch from.
+address and engraving name in its **tags** (Dashboard → Transactions →
+Orders → the order). That is what you despatch from if the confirmation
+email (section 8) is ever missing.
 
 ## 8. Order notification email
 
 Every paid order is emailed to `info@isvena.com` (override with
 `ORDER_EMAIL_TO`). There is no database and no admin screen, so **that email
 is the order**: it carries the order number, the pieces and colours, the
-engraving name, the full delivery address, phone, and the Razorpay payment
+engraving name, the full delivery address, phone, and the Cashfree payment
 id. Replying to it reaches the customer.
 
 Add to `.env.production` and recreate the container:
@@ -352,27 +386,26 @@ docker logs isvena | grep -A25 '\[mail\]'
 
 ### Order numbers
 
-Assigned at order creation as `ISV-260818-K4F7` — the date, then a suffix
+Assigned at order creation as `ISV-260821-K4F7` — the date, then a suffix
 drawn from an alphabet with no `0/O` or `1/I/5/S` in it, so a number read off
-a screen and typed into an email survives the trip. It is written to the
-Razorpay order's `receipt` and its notes, shown to the customer on the
-confirmation page, and used as the email subject, so all four name the same
-order.
+a screen and typed into an email survives the trip. It is used directly as
+Cashfree's own `order_id`, shown to the customer on the confirmation page,
+and used as the email subject, so all three name the same order — there is
+no separate gateway-issued id to reconcile against it.
 
 There is no database, so uniqueness is probabilistic rather than enforced:
 456,976 suffixes per day. At current volume a clash is far-fetched; it is
 worth knowing rather than assuming.
 
-### The gap worth knowing about
+### Duplicate emails
 
-The email is sent when the browser returns from Razorpay and
-`/api/verify-payment` runs. **If a customer pays and closes the tab
-immediately, that never happens** — the money is captured, the order sits in
-the Razorpay dashboard with its notes intact, and no email arrives.
-
-Nothing is lost, but you would only find it by looking. If it ever happens,
-the fix is a Razorpay webhook on `payment.captured` calling the same code,
-which does not depend on the customer's browser at all.
+The webhook and the success page both trigger the same confirmation check,
+and Cashfree can retry a webhook delivery — so without a safeguard, one
+order could email two or three times. Guarded against with an in-memory
+"already confirmed" set: harmless and cheap, but it resets on a deploy or a
+restart, so a very precisely-timed retry across exactly that moment could in
+theory cause one duplicate email. A nuisance, not a lost order — the order
+and its tags still exist on Cashfree regardless.
 
 ---
 
@@ -390,46 +423,54 @@ sudo systemctl restart isvena
 the restart, so the window where the site is inconsistent is short — but it
 is not zero. Deploy when it's quiet.
 
+(On the box as it is actually run, this is `docker compose up -d --build
+isvena` instead — see "How it is actually deployed" in section 3.)
+
 ---
 
 ## Testing
 
-Use a **test** key pair (`rzp_test_…`) first. Add a bag, go to `/checkout`,
-fill the form, and pay in the Razorpay window with card
-`4111 1111 1111 1111`, any future expiry, any CVC, OTP `1234` — or use the
-**UPI success** option, which needs no card at all. Confirm:
+Use the **sandbox** key pair first (`CASHFREE_ENV=sandbox`, App ID starting
+`TEST…`). Add a bag, go to `/checkout`, fill the form, and pay in the
+Cashfree window with test card `4111 1111 1111 1111`, any future expiry, CVV
+`123`, OTP `123456` — or use the sandbox's UPI success option, which needs
+no card at all. Confirm:
 
 1. `/checkout` asks for address, phone and engraving, and shows **no
    shipping charge**.
-2. The Razorpay window shows the expected amount in the expected currency.
-3. You land on `/checkout/success` and the cart is empty.
-4. The payment appears in the Razorpay dashboard, and the **order's Notes**
-   carry the address, phone and engraving name.
+2. The Cashfree window shows the expected amount in the expected currency.
+3. You land on `/checkout/success` showing **paid**, with the order number.
+4. The order appears in the Cashfree dashboard, and its **Tags** carry the
+   address, phone and engraving name.
+5. The confirmation email arrives at `info@isvena.com` (section 8).
 
 Then close the window without paying — you should land back on the form with
-everything still filled in and no error shouting at you.
+everything still filled in and no error shouting at you, **and the bag
+should still have your items in it** (a failed or cancelled payment must
+never cost the customer their cart).
 
-Then swap in the live keys, **rebuild** (`NEXT_PUBLIC_RAZORPAY_KEY_ID` is
-compiled in), restart, place one real low-value order and refund it.
+If you're testing over plain `http://localhost`, the webhook cannot reach
+you (section 7) — the browser-return path alone still confirms the order and
+sends the email, so this only means you haven't exercised the webhook path
+specifically. Test that once from the real deployed domain.
+
+Then swap in the live keys (`CASHFREE_ENV=production`, and the production
+App ID / Secret Key pair from the dashboard with the environment switch set
+to **live**, not test), restart, place one real low-value order and refund
+it.
 
 If checkout returns 503, check `journalctl -u isvena` — the app logs exactly
 which variable is missing. If it returns 500 or 401, the same log carries
-Razorpay's own reason.
+Cashfree's own reason.
 
 ---
 
 ## Known gaps
 
-**No order record of your own.** Orders live in Razorpay only, with the
-delivery details in the order's `notes`. Fine at current volume; if it grows,
-add a Razorpay webhook on `payment.captured` writing to a database.
-
-**Verification depends on the customer's browser getting back to us.** If
-someone pays and then closes the tab before `/api/verify-payment` runs, the
-money is captured in Razorpay but the site never records the hand-off, and
-they never see the confirmation page. The payment is still in the dashboard
-with its notes, so nothing is lost — but you will only see it there. A
-webhook is the proper fix if that starts happening.
+**No order record of your own.** Orders live in Cashfree only, with the
+delivery details in the order's `order_tags`. Fine at current volume; if it
+grows, the webhook already in place (section 7) is the natural point to also
+write to a database.
 
 **Taxes.** No GST/VAT is calculated. The FAQ states that import duties are
 the recipient's responsibility.
@@ -440,3 +481,9 @@ changes, all three need updating together, plus the FAQ.
 
 **No staging environment.** Builds happen on the production box. If that
 becomes uncomfortable, build elsewhere and rsync `.next/`.
+
+**The `cashfree-pg` SDK reports client-side validation errors (not payment
+or customer data) to a Sentry project Cashfree operates, on by default.**
+This app disables it explicitly (`XEnableErrorAnalytics: false` in
+`src/lib/cashfree.ts`) — worth knowing if the SDK is ever upgraded and that
+call site changes shape, since nothing else re-enables it.
