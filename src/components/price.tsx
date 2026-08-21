@@ -7,7 +7,7 @@ import { useCurrency } from "@/lib/currency-context";
  *
  * Renders USD on the server and on first paint, so crawlers, no-JS visitors
  * and the structured data all agree on the canonical price. When a local
- * currency is active the figure is prefixed with "≈", because Razorpay bills
+ * currency is active the figure is prefixed with "≈", because Cashfree bills
  * in a single currency and the customer's bank sets the final conversion.
  */
 export default function Price({

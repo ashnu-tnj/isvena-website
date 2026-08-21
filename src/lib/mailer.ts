@@ -6,8 +6,8 @@ import type { Transporter } from "nodemailer";
  *
  * There is no database and no admin screen, so this email *is* how the
  * workshop learns an order exists. Everything needed to make and despatch
- * the piece has to be in it, because the alternative is opening the Razorpay
- * dashboard and reading the order's notes by hand.
+ * the piece has to be in it, because the alternative is opening the payment
+ * gateway's dashboard and reading the order's tags by hand.
  *
  * Configured over plain SMTP rather than a provider API so it works with the
  * info@isvena.com mailbox that already exists, whoever hosts it.
@@ -57,8 +57,8 @@ export interface OrderEmail {
   customer: { name: string; email: string; phone: string };
   address: string;
   engraving: string;
-  razorpayOrderId: string;
-  razorpayPaymentId: string;
+  gatewayOrderId: string;
+  gatewayPaymentId: string;
 }
 
 function plainText(o: OrderEmail): string {
@@ -80,9 +80,9 @@ function plainText(o: OrderEmail): string {
     `  ${o.customer.phone}`,
     `  ${o.customer.email}`,
     "",
-    "RAZORPAY",
-    `  Payment  ${o.razorpayPaymentId}`,
-    `  Order    ${o.razorpayOrderId}`,
+    "PAYMENT GATEWAY",
+    `  Payment  ${o.gatewayPaymentId}`,
+    `  Order    ${o.gatewayOrderId}`,
     "",
     "Made to order — due to ship in 6–8 weeks.",
   ].join("\n");
@@ -112,10 +112,10 @@ ${row("Address", esc(o.address))}
 ${row("Phone", esc(o.customer.phone))}
 ${row("Email", `<a href="mailto:${esc(o.customer.email)}">${esc(o.customer.email)}</a>`)}
 </table>
-<h2 style="font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:#8a7f76;margin:28px 0 8px">Razorpay</h2>
+<h2 style="font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:#8a7f76;margin:28px 0 8px">Payment gateway</h2>
 <table style="border-collapse:collapse;font-size:14px;width:100%">
-${row("Payment", esc(o.razorpayPaymentId))}
-${row("Order", esc(o.razorpayOrderId))}
+${row("Payment", esc(o.gatewayPaymentId))}
+${row("Order", esc(o.gatewayOrderId))}
 </table>
 </div>`;
 }

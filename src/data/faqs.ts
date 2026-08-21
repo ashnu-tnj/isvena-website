@@ -47,6 +47,6 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "What payment methods does Isvena accept?",
-    a: "Isvena accepts secure card payments through Razorpay at checkout, which also supports UPI, net banking and wallets. Card details are entered on Razorpay\u2019s own payment window and never touch the Isvena site. Delivery details are collected at checkout for worldwide despatch. For bespoke or wholesale orders, the studio can also arrange payment directly.",
+    a: "Isvena accepts secure card payments through Cashfree at checkout, which also supports UPI, net banking and wallets. Card details are entered on Cashfree\u2019s own payment window and never touch the Isvena site. Delivery details are collected at checkout for worldwide despatch. For bespoke or wholesale orders, the studio can also arrange payment directly.",
   },
 ];
