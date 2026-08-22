@@ -95,6 +95,9 @@ export default function SiteFooter() {
             </p>
             <p>Chennai, Tamil Nadu, India — Shipping Worldwide</p>
           </div>
+          <p className="mt-4 text-center">
+            Isvena is a brand of Black Box Traders, Thanjavur, Tamil Nadu.
+          </p>
           <p className="mt-6 text-center text-[0.66rem] tracking-wide text-cream/35">
             Designed &amp; Developed by AFLATUS OPC PVT LTD, Chennai
           </p>
