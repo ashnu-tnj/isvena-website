@@ -1,5 +1,4 @@
-import nodemailer from "nodemailer";
-import type { Transporter } from "nodemailer";
+import { Resend } from "resend";
 
 /**
  * Order notifications.
@@ -9,25 +8,23 @@ import type { Transporter } from "nodemailer";
  * the piece has to be in it, because the alternative is opening the payment
  * gateway's dashboard and reading the order's tags by hand.
  *
- * Configured over plain SMTP rather than a provider API so it works with the
- * info@isvena.com mailbox that already exists, whoever hosts it.
+ * Sent through Resend's API rather than raw SMTP. SMTP was tried first, but
+ * a protocol whose only failure signal is a TCP connection going quiet
+ * — no structured error, nothing to grep for beyond "it didn't arrive" — is
+ * a bad foundation for the one notification a no-database shop depends on.
+ * An API call either succeeds with a message id or fails with a reason in
+ * the response body, in both cases without needing to guess at a mail
+ * server's specific TLS/port/auth quirks.
  */
-let cached: Transporter | null | undefined;
+let cached: Resend | null | undefined;
 
-function getTransport(): Transporter | null {
+function getClient(): Resend | null {
   if (cached !== undefined) return cached;
 
-  const host = process.env.SMTP_HOST;
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASS;
-  if (!host || !user || !pass) {
-    const missing = [
-      !host && "SMTP_HOST",
-      !user && "SMTP_USER",
-      !pass && "SMTP_PASS",
-    ].filter(Boolean);
+  const key = process.env.RESEND_API_KEY;
+  if (!key) {
     console.error(
-      `[mail] ${missing.join(", ")} not set — order emails will not be sent. ` +
+      "[mail] RESEND_API_KEY not set — order emails will not be sent. " +
         "Order details are written to this log instead, so nothing is lost; " +
         "see SETUP.md section 8."
     );
@@ -35,16 +32,7 @@ function getTransport(): Transporter | null {
     return cached;
   }
 
-  const port = Number(process.env.SMTP_PORT ?? 587);
-  cached = nodemailer.createTransport({
-    host,
-    port,
-    // 465 is implicit TLS; 587 starts plain and upgrades via STARTTLS.
-    secure: process.env.SMTP_SECURE
-      ? process.env.SMTP_SECURE === "true"
-      : port === 465,
-    auth: { user, pass },
-  });
+  cached = new Resend(key);
   return cached;
 }
 
@@ -123,24 +111,30 @@ ${row("Order", esc(o.gatewayOrderId))}
 /**
  * Send the notification. Never throws and never rejects.
  *
- * The customer has already paid by the time this runs, so a mail server
+ * The customer has already paid by the time this runs, so a mail provider
  * having a bad afternoon must not turn a successful payment into a failure
  * on their screen. A send that fails is logged in full — the order details
  * go to the log, where they can be recovered.
  */
 export async function sendOrderEmail(order: OrderEmail): Promise<boolean> {
-  const transport = getTransport();
+  const resend = getClient();
   const to = process.env.ORDER_EMAIL_TO ?? "info@isvena.com";
+  // resend.dev is Resend's own shared sandbox domain — it sends, but only
+  // to the address that owns the API key, and marks every message as a test
+  // send. Real delivery to info@isvena.com needs isvena.com verified in the
+  // Resend dashboard (a couple of DNS records); ORDER_EMAIL_FROM then
+  // becomes something like "Isvena <orders@isvena.com>".
+  const from = process.env.ORDER_EMAIL_FROM ?? "Isvena <onboarding@resend.dev>";
 
-  if (!transport) {
+  if (!resend) {
     console.error(`[mail] NOT SENT — order details follow:\n${plainText(order)}`);
     return false;
   }
 
   try {
-    await transport.sendMail({
+    const { data, error } = await resend.emails.send({
       to,
-      from: process.env.ORDER_EMAIL_FROM ?? process.env.SMTP_USER,
+      from,
       // Replying to the notification reaches the customer, which is what you
       // want when you need to ask them something about the order.
       replyTo: order.customer.email,
@@ -150,11 +144,19 @@ export async function sendOrderEmail(order: OrderEmail): Promise<boolean> {
       text: plainText(order),
       html: html(order),
     });
-    console.log(`[mail] Order ${order.orderNumber} sent to ${to}.`);
+
+    if (error) {
+      console.error(
+        `[mail] Resend rejected order ${order.orderNumber} to ${to} — ` +
+          `${error.name}: ${error.message}\nOrder details follow:\n${plainText(order)}`
+      );
+      return false;
+    }
+    console.log(`[mail] Order ${order.orderNumber} sent to ${to} (id ${data?.id}).`);
     return true;
   } catch (err) {
     console.error(
-      `[mail] Could not send order ${order.orderNumber} to ${to}: ` +
+      `[mail] Could not reach Resend for order ${order.orderNumber} to ${to}: ` +
         `${(err as Error).message}\nOrder details follow:\n${plainText(order)}`
     );
     return false;

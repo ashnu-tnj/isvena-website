@@ -362,27 +362,63 @@ is the order**: it carries the order number, the pieces and colours, the
 engraving name, the full delivery address, phone, and the Cashfree payment
 id. Replying to it reaches the customer.
 
-Add to `.env.production` and recreate the container:
+Sent via **Resend's API**, not SMTP. SMTP was tried first and abandoned:
+its only failure signal is a TCP connection going quiet — no structured
+error, nothing to grep for beyond "it didn't arrive" — which is a bad
+foundation for the one notification a no-database shop depends on entirely.
+
+1. Sign up at [resend.com](https://resend.com) (free tier: 3,000 emails/month,
+   comfortably more than this needs) and grab an API key from
+   **Dashboard → API Keys**.
+2. **Verify `isvena.com`** under **Domains** — Resend gives you a handful of
+   DNS records (SPF, DKIM) to add wherever the domain's DNS is managed;
+   verification usually completes within minutes of adding them. Skipping
+   this step means Resend only delivers to the email address that owns the
+   API key, and marks every send as a test — fine for confirming the wiring
+   works, useless for real orders.
+3. Add to `.env.production` and recreate the container:
 
 ```bash
-SMTP_HOST=smtp.your-provider.com
-SMTP_PORT=587
-SMTP_USER=info@isvena.com
-SMTP_PASS=…
+RESEND_API_KEY=re_…
+ORDER_EMAIL_FROM=Isvena <orders@isvena.com>
 ```
 
-Port 465 is implicit TLS, 587 upgrades via STARTTLS; leave `SMTP_SECURE`
-unset to derive it from the port. If your mailbox uses 2FA, this needs an
-**app password**, not the account password.
+`ORDER_EMAIL_FROM` only works once step 2 is done — until then, leave it
+unset and it falls back to Resend's shared sandbox sender, which is
+sandbox-restricted as described above.
 
-**Nothing is lost if SMTP is unconfigured or the mail server is down.** The
-full order is written to the container log instead, and the customer's
-payment still succeeds — a mail outage must never turn a completed payment
-into an error on their screen. Find those with:
+**Nothing is lost if Resend is unconfigured or unreachable.** The full order
+is written to the container log instead, and the customer's payment still
+succeeds — a mail outage must never turn a completed payment into an error
+on their screen. Find those with:
 
 ```bash
 docker logs isvena | grep -A25 '\[mail\]'
 ```
+
+A rejection from Resend itself (bad `from` domain, quota, etc.) logs as
+`[mail] Resend rejected order … — <reason>`, with the actual order details
+right below it either way.
+
+### Confirming Resend works, independent of a real order
+
+```bash
+docker exec -i isvena node <<'EOF'
+const { Resend } = require('resend');
+const resend = new Resend(process.env.RESEND_API_KEY);
+resend.emails.send({
+  to: process.env.ORDER_EMAIL_TO || 'info@isvena.com',
+  from: process.env.ORDER_EMAIL_FROM || 'Isvena <onboarding@resend.dev>',
+  subject: 'Isvena - Resend test (safe to delete)',
+  text: 'Dummy test confirming Resend delivery works.',
+}).then(r => console.log(r.error ? 'FAILED: ' + r.error.message : 'SENT: ' + r.data.id));
+EOF
+```
+
+The heredoc form (`<<'EOF' … EOF`, all pasted as one block) survives being
+pasted into a terminal far more reliably than a one-line `node -e "…"` with
+nested quotes — worth using for any one-off script like this, not just this
+one.
 
 ### Order numbers
 
