@@ -1,4 +1,5 @@
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
+import type { Transporter } from "nodemailer";
 
 /**
  * Order notifications.
@@ -8,23 +9,32 @@ import { Resend } from "resend";
  * the piece has to be in it, because the alternative is opening the payment
  * gateway's dashboard and reading the order's tags by hand.
  *
- * Sent through Resend's API rather than raw SMTP. SMTP was tried first, but
- * a protocol whose only failure signal is a TCP connection going quiet
- * — no structured error, nothing to grep for beyond "it didn't arrive" — is
- * a bad foundation for the one notification a no-database shop depends on.
- * An API call either succeeds with a message id or fails with a reason in
- * the response body, in both cases without needing to guess at a mail
- * server's specific TLS/port/auth quirks.
+ * Sent over plain SMTP against the existing info@isvena.com mailbox (Titan
+ * Mail), rather than a separate provider account. The original attempt at
+ * this failed silently with no useful reason — the actual cause turned out
+ * to be Titan's "third-party app access" setting being off, which is
+ * exactly the class of failure a plain SMTP AUTH rejection is bad at
+ * reporting. That is now enabled; the error handling below also logs every
+ * field nodemailer gives back (code, SMTP response text) rather than just
+ * the message, so a future auth or delivery problem is diagnosable from the
+ * log alone rather than requiring a fresh round of guessing.
  */
-let cached: Resend | null | undefined;
+let cached: Transporter | null | undefined;
 
-function getClient(): Resend | null {
+function getTransport(): Transporter | null {
   if (cached !== undefined) return cached;
 
-  const key = process.env.RESEND_API_KEY;
-  if (!key) {
+  const host = process.env.SMTP_HOST;
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+  if (!host || !user || !pass) {
+    const missing = [
+      !host && "SMTP_HOST",
+      !user && "SMTP_USER",
+      !pass && "SMTP_PASS",
+    ].filter(Boolean);
     console.error(
-      "[mail] RESEND_API_KEY not set — order emails will not be sent. " +
+      `[mail] ${missing.join(", ")} not set — order emails will not be sent. ` +
         "Order details are written to this log instead, so nothing is lost; " +
         "see SETUP.md section 8."
     );
@@ -32,7 +42,16 @@ function getClient(): Resend | null {
     return cached;
   }
 
-  cached = new Resend(key);
+  const port = Number(process.env.SMTP_PORT ?? 587);
+  cached = nodemailer.createTransport({
+    host,
+    port,
+    // 465 is implicit TLS; 587 starts plain and upgrades via STARTTLS.
+    secure: process.env.SMTP_SECURE
+      ? process.env.SMTP_SECURE === "true"
+      : port === 465,
+    auth: { user, pass },
+  });
   return cached;
 }
 
@@ -109,32 +128,47 @@ ${row("Order", esc(o.gatewayOrderId))}
 }
 
 /**
+ * nodemailer's rejection is a plain Error by type, but SMTP transports
+ * attach extra fields (code, the SMTP server's own response line, the
+ * command that triggered it) that `.message` alone drops. Those extra
+ * fields are exactly what would have named the "third-party app access"
+ * setting as the cause the first time, instead of a bare "auth failed".
+ */
+function describeSmtpError(err: unknown): string {
+  const e = err as {
+    message?: string;
+    code?: string;
+    responseCode?: number;
+    response?: string;
+    command?: string;
+  };
+  return (
+    `code=${e.code ?? "?"} responseCode=${e.responseCode ?? "?"} ` +
+    `command=${e.command ?? "?"}: ${e.response ?? e.message ?? String(err)}`
+  );
+}
+
+/**
  * Send the notification. Never throws and never rejects.
  *
- * The customer has already paid by the time this runs, so a mail provider
+ * The customer has already paid by the time this runs, so a mail server
  * having a bad afternoon must not turn a successful payment into a failure
  * on their screen. A send that fails is logged in full — the order details
  * go to the log, where they can be recovered.
  */
 export async function sendOrderEmail(order: OrderEmail): Promise<boolean> {
-  const resend = getClient();
+  const transport = getTransport();
   const to = process.env.ORDER_EMAIL_TO ?? "info@isvena.com";
-  // resend.dev is Resend's own shared sandbox domain — it sends, but only
-  // to the address that owns the API key, and marks every message as a test
-  // send. Real delivery to info@isvena.com needs isvena.com verified in the
-  // Resend dashboard (a couple of DNS records); ORDER_EMAIL_FROM then
-  // becomes something like "Isvena <orders@isvena.com>".
-  const from = process.env.ORDER_EMAIL_FROM ?? "Isvena <onboarding@resend.dev>";
 
-  if (!resend) {
+  if (!transport) {
     console.error(`[mail] NOT SENT — order details follow:\n${plainText(order)}`);
     return false;
   }
 
   try {
-    const { data, error } = await resend.emails.send({
+    await transport.sendMail({
       to,
-      from,
+      from: process.env.ORDER_EMAIL_FROM ?? process.env.SMTP_USER,
       // Replying to the notification reaches the customer, which is what you
       // want when you need to ask them something about the order.
       replyTo: order.customer.email,
@@ -144,20 +178,12 @@ export async function sendOrderEmail(order: OrderEmail): Promise<boolean> {
       text: plainText(order),
       html: html(order),
     });
-
-    if (error) {
-      console.error(
-        `[mail] Resend rejected order ${order.orderNumber} to ${to} — ` +
-          `${error.name}: ${error.message}\nOrder details follow:\n${plainText(order)}`
-      );
-      return false;
-    }
-    console.log(`[mail] Order ${order.orderNumber} sent to ${to} (id ${data?.id}).`);
+    console.log(`[mail] Order ${order.orderNumber} sent to ${to}.`);
     return true;
   } catch (err) {
     console.error(
-      `[mail] Could not reach Resend for order ${order.orderNumber} to ${to}: ` +
-        `${(err as Error).message}\nOrder details follow:\n${plainText(order)}`
+      `[mail] Could not send order ${order.orderNumber} to ${to} — ` +
+        `${describeSmtpError(err)}\nOrder details follow:\n${plainText(order)}`
     );
     return false;
   }
