@@ -380,8 +380,14 @@ foundation for the one notification a no-database shop depends on entirely.
 
 ```bash
 RESEND_API_KEY=re_…
-ORDER_EMAIL_FROM=Isvena <orders@isvena.com>
+ORDER_EMAIL_FROM=Isvena <info@isvena.com>
 ```
+
+`ORDER_EMAIL_FROM` doesn't need a separate mailbox — once the *domain* is
+verified (step 2), Resend lets you send from any address `@isvena.com`,
+whether or not it's a real inbox. Using the same address as `ORDER_EMAIL_TO`
+(which defaults to `info@isvena.com`) is the simplest setup: the order
+notification sends from your own mailbox to itself.
 
 `ORDER_EMAIL_FROM` only works once step 2 is done — until then, leave it
 unset and it falls back to Resend's shared sandbox sender, which is
