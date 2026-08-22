@@ -362,69 +362,91 @@ is the order**: it carries the order number, the pieces and colours, the
 engraving name, the full delivery address, phone, and the Cashfree payment
 id. Replying to it reaches the customer.
 
-Sent via **Resend's API**, not SMTP. SMTP was tried first and abandoned:
-its only failure signal is a TCP connection going quiet — no structured
-error, nothing to grep for beyond "it didn't arrive" — which is a bad
-foundation for the one notification a no-database shop depends on entirely.
+Sent over **plain SMTP** against the existing `info@isvena.com` mailbox
+(Titan Mail) — deliberately not a separate provider account, to keep this to
+one mailbox rather than one more thing to sign up for and manage.
 
-1. Sign up at [resend.com](https://resend.com) (free tier: 3,000 emails/month,
-   comfortably more than this needs) and grab an API key from
-   **Dashboard → API Keys**.
-2. **Verify `isvena.com`** under **Domains** — Resend gives you a handful of
-   DNS records (SPF, DKIM) to add wherever the domain's DNS is managed;
-   verification usually completes within minutes of adding them. Skipping
-   this step means Resend only delivers to the email address that owns the
-   API key, and marks every send as a test — fine for confirming the wiring
-   works, useless for real orders.
-3. Add to `.env.production` and recreate the container:
+Add to `.env.production` and recreate the container:
 
 ```bash
-RESEND_API_KEY=re_…
-ORDER_EMAIL_FROM=Isvena <info@isvena.com>
+SMTP_HOST=smtp.titan.email
+SMTP_PORT=465
+SMTP_USER=info@isvena.com
+SMTP_PASS=…
 ```
 
-`ORDER_EMAIL_FROM` doesn't need a separate mailbox — once the *domain* is
-verified (step 2), Resend lets you send from any address `@isvena.com`,
-whether or not it's a real inbox. Using the same address as `ORDER_EMAIL_TO`
-(which defaults to `info@isvena.com`) is the simplest setup: the order
-notification sends from your own mailbox to itself.
+Port 465 is implicit TLS, 587 upgrades via STARTTLS; leave `SMTP_SECURE`
+unset to derive it from the port. `ORDER_EMAIL_FROM` defaults to
+`SMTP_USER`, so leaving it unset sends from the same `info@isvena.com`
+address the order already goes to — no separate mailbox needed.
 
-`ORDER_EMAIL_FROM` only works once step 2 is done — until then, leave it
-unset and it falls back to Resend's shared sandbox sender, which is
-sandbox-restricted as described above.
+**The one setting that actually caused a real outage here:** Titan's
+dashboard has a **third-party app access** toggle (wording varies — look
+under Security or App Access), off by default. With it off, SMTP
+authentication is rejected with no clear reason surfaced to this app —
+which is exactly the failure mode plain SMTP is bad at reporting, so it
+looked for a while like a code problem when it was an account setting.
+**Confirm it's enabled before assuming anything else is wrong.**
 
-**Nothing is lost if Resend is unconfigured or unreachable.** The full order
-is written to the container log instead, and the customer's payment still
-succeeds — a mail outage must never turn a completed payment into an error
-on their screen. Find those with:
+**Nothing is lost if SMTP is unconfigured or the mail server is down.** The
+full order is written to the container log instead, and the customer's
+payment still succeeds — a mail outage must never turn a completed payment
+into an error on their screen. Find those with:
 
 ```bash
 docker logs isvena | grep -A25 '\[mail\]'
 ```
 
-A rejection from Resend itself (bad `from` domain, quota, etc.) logs as
-`[mail] Resend rejected order … — <reason>`, with the actual order details
-right below it either way.
+A delivery failure logs as `[mail] Could not send order … — code=… responseCode=…
+command=…: <the SMTP server's own response line>` — the fields nodemailer
+attaches beyond the bare message, since those are what actually name the
+cause (an auth rejection, a quota, a rejected recipient) rather than just
+"it didn't work."
 
-### Confirming Resend works, independent of a real order
+### Confirming Titan works, independent of a real order
+
+This runs directly against Titan with Python (already on the VPS, no
+dependency on the app or its container) and reads the credentials straight
+out of `.env.production`:
 
 ```bash
-docker exec -i isvena node <<'EOF'
-const { Resend } = require('resend');
-const resend = new Resend(process.env.RESEND_API_KEY);
-resend.emails.send({
-  to: process.env.ORDER_EMAIL_TO || 'info@isvena.com',
-  from: process.env.ORDER_EMAIL_FROM || 'Isvena <onboarding@resend.dev>',
-  subject: 'Isvena - Resend test (safe to delete)',
-  text: 'Dummy test confirming Resend delivery works.',
-}).then(r => console.log(r.error ? 'FAILED: ' + r.error.message : 'SENT: ' + r.data.id));
+cd /docker/isvena
+python3 <<'EOF'
+import smtplib
+from email.mime.text import MIMEText
+
+env = {}
+with open(".env.production") as f:
+    for line in f:
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        k, v = line.split("=", 1)
+        env[k.strip()] = v.strip().strip('"').strip("'")
+
+host = env.get("SMTP_HOST", "smtp.titan.email")
+port = int(env.get("SMTP_PORT", "465"))
+user = env["SMTP_USER"]
+password = env["SMTP_PASS"]
+
+msg = MIMEText("Dummy test confirming Titan SMTP delivery works.")
+msg["Subject"] = "Isvena - Titan test (safe to delete)"
+msg["From"] = user
+msg["To"] = user
+
+try:
+    with smtplib.SMTP_SSL(host, port, timeout=15) as server:
+        server.login(user, password)
+        server.sendmail(user, [user], msg.as_string())
+    print("SENT: Titan accepted the message.")
+except Exception as e:
+    print(f"FAILED: {type(e).__name__}: {e}")
 EOF
 ```
 
-The heredoc form (`<<'EOF' … EOF`, all pasted as one block) survives being
-pasted into a terminal far more reliably than a one-line `node -e "…"` with
-nested quotes — worth using for any one-off script like this, not just this
-one.
+Paste the whole block in one go — the heredoc form survives being pasted
+into a terminal far more reliably than a one-line command with nested
+quotes, which is exactly what broke the first attempt at this test.
 
 ### Order numbers
 
