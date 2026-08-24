@@ -1,22 +1,33 @@
 /**
  * Local-currency display.
  *
- * Catalogue prices live in USD (`src/data/products.ts`). Cashfree bills a
- * single currency — rupees, unless International Payments is on — and the
- * customer's own bank converts that into whatever their card is denominated
- * in, at a rate nobody here can see in advance.
+ * Catalogue prices live in USD (`src/data/products.ts`). Cashfree currently
+ * charges every customer in INR regardless of where they are — International
+ * Payments isn't active on the account, and Cashfree's own KYC review
+ * flagged showing anything other than INR as a mismatch against that. So
+ * INR is the default (`BASE_CURRENCY`), and the local-currency toggle stays
+ * off (`NEXT_PUBLIC_LOCAL_PRICING` unset) until international payments is
+ * live and a genuinely multi-currency price makes sense again — at which
+ * point this file, and only this file plus `NEXT_PUBLIC_LOCAL_PRICING`,
+ * needs revisiting.
  *
- * So the figures produced here are approximations ("≈ £355"), rounded to
- * clean numbers, with the real amount shown on Cashfree's payment window
- * before the customer confirms. The feature stays behind
- * NEXT_PUBLIC_LOCAL_PRICING because a local price is a helpful guide on a
- * catalogue priced in dollars, not a quote.
+ * `RATES.INR` reads the same NEXT_PUBLIC_INR_PER_USD value
+ * `src/lib/cashfree.ts` bills with, rather than its own hardcoded number —
+ * so the default price shown and the amount actually charged can never
+ * drift apart from two copies of a rate quietly going out of sync.
  *
- * SEO is unaffected — structured data, page titles and the server-rendered
- * HTML all stay in USD.
+ * SEO is unaffected by the toggle either way — structured data and the
+ * server-rendered HTML are handled directly in the pages that need them.
  */
 
-export const BASE_CURRENCY = "USD";
+export const BASE_CURRENCY = "INR";
+
+/**
+ * The one rate that has to match a real charge exactly — shared with
+ * `src/lib/cashfree.ts`, which bills at this same value, rather than each
+ * file keeping its own copy that could quietly drift out of sync.
+ */
+export const INR_PER_USD = Number(process.env.NEXT_PUBLIC_INR_PER_USD ?? 88);
 
 /**
  * Indicative USD → local rates. Deliberately static: an FX call on the render
@@ -47,7 +58,7 @@ const RATES: Record<string, number> = {
   JPY: 152,
   KRW: 1350,
   HKD: 7.8,
-  INR: 88,
+  INR: INR_PER_USD,
   LKR: 300,
   ZAR: 18.5,
 };
@@ -132,11 +143,21 @@ function roundNicely(value: number): number {
   return Math.round(value);
 }
 
-/** Approximate local-currency amount for a USD catalogue price. */
+/**
+ * USD catalogue price → a display amount in `currency`.
+ *
+ * The default currency (BASE_CURRENCY, currently INR) is what Cashfree
+ * actually charges — not an estimate — so it gets rounded to the nearest
+ * whole unit only, matching the real charge to within a fraction of a rupee.
+ * Any other currency is a genuine estimate (the customer's bank sets the
+ * real conversion when the toggle is live), where roundNicely's coarser,
+ * price-shaped rounding is the point rather than a problem.
+ */
 export function convert(usd: number, currency: string): number {
   const rate = RATES[currency];
   if (!rate) return usd;
-  return roundNicely(usd * rate);
+  const amount = usd * rate;
+  return currency === BASE_CURRENCY ? Math.round(amount) : roundNicely(amount);
 }
 
 /**
