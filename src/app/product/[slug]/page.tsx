@@ -12,6 +12,7 @@ import { getCategory } from "@/data/categories";
 import { getProduct, getProductsByCategory, products } from "@/data/products";
 import { productSchema, breadcrumbSchema } from "@/lib/structured-data";
 import { ogImage } from "@/lib/site";
+import { convert, formatMoney } from "@/lib/currency";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -26,7 +27,10 @@ export async function generateMetadata({
   const product = getProduct(slug);
   if (!product) return {};
   const canonical = `/product/${product.slug}`;
-  const title = `${product.name} — $${product.price}`;
+  // Matches the currency actually charged (src/lib/currency.ts) — a social
+  // preview quoting USD for an INR-only checkout would be the same mismatch
+  // the on-page price already avoids.
+  const title = `${product.name} — ${formatMoney(convert(product.price, "INR"), "INR")}`;
   return {
     title: product.name,
     description: product.description,

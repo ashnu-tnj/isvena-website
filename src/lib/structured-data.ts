@@ -1,5 +1,6 @@
 import { site, absoluteUrl, ogImage } from "@/lib/site";
 import { colourNames } from "@/data/colors";
+import { convert } from "@/lib/currency";
 import type { Product } from "@/data/products";
 import type { Category } from "@/data/categories";
 
@@ -122,8 +123,12 @@ export function productSchema(product: Product, category?: Category) {
     offers: {
       "@type": "Offer",
       url: absoluteUrl(`/product/${product.slug}`),
-      priceCurrency: product.currency,
-      price: product.price,
+      // Structured data has to name what a shopper is actually charged, not
+      // the USD catalogue basis — Cashfree currently bills INR only, so this
+      // uses the same shared rate as the price shown on the page and the
+      // amount Cashfree actually charges (src/lib/currency.ts).
+      priceCurrency: "INR",
+      price: convert(product.price, "INR"),
       availability: "https://schema.org/MadeToOrder",
       itemCondition: "https://schema.org/NewCondition",
       seller: { "@id": ORG_ID },
@@ -137,7 +142,7 @@ export function productSchema(product: Product, category?: Category) {
         shippingRate: {
           "@type": "MonetaryAmount",
           value: 0,
-          currency: product.currency,
+          currency: "INR",
         },
       },
     },

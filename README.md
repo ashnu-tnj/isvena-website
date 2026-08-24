@@ -58,7 +58,12 @@ the contact/concierge flow.
 
 The catalogue is priced in USD but Cashfree bills a single currency — INR
 unless International Payments is activated on the account — so
-`CASHFREE_INR_PER_USD` sets the rate the house sells at.
+`NEXT_PUBLIC_INR_PER_USD` sets the rate the house sells at. The site shows
+INR sitewide by default at that same rate (`src/lib/currency.ts`), for the
+same reason: showing a currency the account isn't authorised to charge in is
+what Cashfree's KYC review flagged. A dormant USD/local-currency toggle
+exists behind `NEXT_PUBLIC_LOCAL_PRICING` for once multi-currency billing is
+real rather than cosmetic — see SETUP.md section 6.
 
 See [SETUP.md](./SETUP.md) for the full go-live walkthrough.
 

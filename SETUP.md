@@ -94,9 +94,11 @@ CASHFREE_SECRET_KEY=…
 CASHFREE_ENV=production
 
 # What the customer is charged in, and the rate used to get there from the
-# USD catalogue. See section 6.
+# USD catalogue — also the rate the site displays prices at (section 6), so
+# this is NEXT_PUBLIC_* even though it isn't a secret, and needs a rebuild
+# to take effect, not just a restart.
 CASHFREE_CURRENCY=INR
-CASHFREE_INR_PER_USD=88
+NEXT_PUBLIC_INR_PER_USD=88
 
 # The public origin. Every canonical URL, sitemap entry, Open Graph tag, and
 # the URL Cashfree's webhook is registered against (section 7) — that one
@@ -120,8 +122,8 @@ Two things that catch people:
 
 - **`NEXT_PUBLIC_*` values are compiled into the JavaScript at build time.**
   Changing one means running `npm run build` again — restarting is not
-  enough. Every Cashfree variable above is read at runtime, so those only
-  need a restart.
+  enough. That includes `NEXT_PUBLIC_INR_PER_USD` above. Every other
+  Cashfree variable is read at runtime, so those only need a restart.
 - **A running Node process does not re-read `.env.local`.** Restart the
   service after any change.
 
@@ -166,17 +168,50 @@ during `npm run build`, which happens *inside the image build* — so those
 must be passed as build `args` in `docker-compose.yml` and given an `ARG` in
 the Dockerfile, as `NEXT_PUBLIC_SITE_URL` already is.
 
-Cashfree needs no `NEXT_PUBLIC_*` value at all: `/api/create-order` returns
-everything the browser needs (the payment session id, and which of
+**`NEXT_PUBLIC_INR_PER_USD` needs the same treatment.** `env_file:` in
+`docker-compose.yml` only reaches the *running container* — the `docker
+build` step that actually runs `npm run build` never sees it, so a value
+that only exists in `.env.production` silently has no effect on the
+compiled JavaScript. It needs to be a build arg too:
+
+`docker-compose.yml`, inside the `isvena` service's `build.args`:
+
+```yaml
+    build:
+      args:
+        NEXT_PUBLIC_SITE_URL: https://www.isvena.com
+        NEXT_PUBLIC_INR_PER_USD: "88"
+```
+
+`Dockerfile`, in the `builder` stage, next to the existing
+`NEXT_PUBLIC_SITE_URL` lines:
+
+```dockerfile
+ARG NEXT_PUBLIC_INR_PER_USD=88
+ENV NEXT_PUBLIC_INR_PER_USD=$NEXT_PUBLIC_INR_PER_USD
+```
+
+Every other Cashfree value — the credentials, `CASHFREE_ENV`,
+`CASHFREE_CURRENCY` — stays runtime-only: `/api/create-order` returns
+everything else the browser needs (the payment session id, which of
 sandbox/production to initialise the SDK against) in its response, so
-nothing gateway-related has to be baked into the JavaScript bundle.
+nothing besides the rate has to be baked into the JavaScript bundle.
 
 ### Checking what the container sees
 
 ```bash
-docker exec isvena printenv | grep CASHFREE
+docker exec isvena printenv | grep -E 'CASHFREE|NEXT_PUBLIC_INR_PER_USD'
 docker logs --tail 50 isvena | grep -i cashfree
 ```
+
+That confirms the *runtime* value — which is not the same thing as the
+value actually baked into the JavaScript bundle, since `NEXT_PUBLIC_INR_PER_USD`
+needs both (runtime for `.env.production`-style checks like this one to make
+sense at all, build-time for what a browser actually receives). The real
+proof is opening a product page and checking the price matches
+`catalogue USD price × NEXT_PUBLIC_INR_PER_USD` exactly — Siena at $365 and
+a rate of 88 should read **₹32,120**, not some other figure the previous
+build's rate would have produced.
 
 ## 4. Run it as a service
 
@@ -252,80 +287,60 @@ Cashfree (section 7) points at one too.**
 
 **The catalogue is priced in USD. Cashfree bills in one currency.** Those
 two facts have to be reconciled somewhere, and that somewhere is
-`CASHFREE_CURRENCY` plus `CASHFREE_INR_PER_USD`.
+`CASHFREE_CURRENCY` plus `NEXT_PUBLIC_INR_PER_USD`.
 
 An Indian Cashfree account settles in **INR** unless *International
 Payments* has been activated on it — this is a request Cashfree reviews, not
-a self-service toggle. So:
+a self-service toggle:
 
 | Situation | Set | Effect |
 |---|---|---|
-| International Payments **off** (the default, and where this account is right now) | `CASHFREE_CURRENCY=INR` | A $365 bag is charged as ₹32,120 at the rate below. Foreign cards are converted by the customer's own bank. |
-| International Payments **on** | `CASHFREE_CURRENCY=USD` | The catalogue price is billed as-is and `CASHFREE_INR_PER_USD` is ignored. |
+| International Payments **off** (the default, and where this account is right now) | `CASHFREE_CURRENCY=INR` | A $365 bag is charged as ₹32,120 at the rate below. |
+| International Payments **on** | `CASHFREE_CURRENCY=USD` | The catalogue price is billed as-is and `NEXT_PUBLIC_INR_PER_USD` is ignored for charging. |
 
-`CASHFREE_INR_PER_USD` is **the rate you sell at**, not a display estimate:
-it decides what the customer's card is actually debited. It is deliberately
-a setting rather than a live FX call, so a third-party outage can never sit
-between a customer and the pay button — which means **you own keeping it
-current**. Review it when the rupee moves; the default of 88 was set in
-2026 and will drift.
+`NEXT_PUBLIC_INR_PER_USD` is **the rate you sell at**, not a display
+estimate: it decides what the customer's card is actually debited, and — see
+below — what's shown on the site as well. It is deliberately a setting
+rather than a live FX call, so a third-party outage can never sit between a
+customer and the pay button — which means **you own keeping it current**.
+Review it when the rupee moves; the default of 88 was set in 2026 and will
+drift.
 
-Whatever it is set to, Cashfree's own payment window shows the customer the
-exact amount before they confirm.
+### What the site shows
 
-### Showing local prices on the site
+**INR is the default currency shown everywhere** — product cards, product
+pages, the cart, checkout, page titles, and the structured data search
+engines read. This isn't a display *estimate* the way it would be for a
+currency the customer's bank still has to convert: Cashfree charges INR
+directly right now, so the figure shown is the exact amount that gets
+charged, down to the rupee. `src/lib/currency.ts` and `src/lib/cashfree.ts`
+both read the *same* `NEXT_PUBLIC_INR_PER_USD` value for this reason — a
+displayed price and a charged amount computed from two separate copies of a
+rate is exactly how they'd quietly drift apart.
 
-Set `NEXT_PUBLIC_LOCAL_PRICING=on` and **rebuild**. Product pages, cards and
-the cart then show the visitor's currency, and a **USD / local switch
-appears in the header** so they can price the collection either way. The
-choice is remembered per browser.
+This exists because of Cashfree's own KYC review: showing a price in a
+currency the account isn't authorised to charge in is what got flagged, and
+INR sitewide, unconditionally, is the fix — not a "show the visitor's local
+currency" feature, which would reintroduce the same mismatch for every
+visitor outside India.
 
-The switch only appears when there is a real choice — a visitor whose
-currency is already USD never sees it.
+### The dormant local-currency toggle
 
-Those figures are **approximations**, marked `≈`, because the customer's own
-bank sets the final conversion from whatever Cashfree bills. Rates live in
-`src/lib/currency.ts`, rounded to clean numbers (`≈ £255`, not `£252.80`).
+The site still has a USD/local-currency switch built in
+(`src/lib/currency-context.tsx`, `/api/geo`, a small `X-Geo-Country`-or-locale
+detection step) — it's just switched off, behind `NEXT_PUBLIC_LOCAL_PRICING`,
+which defaults to unset. **Leave it unset while Cashfree bills INR only** —
+turning it on would let a visitor switch away from the one currency that
+matches what they're actually charged, the exact problem this section
+exists to avoid.
 
-> These display rates are **separate** from `CASHFREE_INR_PER_USD`, which is
-> what gets charged. Keep the two roughly in step — the INR figure shown to
-> an Indian visitor comes from `currency.ts`, the one Cashfree charges comes
-> from the environment, and a visitor who compares them will notice.
-
-Server-rendered HTML, page titles and structured data stay in USD, so search
-engines and the canonical price are unaffected.
-
-### Country detection behind nginx
-
-Country is resolved in two steps: `/api/geo` reads an `x-geo-country`
-header, and if nothing sets one the browser's own locale is used instead
-(`en-GB` → GB). **So local pricing works out of the box on a plain VPS** —
-the header is an accuracy upgrade, not a requirement.
-
-Locale is weaker evidence: it reflects the device's language settings rather
-than where the visitor is, so a British expat in Dubai sees GBP. The
-currency switch in the header lets anyone correct it, and the choice is
-remembered.
-
-For IP-based accuracy, install the GeoIP2 module (`apt install
-libnginx-mod-http-geoip2` and a GeoLite2-Country database), then:
-
-```nginx
-geoip2 /usr/share/GeoIP/GeoLite2-Country.mmdb {
-    $geoip2_country_code country iso_code;
-}
-
-# inside the location / block:
-proxy_set_header X-Geo-Country $geoip2_country_code;
-```
-
-Verify with `curl -sI https://www.isvena.com/api/geo` and a request from a
-non-Indian IP; the JSON should carry that country.
-
-Skipping GeoIP is fine — detection falls back to the browser locale. To turn
-the feature off entirely, leave `NEXT_PUBLIC_LOCAL_PRICING` unset: prices
-stay in USD sitewide and the currency switch disappears. What Cashfree
-charges is unaffected either way.
+It's there for when International Payments is eventually approved and
+multi-currency billing becomes real rather than cosmetic. At that point,
+re-enabling it needs a look at `src/lib/currency.ts`'s `BASE_CURRENCY` and
+`convert()` — currently tuned so the *default* currency is treated as exact
+rather than "≈"-rounded, which was the right call while that default is INR
+but would need revisiting if the default currency ever becomes a genuine
+estimate again.
 
 ## 7. The webhook
 

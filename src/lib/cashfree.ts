@@ -1,5 +1,6 @@
 import crypto from "node:crypto";
 import { Cashfree, CFEnvironment } from "cashfree-pg";
+import { INR_PER_USD } from "@/lib/currency";
 
 /**
  * Server-side Cashfree client. Returns null when the keys are not
@@ -62,14 +63,16 @@ export const CHARGE_CURRENCY = (
 ).toUpperCase();
 
 /**
- * INR per USD used to bill, not to display.
- *
- * The catalogue is priced in USD; Cashfree bills CHARGE_CURRENCY. This is
- * the rate the house is willing to sell at — a setting, not a live FX call,
- * so a third-party outage can never sit between a customer and the pay
- * button. Review it when the rupee moves.
+ * INR per USD used to bill, not to display — imported from currency.ts
+ * (which reads NEXT_PUBLIC_INR_PER_USD) rather than a second copy here, so
+ * the price a visitor sees and the amount actually charged read the same
+ * value and can never quietly drift apart. It has to be a NEXT_PUBLIC_
+ * variable rather than a server-only one because currency.ts also renders
+ * prices client-side, and a non-public env var is invisible in
+ * browser-executed code — a Next.js constraint, not a choice made here. The
+ * rate itself isn't a secret, so making it public costs nothing. Review it
+ * when the rupee moves.
  */
-const INR_PER_USD = Number(process.env.CASHFREE_INR_PER_USD ?? 88);
 
 /** Catalogue USD → the charge currency, as a whole unit. */
 export function toChargeCurrency(usd: number): number {
