@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ClearCartOnMount from "@/components/clear-cart-on-mount";
+import PurchaseConversion from "@/components/purchase-conversion";
 import { confirmOrderPaid } from "@/lib/order-confirmation";
 import { isOrderNumber } from "@/lib/order-number";
 import { site } from "@/lib/site";
@@ -35,6 +36,15 @@ export default async function CheckoutSuccessPage({
 
       {result?.status === "paid" && (
         <>
+          {/* Only on a genuinely confirmed payment — this page also renders
+              for declines and abandoned checkouts. */}
+          {orderId && (
+            <PurchaseConversion
+              orderNumber={orderId}
+              amount={result.amount ?? 0}
+              currency={result.currency ?? "INR"}
+            />
+          )}
           <p className="reveal eyebrow text-gold">Order Confirmed</p>
           <h1 className="reveal type-display mt-5 font-display italic" style={{ animationDelay: "0.1s" }}>
             Thank you.

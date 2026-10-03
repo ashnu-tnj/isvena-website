@@ -6,6 +6,9 @@ export type ConfirmationStatus = "paid" | "pending" | "failed" | "error";
 export interface ConfirmationResult {
   status: ConfirmationStatus;
   emailed: boolean;
+  /** What was actually charged — only present once status is "paid". */
+  amount?: number;
+  currency?: string;
 }
 
 /**
@@ -24,7 +27,7 @@ export interface ConfirmationResult {
  * tags still exist on Cashfree regardless — so it is not worth a database
  * for. Capped so a long-running process can't grow this without bound.
  */
-const confirmed = new Set<string>();
+const confirmed = new Map<string, { amount: number; currency: string }>();
 const CONFIRMED_CAP = 5000;
 
 /**
@@ -38,7 +41,13 @@ const CONFIRMED_CAP = 5000;
  * paths land here and re-fetch the true state from Cashfree.
  */
 export async function confirmOrderPaid(orderId: string): Promise<ConfirmationResult> {
-  if (confirmed.has(orderId)) return { status: "paid", emailed: false };
+  // The amount is carried on this entry, not just the id, so a customer
+  // reloading the confirmation page still gets the real figure back rather
+  // than a bare "paid" with nothing to report to analytics.
+  const already = confirmed.get(orderId);
+  if (already) {
+    return { status: "paid", emailed: false, ...already };
+  }
 
   const cashfree = getCashfree();
   if (!cashfree) return { status: "error", emailed: false };
@@ -60,18 +69,22 @@ export async function confirmOrderPaid(orderId: string): Promise<ConfirmationRes
       return { status: terminal || anyFailed ? "failed" : "pending", emailed: false };
     }
 
+    const amount = Number(successful.payment_amount ?? order.order_amount ?? 0);
+    const currency = successful.payment_currency ?? order.order_currency ?? "INR";
+
     // Re-confirming an already-confirmed order between the fetch above and
     // here is possible under concurrent requests; harmless, since the send
     // below is idempotent-in-effect via this same guard on the way out.
-    if (confirmed.has(orderId)) return { status: "paid", emailed: false };
+    const raced = confirmed.get(orderId);
+    if (raced) return { status: "paid", emailed: false, ...raced };
 
     const tags = order.order_tags ?? {};
     const emailed = await sendOrderEmail({
       orderNumber: orderId,
       items: (tags.items ?? "").split("; ").filter(Boolean),
       catalogueTotalUsd: Number(tags.catalogue_usd ?? 0),
-      chargedAmount: Number(successful.payment_amount ?? order.order_amount ?? 0),
-      chargedCurrency: successful.payment_currency ?? order.order_currency ?? "INR",
+      chargedAmount: amount,
+      chargedCurrency: currency,
       customer: {
         name: tags.customer ?? "",
         email: tags.email ?? "",
@@ -83,13 +96,13 @@ export async function confirmOrderPaid(orderId: string): Promise<ConfirmationRes
       gatewayPaymentId: String(successful.cf_payment_id ?? ""),
     });
 
-    confirmed.add(orderId);
+    confirmed.set(orderId, { amount, currency });
     if (confirmed.size > CONFIRMED_CAP) {
-      // Oldest-first eviction — Set preserves insertion order.
-      confirmed.delete(confirmed.values().next().value as string);
+      // Oldest-first eviction — Map preserves insertion order.
+      confirmed.delete(confirmed.keys().next().value as string);
     }
 
-    return { status: "paid", emailed };
+    return { status: "paid", emailed, amount, currency };
   } catch (err) {
     console.error(
       `[order-confirmation] Could not confirm ${orderId} — ` + describeCashfreeError(err)
