@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant, Jost } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import SiteHeader from "@/components/site-header";
 import SiteFooter from "@/components/site-footer";
@@ -9,6 +10,9 @@ import { CartProvider } from "@/lib/cart-context";
 import { CurrencyProvider } from "@/lib/currency-context";
 import { site, SITE_URL } from "@/lib/site";
 import { organizationSchema, websiteSchema } from "@/lib/structured-data";
+
+/** Google Ads conversion account. Not a secret — it ships in the page. */
+const GOOGLE_ADS_ID = "AW-18491382828";
 
 // Display / brand serif chosen to echo the Isvena wordmark — a delicate,
 // high-contrast fashion serif.
@@ -94,6 +98,22 @@ export default function RootLayout({
             <CartDrawer />
           </CartProvider>
         </CurrencyProvider>
+
+        {/* Google Ads (gtag.js). In the root layout so it covers every route,
+            and Next.js loads it only once across client-side navigations
+            rather than re-running on each page change. The inline half needs
+            an `id` — that is how Next tracks an inline script, and without
+            one it is silently dropped. */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-ads-gtag" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GOOGLE_ADS_ID}');`}
+        </Script>
       </body>
     </html>
   );
