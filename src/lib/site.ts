@@ -34,11 +34,13 @@ export const site = {
   social: [
     { name: "Instagram", handle: "@isvenaofficial", url: "https://www.instagram.com/isvenaofficial" },
     { name: "Facebook", handle: "isvenaofficial", url: "https://www.facebook.com/isvenaofficial" },
+    { name: "YouTube", handle: "@isvenaofficial", url: "https://www.youtube.com/@isvenaofficial" },
   ],
   /** Public profiles / external references that reinforce entity identity. */
   sameAs: [
     "https://www.instagram.com/isvenaofficial",
     "https://www.facebook.com/isvenaofficial",
+    "https://www.youtube.com/@isvenaofficial",
     "https://www.tradeindia.com/p-m-rahamathulla-co-363125/",
   ],
   keywords: [
