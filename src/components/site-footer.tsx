@@ -90,7 +90,7 @@ export default function SiteFooter() {
         <div className="mt-16 border-t border-cream/15 pt-7 text-xs text-cream/50">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p>
-              © {new Date().getFullYear()} Isvena. A legacy of P.M.
+              © {new Date().getFullYear()}{" "}Isvena. A legacy of P.M.
               Rahamathulla &amp; Co. — in leather since 1936.
             </p>
             <p>Chennai, Tamil Nadu, India — Shipping Worldwide</p>
